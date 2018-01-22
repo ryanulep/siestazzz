@@ -4,18 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ucr.buzuka.siestazzz.MainActivity">
+    tools:context="com.ucr.buzuka.siestazzz.MainActivity"
+    android:background="@drawable/mainBackground">
 
     <Button
         android:id="@+id/sleepButton"
         android:layout_width="151dp"
         android:layout_height="49dp"
+        android:layout_marginBottom="309dp"
         android:layout_marginEnd="148dp"
         android:layout_marginStart="148dp"
-        android:text="Go to Sleep"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:backgroundTint="@color/colorPrimaryDark"
+        android:text="Go to Sleep"
         android:textColor="@color/colorIcons"
-        tools:layout_editor_absoluteY="153dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </android.support.constraint.ConstraintLayout>
