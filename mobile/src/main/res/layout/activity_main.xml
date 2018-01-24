@@ -9,11 +9,9 @@ tools:context="com.ucr.buzuka.siestazzz.MainActivity">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
-        android:layout_width="182dp"
-        android:layout_height="225dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="72dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

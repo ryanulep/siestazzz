@@ -15,12 +15,22 @@ public class MyViewPageAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int position) { // The page that we awant to display in a ViewPager
-        return new MyViewPagerFragment();
+    public Fragment getItem(int position) { // The page that we want to display in a ViewPage
+
+        if (position == 0) {
+            return new MainViewPageFragment();
+        } else if( position == 1) {
+            return  new JournalViewPageFragment();
+        } else if (position == 2) {
+            return new TrendsViewPageFragment();
+        } else {
+            return new MainViewPageFragment();
+        }
+
     }
 
     @Override
     public int getCount() { // getCount is the number of pages that we want to display in the ViewPager.
-        return 4;
+        return 3;
     }
 }
