@@ -7,6 +7,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import java.util.Queue;
 
@@ -16,8 +17,11 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     private SensorManager sensorManager;
     private Sensor sensorAccelerometer;
 
+    private static final int M_SENSOR_DELAY = 500;
+
     //local variable for sensor data
     private long lastUpdate = 0;
+    private static final long M_POLL_INTERVAL = 1000;
     private float last_x, last_y, last_z; //last position
     //private Queue<Float> sensorLog;
 
@@ -28,10 +32,12 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sleep_session);
 
+
         //create, get, register accelerometer
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE); // get an instance of system sensor
         sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER); // get accelerometer
-        sensorManager.registerListener(this, sensorAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, sensorAccelerometer, M_SENSOR_DELAY);
+
     }
 
     //put sensor to sleep when app not in use, will need to comment out in production
@@ -42,34 +48,32 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
 
     protected void onResume(){
         super.onResume();
-        sensorManager.registerListener(this, sensorAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, sensorAccelerometer, M_SENSOR_DELAY);
     }
+
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         Sensor sensor = sensorEvent.sensor;
 
         if(sensor.getType() == Sensor.TYPE_ACCELEROMETER){
-            //get current accel data
+            //get current accelerometer data
             float x = sensorEvent.values[0];
             float y = sensorEvent.values[1];
             float z = sensorEvent.values[2];
 
             //create a time internal
             long curTime = System.currentTimeMillis();
+            long diffTime = curTime - lastUpdate;
+            lastUpdate = curTime;
 
-            if((curTime - lastUpdate) > 100){
-                long interval = (curTime - lastUpdate);
-                lastUpdate = curTime; // update time
+            //TextView textView = findViewById(R.id.textView);
+            //textView.setText(curTime+ "\n" + "x = " + x + "\n" + "y = " + y + "\n"+ "z = " + z + "\n");
+            //textView.append("Speed " + Math.abs(x + y + z - last_x - last_y - last_z)/ diffTime * 10000);
 
-                //get acceleration
-                float accel = Math.abs(x - last_x + y - last_y + z - last_z)/(interval * 10000);
-
-                //TODO finish sensor
-                if(accel > 0){
-
-                }
-            }
+            last_x = x;
+            last_y = y;
+            last_z = z;
 
         }
     }
@@ -78,4 +82,3 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     public void onAccuracyChanged(Sensor sensor, int i) {
 
     }
-}
