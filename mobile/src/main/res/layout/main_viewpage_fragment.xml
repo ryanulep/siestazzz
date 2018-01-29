@@ -1,11 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent" android:layout_height="match_parent"
-android:background="@android:color/holo_blue_bright">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@drawable/mainbackground">
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_centerInParent="true"
-    android:text="Main View" />
-</RelativeLayout>
+    <Button
+        android:id="@+id/sleepButton"
+        android:layout_width="249dp"
+        android:layout_height="36dp"
+        android:layout_alignEnd="@+id/timeView"
+        android:layout_below="@+id/timeView"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/sleepbutton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timeView"
+        app:layout_constraintVertical_bias="0.135" />
+
+    <ImageView
+        android:id="@+id/timeView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="52dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.481"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/timecontainer" />
+
+    <TextClock
+        android:id="@+id/textClock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/timeView"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="Roboto"
+        android:textColor="@color/colorIcons"
+        android:textSize="60dp"
+        app:layout_constraintBottom_toBottomOf="@+id/timeView"
+        app:layout_constraintEnd_toEndOf="@+id/timeView"
+        app:layout_constraintStart_toStartOf="@+id/timeView"
+        app:layout_constraintTop_toTopOf="@+id/timeView" />
+
+</android.support.constraint.ConstraintLayout>

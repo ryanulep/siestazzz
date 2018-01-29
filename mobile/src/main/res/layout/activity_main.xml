@@ -17,46 +17,4 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.546" />
 
-    <Button
-        android:id="@+id/sleepButton"
-        android:layout_width="249dp"
-        android:layout_height="36dp"
-        android:layout_marginBottom="286dp"
-        android:layout_marginEnd="67dp"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="176dp"
-        android:background="@drawable/sleepbutton"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timeView" />
-
-    <ImageView
-        android:id="@+id/timeView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="28dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="52dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.481"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/timecontainer" />
-
-    <TextClock
-        android:id="@+id/textClock"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="Roboto"
-        android:textSize="60dp"
-        android:textColor="@color/colorIcons"
-        app:layout_constraintBottom_toBottomOf="@+id/timeView"
-        app:layout_constraintEnd_toEndOf="@+id/timeView"
-        app:layout_constraintStart_toStartOf="@+id/timeView"
-        app:layout_constraintTop_toTopOf="@+id/timeView" />
-
 </android.support.constraint.ConstraintLayout>
