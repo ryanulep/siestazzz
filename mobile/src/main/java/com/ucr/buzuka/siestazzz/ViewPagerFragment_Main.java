@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 /**
- * Created by rwbos on 1/23/2018.
+ * Created by Rick Boshae on 1/23/2018.
  */
 
 public class ViewPagerFragment_Main extends Fragment {

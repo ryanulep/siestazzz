@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by rwbos on 1/22/2018.
+ * Created by Rick Boshae on 1/22/2018.
  */
 
 public class ViewPagerFragment_Info extends Fragment {
