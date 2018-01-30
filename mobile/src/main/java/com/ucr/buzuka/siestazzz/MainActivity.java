@@ -112,7 +112,8 @@ public class MainActivity extends AppCompatActivity {
             sleep_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(MainActivity.this, "Button Clicked",Toast.LENGTH_LONG).show();
+                    // getContext() is used to replace 'MainActivity.this'
+                    Toast.makeText(getContext(), "Button Clicked",Toast.LENGTH_LONG).show();
                 }
             });
         return rootView;
