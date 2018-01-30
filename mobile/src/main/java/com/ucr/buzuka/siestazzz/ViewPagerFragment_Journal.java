@@ -8,10 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by rwbos on 1/23/2018.
+ * Created by Rick Boshae on 1/23/2018.
  */
 
-public class JournalViewPageFragment extends Fragment {
+public class ViewPagerFragment_Journal extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

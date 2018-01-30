@@ -3,21 +3,14 @@ package com.ucr.buzuka.siestazzz;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TableLayout;
-import android.widget.Toast;
 
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -121,15 +114,17 @@ public class MainActivity extends AppCompatActivity {
 
             switch (position) {
                 case 0:
-                    return new MainViewPageFragment();
+                    return new ViewPagerFragment_Main();
                 case 1:
-                    return new JournalViewPageFragment();
+                    return new ViewPagerFragment_Journal();
                 case 2 :
-                    return new TrendsViewPageFragment();
+                    return new ViewPagerFragment_Trends();
+
+                //Later Case 3 may be added to display app info.
 //                case 3:
 //                    return new InfoViewPagerFragment();
                 default:
-                    return new MainViewPageFragment();
+                    return new ViewPagerFragment_Main();
             }
         }
 
