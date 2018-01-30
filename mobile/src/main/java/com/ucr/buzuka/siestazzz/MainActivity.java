@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
-
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**
@@ -59,22 +58,6 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
-//
-//        ActionBar actionBar = getSupportActionBar(); // or getActionBar()
-//        if (actionBar != null) { actionBar.hide(); }
-
-//        mViewPager = (ViewPager) findViewById(R.id.viewPager);
-
-//        mViewPager.setAdapter(new MyViewPageAdapter(getSupportFragmentManager()));
-
-//        Button button = findViewById(R.id.sleepButton);
-
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(MainActivity.this, "Button Clicked",Toast.LENGTH_LONG).show();
-//            }
-//        });
     }  // End of OnCreate
 
     /**
@@ -90,34 +73,37 @@ public class MainActivity extends AppCompatActivity {
         public PlaceholderFragment() {
         }
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();                       // Unclear what Bundle is doing
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
+//        /**
+//         * Returns a new instance of this fragment for the given section
+//         * number.
+//         *
+//         * Not currently  being used however I think this would be a good
+//         * use for passing data between sections.
+//         */
+//        public static PlaceholderFragment newInstance(int sectionNumber) {
+//            PlaceholderFragment fragment = new PlaceholderFragment();
+//            Bundle args = new Bundle();                       // Unclear what Bundle is doing
+//            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+//            fragment.setArguments(args);
+//            return fragment;
+//        }
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
-            final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            // Some fuzzy stuff here. Refer to template but in essence i want to add interface here.
-
-            Button sleep_button = (Button) rootView.findViewById(R.id.sleepButton);
-
-            sleep_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // getContext() is used to replace 'MainActivity.this'
-                    Toast.makeText(getContext(), "Button Clicked",Toast.LENGTH_LONG).show();
-                }
-            });
-        return rootView;
-        }
+//        @Override
+//        public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
+//            final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+//            // Some fuzzy stuff here. Refer to template but in essence i want to add interface here.
+//
+//            Button sleep_button = (Button) rootView.findViewById(R.id.sleepButton);
+//
+//            sleep_button.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    // getContext() is used to replace 'MainActivity.this'
+//                    Toast.makeText(getContext(), "Button Clicked",Toast.LENGTH_LONG).show();
+//                }
+//            });
+//        return rootView;
+//        }
     }
 
     /**
@@ -128,10 +114,23 @@ public class MainActivity extends AppCompatActivity {
         public SectionsPagerAdapter(FragmentManager fm) { super(fm); }
 
         @Override
-        public Fragment getItem(int position) {
+        public Fragment getItem(int position) { // The page that we want to display in a ViewPage
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            //return PlaceholderFragment.newInstance(position + 1);
+
+            switch (position) {
+                case 0:
+                    return new MainViewPageFragment();
+                case 1:
+                    return new JournalViewPageFragment();
+                case 2 :
+                    return new TrendsViewPageFragment();
+//                case 3:
+//                    return new InfoViewPagerFragment();
+                default:
+                    return new MainViewPageFragment();
+            }
         }
 
         @Override

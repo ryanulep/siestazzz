@@ -17,24 +17,21 @@ public class MainViewPageFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
+        final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        // Some fuzzy stuff here. Refer to template but in essence i want to add interface here.
 
-        View mView = inflater.inflate(R.layout.fragment_main,null); // inflate is a function that converts a layout to a view.
+        Button sleep_button = (Button) rootView.findViewById(R.id.sleepButton);
 
-        return inflater.inflate(R.layout.fragment_main,null); // inflate is a function that converts a layout to a view.
-
-
+        sleep_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // getContext() is used to replace 'MainActivity.this'
+                Toast.makeText(getContext(), "Button Clicked",Toast.LENGTH_LONG).show();
+            }
+        });
+        return rootView;
     }
 
-//    protected void onCreate(Bundle savedInstanceState) {
-//        Button button = findViewById(R.id.sleepButton);
-//
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(MainActivity.this, "Button Clicked",Toast.LENGTH_LONG).show();
-//            }
-//        });
-//    }
 
 }

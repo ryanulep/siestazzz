@@ -15,6 +15,6 @@ public class TrendsViewPageFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.trends_viewpage_fragment,null); // inflate is a function that converts a layout to a view.
+        return inflater.inflate(R.layout.fragment_trends,container, false); // inflate is a function that converts a layout to a view.
     }
 }
