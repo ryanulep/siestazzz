@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v){
 
                 Toast.makeText(MainActivity.this, "alarm button pressed",Toast.LENGTH_SHORT).show();
+                // TODO: Add Alarm Activity. Feature ID 1.
             }
         });
 
@@ -66,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v){
 
                 Toast.makeText(MainActivity.this, "settings button pressed",Toast.LENGTH_SHORT).show();
+
+                // TODO: Add Settings Activity. No Feature ID.
             }
         });
 
