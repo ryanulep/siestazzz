@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mSettingsButton = (ImageButton) findViewById(R.id.button_alarm);
+        mSettingsButton = (ImageButton) findViewById(R.id.button_settings);
         mSettingsButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
