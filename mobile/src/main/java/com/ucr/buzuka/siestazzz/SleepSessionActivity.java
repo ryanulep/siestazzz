@@ -5,11 +5,9 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
-
-import java.util.Queue;
 
 public class SleepSessionActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -67,9 +65,9 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
             long diffTime = curTime - lastUpdate;
             lastUpdate = curTime;
 
-            //TextView textView = findViewById(R.id.textView);
-            //textView.setText(curTime+ "\n" + "x = " + x + "\n" + "y = " + y + "\n"+ "z = " + z + "\n");
-            //textView.append("Speed " + Math.abs(x + y + z - last_x - last_y - last_z)/ diffTime * 10000);
+            TextView textView = findViewById(R.id.textView);
+            textView.setText("x = " + x + "\n" + "y = " + y + "\n"+ "z = " + z + "\n");
+            textView.append("Speed " + Math.abs(x + y + z - last_x - last_y - last_z)/ diffTime * 1000);
 
             last_x = x;
             last_y = y;
@@ -82,3 +80,4 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     public void onAccuracyChanged(Sensor sensor, int i) {
 
     }
+}
