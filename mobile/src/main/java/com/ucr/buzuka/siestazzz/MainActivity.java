@@ -1,7 +1,7 @@
 package com.ucr.buzuka.siestazzz;
 
 
-import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,22 +12,10 @@ import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.Toast;
-
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
 
 
 public class MainActivity extends AppCompatActivity {
-
-    private ImageButton mAlarmButton;
-    private ImageButton mSettingsButton;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -47,41 +35,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /**
-         * Set up the top bar
-         */
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);                           // Unclear about what this does.
-
-        // Declare button objects in top bar
-        mAlarmButton = (ImageButton) findViewById(R.id.button_alarm);
-        mAlarmButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-
-                Toast.makeText(MainActivity.this, "alarm button pressed",Toast.LENGTH_SHORT).show();
-                // TODO: Add Alarm Activity. Feature ID 1.
-            }
-        });
-
-        mSettingsButton = (ImageButton) findViewById(R.id.button_settings);
-        mSettingsButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-
-                Toast.makeText(MainActivity.this, "settings button pressed",Toast.LENGTH_SHORT).show();
-
-                // TODO: Add Settings Activity. No Feature ID.
-            }
-        });
-
-        // End of Top Bar Setup
-
-
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -95,9 +53,17 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
-
-
     }  // End of OnCreate
+
+
+
+    public void GoToSleep(View view) {
+    }
+
+    public void SetAlarm(View view) {
+        Intent intent = new Intent(this, SetAlarm.class);
+        startActivity(intent);
+    }
 
     /**
      * A placeholder fragment containing a simple view.
@@ -112,13 +78,13 @@ public class MainActivity extends AppCompatActivity {
         public PlaceholderFragment() {
         }
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         *
-         * Not currently  being used however I think this would be a good
-         * use for passing data between sections.
-         */
+//        /**
+//         * Returns a new instance of this fragment for the given section
+//         * number.
+//         *
+//         * Not currently  being used however I think this would be a good
+//         * use for passing data between sections.
+//         */
 //        public static PlaceholderFragment newInstance(int sectionNumber) {
 //            PlaceholderFragment fragment = new PlaceholderFragment();
 //            Bundle args = new Bundle();                       // Unclear what Bundle is doing
@@ -126,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
 //            fragment.setArguments(args);
 //            return fragment;
 //        }
-//
+
 //        @Override
 //        public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 //            final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
