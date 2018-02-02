@@ -5,6 +5,23 @@
     android:background="@drawable/mainbackground">
 
     <Button
+        android:id="@+id/setAlarmButton"
+        android:layout_width="249dp"
+        android:layout_height="36dp"
+        android:layout_alignEnd="@+id/timeView"
+        android:layout_below="@+id/timeView"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/setalarm"
+        android:onClick="SetAlarm"
+        app:layout_constraintBottom_toTopOf="@+id/sleepButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timeView"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <Button
         android:id="@+id/sleepButton"
         android:layout_width="249dp"
         android:layout_height="36dp"
@@ -12,13 +29,12 @@
         android:layout_below="@+id/timeView"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="50dp"
         android:background="@drawable/sleepbutton"
+        android:onClick="GoToSleep"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timeView"
-        app:layout_constraintVertical_bias="0.135" />
+        app:layout_constraintTop_toBottomOf="@+id/setAlarmButton" />
 
     <ImageView
         android:id="@+id/timeView"
@@ -27,8 +43,8 @@
         android:layout_marginEnd="28dp"
         android:layout_marginStart="28dp"
         android:layout_marginTop="52dp"
+        android:adjustViewBounds="false"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/timecontainer" />
@@ -39,7 +55,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/timeView"
-        android:layout_marginBottom="8dp"
         android:fontFamily="Roboto"
         android:textColor="@color/colorIcons"
         android:textSize="60dp"

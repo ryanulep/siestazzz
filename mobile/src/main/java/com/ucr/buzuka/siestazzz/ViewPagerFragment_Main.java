@@ -20,17 +20,6 @@ public class ViewPagerFragment_Main extends Fragment {
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-
-        // Add Listeners here.
-        Button sleep_button = (Button) rootView.findViewById(R.id.sleepButton);
-
-        sleep_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // getContext() is used to replace 'MainActivity.this'
-                Toast.makeText(getContext(), "Button Clicked",Toast.LENGTH_LONG).show();
-            }
-        });
         return rootView;
     }
 

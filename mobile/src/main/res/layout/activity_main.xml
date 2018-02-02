@@ -22,13 +22,6 @@
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/button_alarm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:srcCompat="@android:drawable/ic_lock_idle_alarm" />
-
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="wrap_content"
@@ -40,11 +33,7 @@
                     app:popupTheme="@style/AppTheme.PopupOverlay"
                     app:title="@string/app_name"
                     tools:textAlignment="center">
-
                 </android.support.v7.widget.Toolbar>
-
-
-
             </LinearLayout>
 
             <android.support.design.widget.TabLayout
@@ -69,9 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/tab_text_3" />
-
             </android.support.design.widget.TabLayout>
-
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v4.view.ViewPager

@@ -1,6 +1,7 @@
 package com.ucr.buzuka.siestazzz;
 
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.View;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -52,6 +54,16 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
     }  // End of OnCreate
+
+
+
+    public void GoToSleep(View view) {
+    }
+
+    public void SetAlarm(View view) {
+        Intent intent = new Intent(this, SetAlarm.class);
+        startActivity(intent);
+    }
 
     /**
      * A placeholder fragment containing a simple view.
