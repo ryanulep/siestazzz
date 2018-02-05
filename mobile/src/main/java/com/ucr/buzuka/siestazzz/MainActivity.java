@@ -1,6 +1,7 @@
 package com.ucr.buzuka.siestazzz;
 
 
+import android.content.Intent;
 import android.annotation.SuppressLint;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -89,6 +90,16 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
     }  // End of OnCreate
+
+
+
+    public void GoToSleep(View view) {
+    }
+
+    public void SetAlarm(View view) {
+        Intent intent = new Intent(this, SetAlarm.class);
+        startActivity(intent);
+    }
 
     /**
      * A placeholder fragment containing a simple view.
