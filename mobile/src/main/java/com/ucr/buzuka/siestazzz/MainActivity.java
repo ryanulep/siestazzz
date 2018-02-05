@@ -51,31 +51,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);                           // Unclear about what this does.
 
-        // Declare button objects in top bar
-        mAlarmButton = (ImageButton) findViewById(R.id.button_alarm);
-        mAlarmButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-
-                Toast.makeText(MainActivity.this, "alarm button pressed",Toast.LENGTH_SHORT).show();
-                // TODO: Add Alarm Activity. Feature ID 1.
-            }
-        });
-
-        mSettingsButton = (ImageButton) findViewById(R.id.button_settings);
-        mSettingsButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-
-                Toast.makeText(MainActivity.this, "settings button pressed",Toast.LENGTH_SHORT).show();
-
-                // TODO: Add Settings Activity. No Feature ID.
-            }
-        });
-
-        // End of Top Bar Setup
-
-
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
