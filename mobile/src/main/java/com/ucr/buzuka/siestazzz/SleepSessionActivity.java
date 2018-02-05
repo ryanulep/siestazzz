@@ -15,11 +15,12 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     private SensorManager sensorManager;
     private Sensor sensorAccelerometer;
 
+    //set the time interval to pull from sensor, current 500 ms
     private static final int M_SENSOR_DELAY = 500;
 
     //local variable for sensor data
     private long lastUpdate = 0;
-    private static final long M_POLL_INTERVAL = 1000;
+    private static final long M_POLL_INTERVAL = 1000; // used, but it is for displaying sensor data on app
     private float last_x, last_y, last_z; //last position
     //private Queue<Float> sensorLog;
 
@@ -38,12 +39,17 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
 
     }
 
-    //put sensor to sleep when app not in use, will need to comment out in production
+    /** put sensor to sleep when app not in use, will need to comment out in production.
+    *   will need to make sensor polling into a service
+    */
     protected void onPause(){
         super.onPause();
         sensorManager.unregisterListener(this);
     }
-
+    
+    /**
+    * re-register sensor for app, will not need this in production
+    */
     protected void onResume(){
         super.onResume();
         sensorManager.registerListener(this, sensorAccelerometer, M_SENSOR_DELAY);
