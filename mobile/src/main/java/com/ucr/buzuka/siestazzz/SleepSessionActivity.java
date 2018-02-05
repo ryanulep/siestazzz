@@ -20,7 +20,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
 
     //local variable for sensor data
     private long lastUpdate = 0;
-    private static final long M_POLL_INTERVAL = 1000; // used, but it is for displaying sensor data on app
+    private static final long M_POLL_INTERVAL = 1000; // not used, but it is for displaying sensor data on app
     private float last_x, last_y, last_z; //last position
     //private Queue<Float> sensorLog;
 
