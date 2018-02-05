@@ -12,4 +12,8 @@ public class SetAlarm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_alarm);
     }
+
+    public void setAlarmTime(View view) {
+
+    }
 }
