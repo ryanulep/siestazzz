@@ -12,10 +12,16 @@ import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -41,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -75,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         // End of Top Bar Setup
 
 
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -87,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+
 
     }  // End of OnCreate
 
@@ -103,13 +112,13 @@ public class MainActivity extends AppCompatActivity {
         public PlaceholderFragment() {
         }
 
-//        /**
-//         * Returns a new instance of this fragment for the given section
-//         * number.
-//         *
-//         * Not currently  being used however I think this would be a good
-//         * use for passing data between sections.
-//         */
+        /**
+         * Returns a new instance of this fragment for the given section
+         * number.
+         *
+         * Not currently  being used however I think this would be a good
+         * use for passing data between sections.
+         */
 //        public static PlaceholderFragment newInstance(int sectionNumber) {
 //            PlaceholderFragment fragment = new PlaceholderFragment();
 //            Bundle args = new Bundle();                       // Unclear what Bundle is doing
@@ -117,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
 //            fragment.setArguments(args);
 //            return fragment;
 //        }
-
+//
 //        @Override
 //        public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 //            final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
