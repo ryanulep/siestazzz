@@ -2,6 +2,7 @@ package com.ucr.buzuka.siestazzz;
 
 
 import android.content.Intent;
+import android.annotation.SuppressLint;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -13,9 +14,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    private ImageButton mAlarmButton;
+    private ImageButton mSettingsButton;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -38,8 +45,36 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /**
+         * Set up the top bar
+         */
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);                           // Unclear about what this does.
+
+        // Declare button objects in top bar
+        mAlarmButton = (ImageButton) findViewById(R.id.button_alarm);
+        mAlarmButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+                Toast.makeText(MainActivity.this, "alarm button pressed",Toast.LENGTH_SHORT).show();
+                // TODO: Add Alarm Activity. Feature ID 1.
+            }
+        });
+
+        mSettingsButton = (ImageButton) findViewById(R.id.button_settings);
+        mSettingsButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+                Toast.makeText(MainActivity.this, "settings button pressed",Toast.LENGTH_SHORT).show();
+
+                // TODO: Add Settings Activity. No Feature ID.
+            }
+        });
+
+        // End of Top Bar Setup
+
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -53,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+
     }  // End of OnCreate
 
 
