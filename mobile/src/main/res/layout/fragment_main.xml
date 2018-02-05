@@ -6,8 +6,8 @@
 
     <Button
         android:id="@+id/setAlarmButton"
-        android:layout_width="249dp"
-        android:layout_height="36dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/timeView"
         android:layout_below="@+id/timeView"
         android:layout_marginBottom="24dp"
@@ -23,8 +23,8 @@
 
     <Button
         android:id="@+id/sleepButton"
-        android:layout_width="249dp"
-        android:layout_height="36dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/timeView"
         android:layout_below="@+id/timeView"
         android:layout_marginEnd="24dp"
@@ -58,6 +58,7 @@
         android:fontFamily="Roboto"
         android:textColor="@color/colorIcons"
         android:textSize="60dp"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="@+id/timeView"
         app:layout_constraintEnd_toEndOf="@+id/timeView"
         app:layout_constraintStart_toStartOf="@+id/timeView"
