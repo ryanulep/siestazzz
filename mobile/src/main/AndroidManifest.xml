@@ -18,7 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SetAlarm"></activity>
+        <activity android:name=".SetAlarm" />
+        <activity android:name=".SleepSessionActivity"></activity>
     </application>
 
 </manifest>
