@@ -13,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.View;
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -58,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void GoToSleep(View view) {
+        Intent intent = new Intent(this, SleepSessionActivity.class);
+        Toast.makeText(getApplicationContext(), "Start Sleep!", Toast.LENGTH_SHORT).show();
+        startActivity(intent);
     }
 
     public void SetAlarm(View view) {
