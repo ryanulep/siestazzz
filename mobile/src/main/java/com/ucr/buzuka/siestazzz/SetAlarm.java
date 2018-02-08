@@ -38,6 +38,10 @@ public class SetAlarm extends AppCompatActivity {
         setButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Toast to indicate that the alarm has been set by the user.
+                Toast.makeText(getApplicationContext(), "Alarm Set!", Toast.LENGTH_SHORT).show();
+
+                // TODO: Add comments explainging what code is doing here.
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     hour = timerClock.getHour();
                     minute = timerClock.getMinute();
@@ -52,6 +56,7 @@ public class SetAlarm extends AppCompatActivity {
                 Log.w("myApp", "Alarm");
 
                 alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),pendingIntent);
+                finish();
             }
         });
 

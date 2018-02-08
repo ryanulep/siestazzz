@@ -8,4 +8,33 @@
     tools:context="com.ucr.buzuka.siestazzz.ListAlarmsActivity"
     tools:showIn="@layout/activity_list_alarms">
 
+    <!-- A line within the list view -->
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:padding="6dip">
+
+        <TextView
+            android:id="@+id/textView_AlarmTime"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:fontFamily="-"
+            android:text="8:00 AM"
+            android:textAlignment="center"
+            android:textAppearance="@android:style/TextAppearance.Material.Large"
+            tools:layout_editor_absoluteX="33dp"
+            tools:layout_editor_absoluteY="32dp" />
+
+        <Switch
+            android:id="@+id/alarmSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            tools:layout_editor_absoluteX="296dp"
+            tools:layout_editor_absoluteY="6dp" />
+
+
+    </RelativeLayout>
+
 </android.support.constraint.ConstraintLayout>
