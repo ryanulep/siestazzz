@@ -24,6 +24,10 @@
 
         <receiver android:name=".Mote" />
 
+        <activity
+            android:name=".ListAlarmsActivity"
+            android:label="@string/title_activity_list_alarms"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
