@@ -35,8 +35,8 @@ public class Mote extends BroadcastReceiver {
 
 
         Toast.makeText(context, "Alarm worked.", Toast.LENGTH_LONG).show();
-        Vibrator vibe = (Vibrator)context.getSystemService(context.VIBRATOR_SERVICE);
-        vibe.vibrate(10000);
+        //Vibrator vibe = (Vibrator)context.getSystemService(context.VIBRATOR_SERVICE);
+        //vibe.vibrate(10000);
         Log.w("myApp", "Alarm at");
     }
 
