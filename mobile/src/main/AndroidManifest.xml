@@ -24,10 +24,6 @@
 
         <receiver android:name=".Mote" />
 
-        <activity
-            android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
-
     </application>
 
 </manifest>

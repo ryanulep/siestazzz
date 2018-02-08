@@ -66,35 +66,5 @@
         app:layout_constraintStart_toStartOf="@+id/timeView"
         app:layout_constraintTop_toTopOf="@+id/timeView" />
 
-    <ToggleButton
-        android:id="@+id/toggleButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:text="ToggleButton"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="241dp" />
-
-    <ToggleButton
-        android:id="@+id/toggleButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="ToggleButton"
-        app:layout_constraintEnd_toStartOf="@+id/toggleButton3"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/toggleButton"
-        tools:layout_editor_absoluteY="241dp" />
-
-    <ToggleButton
-        android:id="@+id/toggleButton3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="8dp"
-        android:text="ToggleButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/toggleButton2"
-        tools:layout_editor_absoluteY="241dp" />
 
 </android.support.constraint.ConstraintLayout>
