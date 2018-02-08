@@ -21,17 +21,12 @@ public class ListAlarmsActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
                 setAlarm(view);
             }
         });
     }
 
     public void setAlarm(View view) {
-//        Intent intent = new Intent(this, SetAlarm.class);
-//        startActivity(intent);
-        // Tell MainActivity to switch to ListAlarmsActivity
         Intent intent = new Intent(this, SetAlarm.class);
         startActivity(intent);
     }
