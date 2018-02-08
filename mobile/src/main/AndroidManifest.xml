@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ucr.buzuka.siestazzz">
-
+    
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
@@ -19,8 +21,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".SetAlarm" />
-        <activity android:name=".SleepSessionActivity"></activity>
-        <receiver  android:name=".Mote"></receiver>
+        <activity android:name=".SleepSessionActivity" />
+
+        <receiver android:name=".Mote" />
+
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
+
     </application>
 
 </manifest>

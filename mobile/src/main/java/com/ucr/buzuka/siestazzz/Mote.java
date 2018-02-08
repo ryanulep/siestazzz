@@ -26,9 +26,6 @@ public class Mote extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         // TODO Auto-generated method stub
 
-
-
-
         Toast.makeText(context, "Alarm worked.", Toast.LENGTH_LONG).show();
         Vibrator vibe = (Vibrator)context.getSystemService(context.VIBRATOR_SERVICE);
         vibe.vibrate(10000);
