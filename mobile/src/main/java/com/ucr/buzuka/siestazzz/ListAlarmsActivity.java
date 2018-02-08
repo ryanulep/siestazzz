@@ -24,6 +24,8 @@ public class ListAlarmsActivity extends AppCompatActivity {
                 setAlarm(view);
             }
         });
+
+        // Todo: Connect setAlarm with ListAlarmsActivity.
     }
 
     public void setAlarm(View view) {
