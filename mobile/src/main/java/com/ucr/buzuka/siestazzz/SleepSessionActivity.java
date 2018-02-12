@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import com.ucr.buzuka.siestazzz.model.SensorReadout;
+
 public class SleepSessionActivity extends AppCompatActivity implements SensorEventListener {
 
     //sensor manager and accelerometer
@@ -31,6 +33,18 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sleep_session);
 
+        //new sensor read out
+        SensorReadout read =
+                new SensorReadout(null,
+                                "first",
+                                System.currentTimeMillis(),
+                                System.currentTimeMillis(),
+                                0,
+                                0,
+                                0,
+                                0);
+        TextView textView = findViewById(R.id.textView);
+        textView.setText(read.toString());
 
         //create, get, register accelerometer
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE); // get an instance of system sensor
@@ -71,9 +85,9 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
             long diffTime = curTime - lastUpdate;
             lastUpdate = curTime;
 
-            TextView textView = findViewById(R.id.textView);
-            textView.setText("x = " + x + "\n" + "y = " + y + "\n"+ "z = " + z + "\n");
-            textView.append("Speed " + Math.abs(x + y + z - last_x - last_y - last_z)/ diffTime * 1000);
+//            TextView textView = findViewById(R.id.textView);
+//            textView.setText("x = " + x + "\n" + "y = " + y + "\n"+ "z = " + z + "\n");
+//            textView.append("Speed " + Math.abs(x + y + z - last_x - last_y - last_z)/ diffTime * 1000);
 
             last_x = x;
             last_y = y;
