@@ -64,8 +64,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void SetAlarm(View view) {
-        Intent intent = new Intent(this, SetAlarm.class);
+    public void goToAlarms(View view) {
+        // Tell MainActivity to switch to ListAlarmsActivity
+        Intent intent = new Intent(this, ListAlarmsActivity.class);
         startActivity(intent);
     }
 
