@@ -4,4 +4,5 @@
     <string name="tab_text_2">Journal</string>
     <string name="tab_text_3">Trends</string>
     <string name="action_settings">Settings</string>
+    <string name="readout" />
 </resources>
