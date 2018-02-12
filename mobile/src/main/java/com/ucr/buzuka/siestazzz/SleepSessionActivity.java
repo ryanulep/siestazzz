@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class SleepSessionActivity extends AppCompatActivity implements SensorEventListener {
 
-    //set the time interval to pull from sensor, current 1000 ms
+    //set the time interval to pull from sensor, current 300 ms
     private static final int M_SENSOR_DELAY = 300;
     private static final long M_POLL_INTERVAL = 1000; // not used, but it is for displaying sensor data on app
     private static final String TAG = "SleepSessionActivity";
