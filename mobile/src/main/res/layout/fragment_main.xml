@@ -50,7 +50,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/timecontainer" />
+        app:srcCompat="@drawable/timeheader" />
 
     <TextClock
         android:id="@+id/textClock"
