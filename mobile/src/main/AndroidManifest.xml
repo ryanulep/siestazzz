@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ucr.buzuka.siestazzz">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
@@ -19,7 +20,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".SetAlarm" />
-        <activity android:name=".SleepSessionActivity"></activity>
+        <activity android:name=".SleepSessionActivity" />
+
+        <receiver android:name=".Mote" />
+
+        <activity
+            android:name=".ListAlarmsActivity"
+            android:label="@string/title_activity_list_alarms"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

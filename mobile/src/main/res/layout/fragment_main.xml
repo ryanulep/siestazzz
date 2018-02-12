@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/mainbackground">
 
+    <!-- TODO: In setAlarmButton replace "@drawable/setalarm" with "@drawable/alarms"-->
     <Button
         android:id="@+id/setAlarmButton"
         android:layout_width="wrap_content"
@@ -16,7 +17,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:background="@drawable/setalarm"
-        android:onClick="SetAlarm"
+        android:onClick="goToAlarms"
         app:layout_constraintBottom_toTopOf="@+id/sleepButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,6 +66,7 @@
         app:layout_constraintEnd_toEndOf="@+id/timeView"
         app:layout_constraintStart_toStartOf="@+id/timeView"
         app:layout_constraintTop_toTopOf="@+id/timeView" />
+
 
     <Button
         android:id="@+id/smart_alarm_button"
