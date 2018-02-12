@@ -1,12 +1,15 @@
 package com.ucr.buzuka.siestazzz.util;
 
 import android.content.Context;
+import android.os.Environment;
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.ucr.buzuka.siestazzz.model.SensorReadout;
 
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -25,7 +28,22 @@ public class JSONHelper {
         Log.i(TAG, "exportToJSON: " + jsonString);
 
         FileOutputStream fileOutputStream = null;
-        //File file = new File()
+        File file = new File(Environment.getExternalStorageDirectory(), FILE_NAME);
+
+        try {
+            fileOutputStream = new FileOutputStream(file);
+            fileOutputStream.write(jsonString.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fileOutputStream != null) {
+                try {
+                    fileOutputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
         return false;
     }
