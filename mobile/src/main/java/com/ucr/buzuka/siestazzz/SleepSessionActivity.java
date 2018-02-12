@@ -122,8 +122,10 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
 
     }
 
+//  onClick listener for going back to MainActivity to end session
     public void GoHome(View view){
 
+        // export to json file
         boolean result = JSONHelper.exportToJSON(this, sensorReadoutList);
         if(result){
             Toast.makeText(this, "Data exported", Toast.LENGTH_SHORT).show();
@@ -131,8 +133,9 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
             Toast.makeText(this, "Export failed", Toast.LENGTH_SHORT).show();
         }
 
-        //finish();
+        //finish(); //may needed for closing activity
 
+        //intent to go back to MainActivity
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
 
