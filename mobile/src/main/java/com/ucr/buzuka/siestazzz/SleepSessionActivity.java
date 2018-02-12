@@ -8,47 +8,36 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ucr.buzuka.siestazzz.model.SensorReadout;
 import com.ucr.buzuka.siestazzz.util.JSONHelper;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class SleepSessionActivity extends AppCompatActivity implements SensorEventListener {
 
+    //set the time interval to pull from sensor, current 1000 ms
+    private static final int M_SENSOR_DELAY = 300;
+    private static final long M_POLL_INTERVAL = 1000; // not used, but it is for displaying sensor data on app
+    private static final String TAG = "SleepSessionActivity";
+    //private Queue<Float> sensorLog;
+    public  ArrayList<SensorReadout> sensorReadoutList = new ArrayList<SensorReadout>();
     //sensor manager and accelerometer
     private SensorManager sensorManager;
     private Sensor sensorAccelerometer;
-
-    //set the time interval to pull from sensor, current 1000 ms
-    private static final int M_SENSOR_DELAY = 1000;
-
     //local variable for sensor data
     private long lastUpdate = 0;
-    private static final long M_POLL_INTERVAL = 1000; // not used, but it is for displaying sensor data on app
     private float last_x, last_y, last_z; //last position
-    private static final float SENSOR_THRESHOLD = 5.0f;
-    //private Queue<Float> sensorLog;
-    List<SensorReadout> sensorReadoutList;
-    List<String> readoutNames = new ArrayList<>();
-    private SensorReadout readout;
+    private float SENSOR_THRESHOLD = 0.00005f;
+    private float MAX_SPEED = Float.NEGATIVE_INFINITY;
 
 //    public static final String FILE_NAME = "readout.txt";
 //    private static FileOutputStream fileOutputStream = null;
 //    private static File file = new File(FILE_NAME);
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,19 +105,26 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
 
             /*Write to file if speed is greater than threshold
             * */
-            if (speed > SENSOR_THRESHOLD) {
-                readout = new SensorReadout(null,
-                                            "reading",
-                                            curTime,
-                                            lastUpdate,
-                                            speed,
-                                            x, y, z);
-                sensorReadoutList.add(readout);
+            if (speed > SENSOR_THRESHOLD ) {
+
+                SensorReadout sensorReadout = new SensorReadout(curTime, speed);
+                sensorReadoutList.add(sensorReadout);
+                //Log.i(TAG, "Current read out " + sensorReadoutList);
+
+                if (speed != Float.POSITIVE_INFINITY){
+                    MAX_SPEED = speed;
+                }
+
+
             }
 
             TextView textView = findViewById(R.id.textView2);
             textView.setText("x = " + x + "\n" + "y = " + y + "\n"+ "z = " + z + "\n");
-            textView.append("Speed " + speed);
+            textView.append("Current time " + curTime);
+            textView.append("\nSpeed " + speed);
+            textView.append("\nMax speed " + MAX_SPEED);
+
+            Log.i(TAG, "Array: " + sensorReadoutList);
 
             last_x = x;
             last_y = y;
@@ -144,9 +140,6 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
 
     public void GoHome(View view){
 
-        sensorManager.unregisterListener(this);
-        finish();
-
         boolean result = JSONHelper.exportToJSON(this, sensorReadoutList);
         if(result){
             Toast.makeText(this, "Data exported", Toast.LENGTH_SHORT).show();
@@ -154,9 +147,16 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
             Toast.makeText(this, "Export failed", Toast.LENGTH_SHORT).show();
         }
 
+        //finish();
+
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        sensorManager.unregisterListener(this);
+    }
 }

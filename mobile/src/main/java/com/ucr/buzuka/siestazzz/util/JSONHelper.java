@@ -10,6 +10,8 @@ import com.ucr.buzuka.siestazzz.model.SensorReadout;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -17,7 +19,7 @@ import java.util.List;
  */
 
 public class JSONHelper {
-    private static final String FILE_NAME = "readout.jsosn";
+    //private static final String FILE_NAME = "readout.jsosn";
     private static final String TAG = "JSONHelper";
 
     public static boolean exportToJSON(Context context, List<SensorReadout> sensorReadoutList){
@@ -26,9 +28,11 @@ public class JSONHelper {
         Gson gson = new Gson();
         String jsonString = gson.toJson(readoutData);
         Log.i(TAG, "exportToJSON: " + jsonString);
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+        timeStamp += ".json";
 
         FileOutputStream fileOutputStream = null;
-        File file = new File(Environment.getExternalStorageDirectory(), FILE_NAME);
+        File file = new File(Environment.getExternalStorageDirectory(), timeStamp);
 
         try {
             fileOutputStream = new FileOutputStream(file);
