@@ -67,13 +67,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
     }  // End of OnCreate
 
-    private File getFile(){
-        return new File(
-                Environment.getExternalStorageDirectory(),
-                FILE_NAME
-        );
-    }
-
     public void GoToSleep(View view) {
         Intent intent = new Intent(this, SleepSessionActivity.class);
         Toast.makeText(getApplicationContext(), "Start Sleep!", Toast.LENGTH_SHORT).show();
