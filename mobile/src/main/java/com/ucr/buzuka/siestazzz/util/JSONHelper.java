@@ -19,7 +19,7 @@ import java.util.List;
  */
 
 public class JSONHelper {
-    //private static final String FILE_NAME = "readout.jsosn";
+    //private static final String FILE_NAME = "readout.json";
     private static final String TAG = "JSONHelper";
 
     public static boolean exportToJSON(Context context, List<SensorReadout> sensorReadoutList){
@@ -32,8 +32,16 @@ public class JSONHelper {
         timeStamp += ".json";
 
         FileOutputStream fileOutputStream = null;
-        File file = new File(Environment.getExternalStorageDirectory(), timeStamp);
 
+        //create directory
+        File folder = new File(Environment.getExternalStorageDirectory(), "/Siestazzz/");
+        if (!folder.exists()) {
+            if (!folder.mkdirs()) {
+                Log.e(TAG, "Problem creating Image folder");
+            }
+        }
+
+        File file = new File(folder.toString(), timeStamp);
         try {
             fileOutputStream = new FileOutputStream(file);
             fileOutputStream.write(jsonString.getBytes());
