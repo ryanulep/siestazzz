@@ -13,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 
@@ -68,6 +69,39 @@ public class MainActivity extends AppCompatActivity {
         // Tell MainActivity to switch to ListAlarmsActivity
         Intent intent = new Intent(this, ListAlarmsActivity.class);
         startActivity(intent);
+    }
+
+    public void SmartAlarmClick(View view) {
+        final Button btn = (Button) findViewById(R.id.smart_alarm_button);
+
+        if (btn.getBackground().getConstantState() == getResources().getDrawable(R.drawable.smartalarm_disabled).getConstantState()) {
+            btn.setBackground(getDrawable(R.drawable.smartalarm_enabled));
+        }
+        else {
+            btn.setBackground(getDrawable(R.drawable.smartalarm_disabled));
+        }
+    }
+
+    public void TrackMovementClicked(View view) {
+        final Button btn = (Button) findViewById(R.id.track_movement_button);
+
+        if (btn.getBackground().getConstantState() == getResources().getDrawable(R.drawable.trackmovement_disabled).getConstantState()) {
+            btn.setBackground(getDrawable(R.drawable.trackmovement_enabled));
+        }
+        else {
+            btn.setBackground(getDrawable(R.drawable.trackmovement_disabled));
+        }
+    }
+
+    public void RecordSoundClicked(View view) {
+        final Button btn = (Button) findViewById(R.id.record_sound_button);
+
+        if (btn.getBackground().getConstantState() == getResources().getDrawable(R.drawable.recordsound_disabled).getConstantState()) {
+            btn.setBackground(getDrawable(R.drawable.recordsound_enabled));
+        }
+        else {
+            btn.setBackground(getDrawable(R.drawable.recordsound_disabled));
+        }
     }
 
     /**
