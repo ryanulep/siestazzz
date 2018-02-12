@@ -23,20 +23,23 @@
         </activity>
 
         <activity android:name=".SetAlarm"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity"/>
         </activity>
         <activity android:name=".SleepSessionActivity"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait">
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity"/>
         </activity>
 
-        <activity android:name=".SetAlarm" android:screenOrientation="portrait"/>
-        <activity android:name=".SleepSessionActivity" android:screenOrientation="portrait" />
+
+
 
         <receiver android:name=".Mote" />
 

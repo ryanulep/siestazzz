@@ -131,6 +131,8 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(this, "You must grant permission!", Toast.LENGTH_SHORT).show();
                 }
                 break;
+        }
+    }
 
     public void SmartAlarmClick(View view) {
         final Button btn = (Button) findViewById(R.id.smart_alarm_button);
