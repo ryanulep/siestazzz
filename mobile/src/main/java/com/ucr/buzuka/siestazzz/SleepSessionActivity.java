@@ -35,27 +35,10 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     private float SENSOR_THRESHOLD = 0.00005f;
     private float MAX_SPEED = Float.NEGATIVE_INFINITY;
 
-//    public static final String FILE_NAME = "readout.txt";
-//    private static FileOutputStream fileOutputStream = null;
-//    private static File file = new File(FILE_NAME);
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sleep_session);
-
-        //new sensor read out
-//        SensorReadout read =
-//                new SensorReadout(null,
-//                                "first",
-//                                System.currentTimeMillis(),
-//                                System.currentTimeMillis(),
-//                                0,
-//                                0,
-//                                0,
-//                                0);
-//        TextView textView = findViewById(R.id.textView);
-//        textView.setText(read.toString());
 
         //create, get, register accelerometer
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE); // get an instance of system sensor
@@ -101,6 +84,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
             long curTime = System.currentTimeMillis();
             long diffTime = (curTime - lastUpdate)*1000;
             lastUpdate = curTime;
+            // speed = delta V / time
             float speed = Math.abs(x + y + z - last_x - last_y - last_z)/ diffTime;
 
             /*Write to file if speed is greater than threshold
