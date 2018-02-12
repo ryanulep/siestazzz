@@ -2,7 +2,7 @@
     <string name="app_name">Siestazzz</string>
     <string name="tab_text_1">Sleep</string>
     <string name="tab_text_2">Journal</string>
-    <string name="tab_text_3">Trends</string>
+    <string name="tab_text_3">Alarms</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_settings">Settings</string>
 

@@ -6,13 +6,14 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.ucr.buzuka.siestazzz.ListAlarmsActivity"
+    android:background="@drawable/mainbackground"
     tools:showIn="@layout/activity_list_alarms">
 
     <!-- A line within the list view -->
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="?android:attr/listPreferredItemHeight"
-        android:padding="6dip">
+        android:padding="6dp">
 
         <TextView
             android:id="@+id/textView_AlarmTime"
@@ -23,7 +24,6 @@
             android:layout_marginStart="20dp"
             android:gravity="center"
             android:text="8:00 AM"
-            android:textAppearance="@android:style/TextAppearance.Material.Display1"
             tools:layout_editor_absoluteX="33dp"
             tools:layout_editor_absoluteY="32dp" />
 
@@ -37,7 +37,5 @@
             tools:layout_editor_absoluteX="296dp"
             tools:layout_editor_absoluteY="6dp" />
 
-
     </RelativeLayout>
-
 </android.support.constraint.ConstraintLayout>

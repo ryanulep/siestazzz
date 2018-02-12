@@ -65,9 +65,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToAlarms(View view) {
+    public void SetAlarm(View view) {
         // Tell MainActivity to switch to ListAlarmsActivity
-        Intent intent = new Intent(this, ListAlarmsActivity.class);
+        Intent intent = new Intent(this, SetAlarm.class);
         startActivity(intent);
     }
 
@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                     return new ViewPagerFragment_Journal();
                 case 2 :
-                    return new ViewPagerFragment_Trends();
+                    return new ViewPagerFragment_Alarms();
 
                 //Later Case 3 may be added to display app info.
 //                case 3:
