@@ -7,6 +7,8 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,13 +18,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class SleepSessionActivity extends AppCompatActivity implements SensorEventListener {
 
     //sensor manager and accelerometer
     private SensorManager sensorManager;
     private Sensor sensorAccelerometer;
-    private int idInc = 0;
 
     //set the time interval to pull from sensor, current 500 ms
     private static final int M_SENSOR_DELAY = 500;
@@ -33,11 +37,14 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     private float last_x, last_y, last_z; //last position
     private static final float SENSOR_THRESHOLD = 5.0f;
     //private Queue<Float> sensorLog;
+    List<SensorReadout> sensorReadoutList;
+    List<String> readoutNames = new ArrayList<>();
+    private SensorReadout readout;
 
-    public static final String FILE_NAME = "readout.txt";
-    private static FileOutputStream fileOutputStream = null;
-    private static File file = new File(FILE_NAME);
-    private static SensorReadout readout;
+//    public static final String FILE_NAME = "readout.txt";
+//    private static FileOutputStream fileOutputStream = null;
+//    private static File file = new File(FILE_NAME);
+
 
 
     @Override
@@ -62,6 +69,8 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE); // get an instance of system sensor
         sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER); // get accelerometer
         sensorManager.registerListener(this, sensorAccelerometer, M_SENSOR_DELAY);
+
+
 
     }
 
@@ -107,37 +116,13 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
                                             lastUpdate,
                                             speed,
                                             x, y, z);
-                String string = readout.toString();
-                if (!file.exists()){
-                    try {
-                        file.createNewFile();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                sensorReadoutList.add(readout);
+                for (SensorReadout sensorReadout: sensorReadoutList){
+                    readoutNames.add(String.valueOf(sensorReadout.getSpeed()));
                 }
-
-                try {
-                    fileOutputStream = openFileOutput(FILE_NAME, MODE_APPEND);
-                    fileOutputStream.write(string.getBytes());
-
-                    //Debug, it is writing to file
-                    Toast.makeText(this, "File written:" + FILE_NAME, Toast.LENGTH_SHORT).show();
-
-
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Toast.makeText(this, "Exception: " + e.getMessage(),
-                            Toast.LENGTH_SHORT).show();
-                }finally {
-                    try {
-                        fileOutputStream.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
+                Collections.sort(readoutNames);
             }
+
 
 
             TextView textView = findViewById(R.id.textView);
