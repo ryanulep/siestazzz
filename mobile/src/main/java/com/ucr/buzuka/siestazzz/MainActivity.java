@@ -17,6 +17,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.io.File;
@@ -74,9 +75,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void SetAlarm(View view) {
+        // Tell MainActivity to switch to ListAlarmsActivity
         Intent intent = new Intent(this, SetAlarm.class);
         startActivity(intent);
     }
+
 
     /* Checks if external storage is available for read and write */
     public boolean isExternalStorageWritable() {
@@ -128,6 +131,38 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(this, "You must grant permission!", Toast.LENGTH_SHORT).show();
                 }
                 break;
+
+    public void SmartAlarmClick(View view) {
+        final Button btn = (Button) findViewById(R.id.smart_alarm_button);
+
+        if (btn.getBackground().getConstantState() == getResources().getDrawable(R.drawable.smartalarm_disabled).getConstantState()) {
+            btn.setBackground(getDrawable(R.drawable.smartalarm_enabled));
+        }
+        else {
+            btn.setBackground(getDrawable(R.drawable.smartalarm_disabled));
+        }
+    }
+
+    public void TrackMovementClicked(View view) {
+        final Button btn = (Button) findViewById(R.id.track_movement_button);
+
+        if (btn.getBackground().getConstantState() == getResources().getDrawable(R.drawable.trackmovement_disabled).getConstantState()) {
+            btn.setBackground(getDrawable(R.drawable.trackmovement_enabled));
+        }
+        else {
+            btn.setBackground(getDrawable(R.drawable.trackmovement_disabled));
+        }
+    }
+
+    public void RecordSoundClicked(View view) {
+        final Button btn = (Button) findViewById(R.id.record_sound_button);
+
+        if (btn.getBackground().getConstantState() == getResources().getDrawable(R.drawable.recordsound_disabled).getConstantState()) {
+            btn.setBackground(getDrawable(R.drawable.recordsound_enabled));
+        }
+        else {
+            btn.setBackground(getDrawable(R.drawable.recordsound_disabled));
+
         }
     }
 
@@ -196,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                     return new ViewPagerFragment_Journal();
                 case 2 :
-                    return new ViewPagerFragment_Trends();
+                    return new ViewPagerFragment_Alarms();
 
                 //Later Case 3 may be added to display app info.
 //                case 3:
