@@ -8,7 +8,8 @@ package com.ucr.buzuka.siestazzz.model;
 public class SensorReadout {
     private long current_Time;
     private float speed;
-
+    
+//  Constructors
     public SensorReadout() {
     }
 
@@ -16,7 +17,8 @@ public class SensorReadout {
         this.current_Time = curTime;
         this.speed = speed;
     }
-
+    
+//  Setters and getters
     public long getCurTime() {
         return current_Time;
     }
@@ -33,7 +35,7 @@ public class SensorReadout {
         this.speed = speed;
     }
 
-
+//  convert all object in data container to a single string
     @Override
     public String toString() {
         return "SensorReadout{" +
