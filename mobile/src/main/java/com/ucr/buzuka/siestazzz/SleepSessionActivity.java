@@ -1,18 +1,21 @@
 package com.ucr.buzuka.siestazzz;
 
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ucr.buzuka.siestazzz.model.SensorReadout;
+import com.ucr.buzuka.siestazzz.util.JSONHelper;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -28,8 +31,8 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     private SensorManager sensorManager;
     private Sensor sensorAccelerometer;
 
-    //set the time interval to pull from sensor, current 500 ms
-    private static final int M_SENSOR_DELAY = 500;
+    //set the time interval to pull from sensor, current 1000 ms
+    private static final int M_SENSOR_DELAY = 1000;
 
     //local variable for sensor data
     private long lastUpdate = 0;
@@ -90,6 +93,10 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         sensorManager.registerListener(this, sensorAccelerometer, M_SENSOR_DELAY);
     }
 
+    protected void onStop(){
+        super.onStop();
+        sensorManager.unregisterListener(this);
+    }
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
@@ -117,15 +124,9 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
                                             speed,
                                             x, y, z);
                 sensorReadoutList.add(readout);
-                for (SensorReadout sensorReadout: sensorReadoutList){
-                    readoutNames.add(String.valueOf(sensorReadout.getSpeed()));
-                }
-                Collections.sort(readoutNames);
             }
 
-
-
-            TextView textView = findViewById(R.id.textView);
+            TextView textView = findViewById(R.id.textView2);
             textView.setText("x = " + x + "\n" + "y = " + y + "\n"+ "z = " + z + "\n");
             textView.append("Speed " + speed);
 
@@ -141,5 +142,21 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
 
     }
 
+    public void GoHome(View view){
+
+        sensorManager.unregisterListener(this);
+        finish();
+
+        boolean result = JSONHelper.exportToJSON(this, sensorReadoutList);
+        if(result){
+            Toast.makeText(this, "Data exported", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(this, "Export failed", Toast.LENGTH_SHORT).show();
+        }
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+
+    }
 
 }

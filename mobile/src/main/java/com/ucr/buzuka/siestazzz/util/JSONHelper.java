@@ -39,6 +39,7 @@ public class JSONHelper {
             if (fileOutputStream != null) {
                 try {
                     fileOutputStream.close();
+                    return true;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
