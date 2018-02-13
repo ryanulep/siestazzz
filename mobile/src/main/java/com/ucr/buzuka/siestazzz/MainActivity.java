@@ -20,13 +20,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.io.File;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_PERMISSION_WRITE = 1;
-    private static final String FILE_NAME = "readout.txt";
+    //private static final String FILE_NAME = "readout.txt";
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -131,6 +130,8 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(this, "You must grant permission!", Toast.LENGTH_SHORT).show();
                 }
                 break;
+        }
+    }
 
     public void SmartAlarmClick(View view) {
         final Button btn = (Button) findViewById(R.id.smart_alarm_button);
