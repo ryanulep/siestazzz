@@ -9,6 +9,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 
@@ -33,7 +36,6 @@ public class Mote extends BroadcastReceiver {
 
 
     public void onReceive(Context context, Intent intent) {
-
 
 
 
@@ -74,16 +76,17 @@ public class Mote extends BroadcastReceiver {
         Toast.makeText(context, "Alarm worked.", Toast.LENGTH_LONG).show();
 
         Vibrator vibe = (Vibrator)context.getSystemService(context.VIBRATOR_SERVICE);
-        //Snooze(view);
+
         vibe.vibrate(10000);
 
 
         Log.v(TAG, "Initializing sounds...");
 
-        //MediaPlayer mp = MediaPlayer.create(context., R.raw.Alien_AlarmDrum_KevanGC_893953959);
+       // MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.sound_file_1);
+        //mediaPlayer.start();
 
         Log.v(TAG, "Playing sound...");
-        //mp.start();
+
 
 
         Log.w("myApp", "Alarm at");
@@ -92,9 +95,6 @@ public class Mote extends BroadcastReceiver {
 
     }
 
-//    public void Snooze(View view) {
-//        Intent intent = new Intent(Mote.this, Snooze.class);
-//    }
 
 
 
