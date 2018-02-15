@@ -27,7 +27,8 @@
         <activity
             android:name=".ListAlarmsActivity"
             android:label="@string/title_activity_list_alarms"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".Snooze"></activity>
     </application>
 
 </manifest>

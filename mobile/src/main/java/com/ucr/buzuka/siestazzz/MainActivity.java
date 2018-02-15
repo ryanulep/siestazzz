@@ -1,6 +1,7 @@
 package com.ucr.buzuka.siestazzz;
 
 
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -13,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.View;
+import android.widget.RemoteViews;
 import android.widget.Toast;
 
 
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);                           // Unclear about what this does.
 
@@ -54,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+
+        NotificationManager note = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        RemoteViews remoteViews = new RemoteViews(getPackageName(),R.layout.notification);
     }  // End of OnCreate
 
 

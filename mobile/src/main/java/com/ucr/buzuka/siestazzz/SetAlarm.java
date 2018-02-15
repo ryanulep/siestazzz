@@ -5,13 +5,14 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TimePicker;
+import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.Calendar;
 
 public class SetAlarm extends AppCompatActivity {
@@ -23,8 +24,15 @@ public class SetAlarm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_alarm);
 
+
+
         Button cancelButton = (Button) findViewById(R.id.cancelButton);
         Button setButton = (Button) findViewById(R.id.setAlarm);
+
+
+
+
+        final TextView alarmDisplay =  findViewById(R.id.textView_AlarmTime);
         final TimePicker timerClock = (TimePicker) findViewById(R.id.timePicker);
 
         final Calendar cal=Calendar.getInstance();
@@ -49,13 +57,16 @@ public class SetAlarm extends AppCompatActivity {
 
                 cal.set(Calendar.MONTH,1);
                 cal.set(Calendar.YEAR,2018);
-                cal.set(Calendar.DAY_OF_MONTH,7);
+                cal.set(Calendar.DAY_OF_MONTH,cal.get(Calendar.DAY_OF_MONTH));
                 cal.set(Calendar.HOUR_OF_DAY,hour);
                 cal.set(Calendar.MINUTE,minute);
                 cal.set(Calendar.SECOND,0);
                 Log.w("myApp", "Alarm");
 
+
+
                 alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),pendingIntent);
+
                 finish();
             }
         });
