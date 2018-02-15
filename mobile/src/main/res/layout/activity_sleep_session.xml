@@ -4,19 +4,33 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-tools:context="com.ucr.buzuka.siestazzz.SetAlarm"
-android:background="@drawable/mainbackground">
+android:background="@drawable/mainbackground"
+tools:context="com.ucr.buzuka.siestazzz.SleepSessionActivity">
+
+    <Button
+        android:id="@+id/stopSession"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/stopsessionbutton"
+        android:onClick="GoHome"
+        app:layout_constraintBottom_toBottomOf="@id/textView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.499"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="183dp"
-        android:layout_height="147dp"
-        android:layout_marginBottom="348dp"
+        android:id="@+id/textView2"
+        android:layout_width="215dp"
+        android:layout_height="196dp"
+        android:layout_marginBottom="36dp"
         android:text="TextView"
-        android:textAlignment="textStart"
-        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>

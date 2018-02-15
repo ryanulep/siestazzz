@@ -1,25 +1,31 @@
 package com.ucr.buzuka.siestazzz;
 
 
-import android.app.NotificationManager;
+import android.Manifest;
 import android.content.Intent;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-
-import android.support.v7.widget.Toolbar;
-
+import android.os.Environment;
+import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.RemoteViews;
+import android.widget.Button;
 import android.widget.Toast;
+
 
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int REQUEST_PERMISSION_WRITE = 1;
+    //private static final String FILE_NAME = "readout.txt";
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -34,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private boolean permissionGranted;
 
 
     @Override
@@ -41,9 +48,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        checkPermissions();
 
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);                           // Unclear about what this does.
 
         // Create the adapter that will return a fragment for each of the three
@@ -51,19 +58,14 @@ public class MainActivity extends AppCompatActivity {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = findViewById(R.id.tabs);
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
-
-        NotificationManager note = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        RemoteViews remoteViews = new RemoteViews(getPackageName(),R.layout.notification);
     }  // End of OnCreate
-
-
 
     public void GoToSleep(View view) {
         Intent intent = new Intent(this, SleepSessionActivity.class);
@@ -71,10 +73,98 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToAlarms(View view) {
+    public void SetAlarm(View view) {
         // Tell MainActivity to switch to ListAlarmsActivity
-        Intent intent = new Intent(this, ListAlarmsActivity.class);
+        Intent intent = new Intent(this, SetAlarm.class);
         startActivity(intent);
+    }
+
+
+    /* Checks if external storage is available for read and write */
+    public boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        return Environment.MEDIA_MOUNTED.equals(state);
+    }
+
+    /* Checks if external storage is available to at least read */
+    public boolean isExternalStorageReadable() {
+        String state = Environment.getExternalStorageState();
+        return (Environment.MEDIA_MOUNTED.equals(state) ||
+                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state));
+    }
+
+    // Initiate request for permissions.
+    private boolean checkPermissions() {
+
+        if (!isExternalStorageReadable() || !isExternalStorageWritable()) {
+            Toast.makeText(this, "This app only works on devices with usable external storage",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        int permissionCheck = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    REQUEST_PERMISSION_WRITE);
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    // Handle permissions result
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[],
+                                           @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_PERMISSION_WRITE:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    permissionGranted = true;
+                    Toast.makeText(this, "External storage permission granted",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "You must grant permission!", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+    }
+
+    public void SmartAlarmClick(View view) {
+        final Button btn = (Button) findViewById(R.id.smart_alarm_button);
+
+        if (btn.getBackground().getConstantState() == getResources().getDrawable(R.drawable.smartalarm_disabled).getConstantState()) {
+            btn.setBackground(getDrawable(R.drawable.smartalarm_enabled));
+        }
+        else {
+            btn.setBackground(getDrawable(R.drawable.smartalarm_disabled));
+        }
+    }
+
+    public void TrackMovementClicked(View view) {
+        final Button btn = (Button) findViewById(R.id.track_movement_button);
+
+        if (btn.getBackground().getConstantState() == getResources().getDrawable(R.drawable.trackmovement_disabled).getConstantState()) {
+            btn.setBackground(getDrawable(R.drawable.trackmovement_enabled));
+        }
+        else {
+            btn.setBackground(getDrawable(R.drawable.trackmovement_disabled));
+        }
+    }
+
+    public void RecordSoundClicked(View view) {
+        final Button btn = (Button) findViewById(R.id.record_sound_button);
+
+        if (btn.getBackground().getConstantState() == getResources().getDrawable(R.drawable.recordsound_disabled).getConstantState()) {
+            btn.setBackground(getDrawable(R.drawable.recordsound_enabled));
+        }
+        else {
+            btn.setBackground(getDrawable(R.drawable.recordsound_disabled));
+
+        }
     }
 
     /**
@@ -142,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                     return new ViewPagerFragment_Journal();
                 case 2 :
-                    return new ViewPagerFragment_Trends();
+                    return new ViewPagerFragment_Alarms();
 
                 //Later Case 3 may be added to display app info.
 //                case 3:
