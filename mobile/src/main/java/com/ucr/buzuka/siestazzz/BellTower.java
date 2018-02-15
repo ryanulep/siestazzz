@@ -5,9 +5,9 @@ import android.content.Context;
 /**
  * Created by Rick Boshae on 2/14/2018.
  *
- * AlarmKeeper maintains a list of alarms created by the user.
+ * BellTower maintains a list of alarms created by the user.
  *
- * AlarmKeeper follows the Singleton data pattern. This ensures that only a single list of alarms
+ * BellTower follows the Singleton data pattern. This ensures that only a single list of alarms
  * can be accessed across.
  */
 
