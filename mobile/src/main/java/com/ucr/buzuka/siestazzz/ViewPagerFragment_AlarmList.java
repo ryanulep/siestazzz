@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
@@ -48,10 +50,35 @@ public class ViewPagerFragment_AlarmList extends Fragment {
 
     // Implementing a ViewHolder and an Adapter
     // The ViewHolder Part
-    private class AlarmHolder extends RecyclerView.ViewHolder {
+    private class AlarmHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        // Private variable used to bind to list_item_alarm
+        private Alarm mAlarm;
+
+        // TODO: Personalize list_items_alarm
+        private TextView mTitleTextView;
+        private TextView mInfoTextView;
+
         // In AlarmHolder constructor inflate list_item_alarm. Immediately pass it into super(...)
         public AlarmHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_alarm, parent, false));
+            //Set onCLickListener as the holder
+            itemView.setOnClickListener(this);
+
+            mTitleTextView = (TextView) itemView.findViewById(R.id.alarm_title);
+            mInfoTextView = (TextView) itemView.findViewById(R.id.alarm_info);
+        }
+
+        // bind is used to attach personal information to each list_item_alarm.
+        public void bind(Alarm alarm) {
+            mAlarm = alarm;
+            mTitleTextView.setText(mAlarm.getTitle());
+            mInfoTextView.setText(mAlarm.getDate().toString());
+        }
+
+        @Override
+        public void onClick(View view) {
+            Toast.makeText(getActivity(), mAlarm.getTitle() + " pressed!",Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -74,11 +101,17 @@ public class ViewPagerFragment_AlarmList extends Fragment {
         @Override
         public void onBindViewHolder(AlarmHolder holder, int position) {
 
+            //Call bind on alarm to personalize the list_item_alarm
+            Alarm alarm = mAlarms.get(position);
+            holder.bind(alarm);
+
         }
 
         @Override
         public int getItemCount() {
             return mAlarms.size();
         }
+
+
     }
 }
