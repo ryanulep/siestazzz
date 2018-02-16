@@ -32,7 +32,7 @@ public class SetAlarm extends AppCompatActivity {
 
 
 
-        final TextView alarmDisplay =  findViewById(R.id.textView_AlarmTime);
+       // final TextView alarmDisplay =  findViewById(R.id.textView_AlarmTime);
         final TimePicker timerClock = (TimePicker) findViewById(R.id.timePicker);
 
         final Calendar cal=Calendar.getInstance();
