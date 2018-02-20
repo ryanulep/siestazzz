@@ -20,7 +20,7 @@ public class JournalEntry {
     private Date mDate;
     private Date mSleepTime;
     private Date mWakeTime;
-    private int mHoursSlept;
+    private int mHoursSlept; // SleepDebt represents the difference between how many hours the user was actually asleep vs. how many hours the user should have slept.
     private int mSleepDebt;
     private int desiredHoursOfSleep;
 
@@ -39,11 +39,12 @@ public class JournalEntry {
     }
 
     public int getHoursSlept() {
-
         long sleepDiff = Math.abs(mWakeTime.getTime() - mSleepTime.getTime())/(1000*60*60);
-        return (int)sleepDiff;
+        mHoursSlept = (int)sleepDiff;
+        return mHoursSlept;
     }
 
+    // SleepDebt represents the difference between how many hours the user was actually asleep vs. how many hours the user should have slept.
     public int getSleepDebt() {
 
         mSleepDebt = desiredHoursOfSleep - getHoursSlept();
