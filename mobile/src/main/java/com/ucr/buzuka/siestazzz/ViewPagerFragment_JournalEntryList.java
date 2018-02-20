@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class ViewPagerFragment_JournalEntryList extends Fragment {
     }
 
     // View Holder
-    private class JournalEntryHolder extends RecyclerView.ViewHolder {
+    private class JournalEntryHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private JournalEntry mJournalEntry;
 
@@ -62,12 +63,19 @@ public class ViewPagerFragment_JournalEntryList extends Fragment {
         public JournalEntryHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_joural_entry, parent, false));
 
+            itemView.setOnClickListener(this);
+
             mJournalEntryDateTextView = (TextView) itemView.findViewById(R.id.journal_entry_date);
             mJournalEntrySleepTextView = (TextView) itemView.findViewById(R.id.journal_entry_sleep);
             mJournalEntryWakeTextView = (TextView) itemView.findViewById(R.id.journal_entry_wake);
             mJournalEntryHoursSleptTextView = (TextView) itemView.findViewById(R.id.journal_entry_hours_slept);
             mJournalEntryDebtTextView = (TextView) itemView.findViewById(R.id.journal_entry_hours_in_debt);
 
+        }
+
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(getActivity(),mJournalEntry.getTitle() + " clicked!", Toast.LENGTH_SHORT).show();
         }
 
         public void bind (JournalEntry journalEntry) {

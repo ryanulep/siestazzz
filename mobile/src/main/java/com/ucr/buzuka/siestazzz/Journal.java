@@ -26,6 +26,7 @@ public class Journal {
         mJournalEntries = new ArrayList<>();
         for (int i = 0; i < 14; i++) {
             JournalEntry journalEntry = new JournalEntry();
+            journalEntry.setTitle("Journal Entry #" + i);
             mJournalEntries.add(journalEntry);
         }
     }
