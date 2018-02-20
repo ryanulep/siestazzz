@@ -8,6 +8,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
+import javax.xml.datatype.Duration;
+
 /**
  * Created by Rick Boshae on 2/18/18.
  */
@@ -38,24 +40,19 @@ public class JournalEntry {
 
     public int getHoursSlept() {
 
-        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-
-
-
-        long sleepDiff = Math.abs(mWakeTime.getTime() - mSleepTime.getTime());
-        mHoursSlept = (int) (sleepDiff / (60 * 60 * 1000));
-        return mHoursSlept;
+        long sleepDiff = Math.abs(mWakeTime.getTime() - mSleepTime.getTime())/(1000*60*60);
+        return (int)sleepDiff;
     }
 
     public int getSleepDebt() {
 
-        mSleepDebt = desiredHoursOfSleep - getHoursSlept();;
+        mSleepDebt = desiredHoursOfSleep - getHoursSlept();
         return mSleepDebt;
     }
 
     public String getWakeTime() {
 
-        DateFormat df = new SimpleDateFormat("KK:mm a");
+        DateFormat df = new SimpleDateFormat("h:mm a");
         String fWakeTime = df.format(mWakeTime);
 
         return fWakeTime;
@@ -69,7 +66,7 @@ public class JournalEntry {
 
     public String getSleepTime() {
 
-        DateFormat df = new SimpleDateFormat("KK:mm a");
+        DateFormat df = new SimpleDateFormat("h:mm a");
         String fSleepTime = df.format(mSleepTime);
 
         return fSleepTime;

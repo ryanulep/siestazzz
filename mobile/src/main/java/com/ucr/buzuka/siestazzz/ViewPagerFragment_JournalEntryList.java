@@ -54,7 +54,7 @@ public class ViewPagerFragment_JournalEntryList extends Fragment {
         private TextView mJournalEntryDateTextView;
         private TextView mJournalEntrySleepTextView;
         private TextView mJournalEntryWakeTextView;
-        private TextView mJournalEntryHoursTextView;
+        private TextView mJournalEntryHoursSleptTextView;
         private TextView mJournalEntryDebtTextView;
 
 
@@ -65,8 +65,9 @@ public class ViewPagerFragment_JournalEntryList extends Fragment {
             mJournalEntryDateTextView = (TextView) itemView.findViewById(R.id.journal_entry_date);
             mJournalEntrySleepTextView = (TextView) itemView.findViewById(R.id.journal_entry_sleep);
             mJournalEntryWakeTextView = (TextView) itemView.findViewById(R.id.journal_entry_wake);
-            mJournalEntryHoursTextView = (TextView) itemView.findViewById(R.id.journal_entry_hours);
-            mJournalEntryDebtTextView = (TextView) itemView.findViewById(R.id.journal_entry_debt);
+            mJournalEntryHoursSleptTextView = (TextView) itemView.findViewById(R.id.journal_entry_hours_slept);
+            mJournalEntryDebtTextView = (TextView) itemView.findViewById(R.id.journal_entry_hours_in_debt);
+
         }
 
         public void bind (JournalEntry journalEntry) {
@@ -75,8 +76,8 @@ public class ViewPagerFragment_JournalEntryList extends Fragment {
             mJournalEntryDateTextView.setText(mJournalEntry.getDateMonthAndDay());
             mJournalEntrySleepTextView.setText(mJournalEntry.getSleepTime());
             mJournalEntryWakeTextView.setText(mJournalEntry.getWakeTime());
-            mJournalEntryHoursTextView.setText(mJournalEntry.getHoursSlept());
-            mJournalEntryDebtTextView.setText(mJournalEntry.getSleepDebt());
+            mJournalEntryHoursSleptTextView.setText(String.valueOf(mJournalEntry.getHoursSlept())); // if a method returns int you must cast to string
+            mJournalEntryDebtTextView.setText(String.valueOf(mJournalEntry.getSleepDebt()));
 
             return;
 
