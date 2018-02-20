@@ -1,5 +1,10 @@
 package com.ucr.buzuka.siestazzz;
 
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Month;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
@@ -8,12 +13,75 @@ import java.util.UUID;
  */
 
 public class JournalEntry {
-    private UUID id;
+    private UUID mId;
     private String mTitle;
     private Date mDate;
+    private Date mSleepTime;
+    private Date mWakeTime;
+    private int mHoursSlept;
+    private int mSleepDebt;
+    private int desiredHoursOfSleep;
+
+    public JournalEntry() {
+        mDate = new Date();
+        mId = UUID.randomUUID();
+        mSleepTime = mDate;
+        desiredHoursOfSleep = 8;
+
+        // Some code I found to do Time math.
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(mSleepTime);
+        calendar.add(Calendar.HOUR, 8);
+
+        mWakeTime = calendar.getTime();
+    }
+
+    public int getHoursSlept() {
+
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+
+
+
+        long sleepDiff = Math.abs(mWakeTime.getTime() - mSleepTime.getTime());
+        mHoursSlept = (int) (sleepDiff / (60 * 60 * 1000));
+        return mHoursSlept;
+    }
+
+    public int getSleepDebt() {
+
+        mSleepDebt = desiredHoursOfSleep - getHoursSlept();;
+        return mSleepDebt;
+    }
+
+    public String getWakeTime() {
+
+        DateFormat df = new SimpleDateFormat("KK:mm a");
+        String fWakeTime = df.format(mWakeTime);
+
+        return fWakeTime;
+    }
+
+    public void setWake(Time wakeTime) {
+        this.mWakeTime = wakeTime;
+    }
+
+
+
+    public String getSleepTime() {
+
+        DateFormat df = new SimpleDateFormat("KK:mm a");
+        String fSleepTime = df.format(mSleepTime);
+
+        return fSleepTime;
+    }
+
+    public void setSleepTime(Time sleepTime) {
+        this.mSleepTime = sleepTime;
+    }
+
 
     public UUID getId() {
-        return id;
+        return mId;
     }
 
     public String getTitle() {
@@ -26,6 +94,14 @@ public class JournalEntry {
 
     public Date getDate() {
         return mDate;
+    }
+
+    public String getDateMonthAndDay() {
+
+        DateFormat df = new SimpleDateFormat("M/d");
+        String fDate = df.format(mDate);
+
+        return fDate;
     }
 
     public void setDate(Date date) {

@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -47,11 +48,40 @@ public class ViewPagerFragment_JournalEntryList extends Fragment {
 
     // View Holder
     private class JournalEntryHolder extends RecyclerView.ViewHolder {
+
+        private JournalEntry mJournalEntry;
+
+        private TextView mJournalEntryDateTextView;
+        private TextView mJournalEntrySleepTextView;
+        private TextView mJournalEntryWakeTextView;
+        private TextView mJournalEntryHoursTextView;
+        private TextView mJournalEntryDebtTextView;
+
+
         // Inflate the list item and immediately pass it to the super ViewHolders constructor.
         public JournalEntryHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_joural_entry, parent, false));
+
+            mJournalEntryDateTextView = (TextView) itemView.findViewById(R.id.journal_entry_date);
+            mJournalEntrySleepTextView = (TextView) itemView.findViewById(R.id.journal_entry_sleep);
+            mJournalEntryWakeTextView = (TextView) itemView.findViewById(R.id.journal_entry_wake);
+            mJournalEntryHoursTextView = (TextView) itemView.findViewById(R.id.journal_entry_hours);
+            mJournalEntryDebtTextView = (TextView) itemView.findViewById(R.id.journal_entry_debt);
         }
-    }
+
+        public void bind (JournalEntry journalEntry) {
+
+            mJournalEntry = journalEntry;
+            mJournalEntryDateTextView.setText(mJournalEntry.getDateMonthAndDay());
+            mJournalEntrySleepTextView.setText(mJournalEntry.getSleepTime());
+            mJournalEntryWakeTextView.setText(mJournalEntry.getWakeTime());
+            mJournalEntryHoursTextView.setText(mJournalEntry.getHoursSlept());
+            mJournalEntryDebtTextView.setText(mJournalEntry.getSleepDebt());
+
+            return;
+
+        }
+    } // End of JournalEntryHolder
 
     // View Adapter
     private class JournalEntryAdapter extends RecyclerView.Adapter<JournalEntryHolder> {
@@ -71,6 +101,9 @@ public class ViewPagerFragment_JournalEntryList extends Fragment {
 
         @Override
         public void onBindViewHolder(JournalEntryHolder holder, int position) {
+
+            JournalEntry journalEntry = mJournalEntries.get(position);
+            holder.bind(journalEntry);
 
         }
 
