@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
                 case 0:
                     return new ViewPagerFragment_Main();
                 case 1:
-                    return new ViewPagerFragment_Journal();
+                    return new ViewPagerFragment_JournalEntryList();
                 case 2 :
                     return new ViewPagerFragment_AlarmList();
 
