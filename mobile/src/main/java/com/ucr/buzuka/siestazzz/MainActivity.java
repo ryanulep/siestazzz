@@ -20,13 +20,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.io.File;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_PERMISSION_WRITE = 1;
-    private static final String FILE_NAME = "readout.txt";
+    //private static final String FILE_NAME = "readout.txt";
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -231,9 +230,9 @@ public class MainActivity extends AppCompatActivity {
                 case 0:
                     return new ViewPagerFragment_Main();
                 case 1:
-                    return new ViewPagerFragment_Journal();
+                    return new ViewPagerFragment_JournalEntryList();
                 case 2 :
-                    return new ViewPagerFragment_Alarms();
+                    return new ViewPagerFragment_AlarmList();
 
                 //Later Case 3 may be added to display app info.
 //                case 3:
