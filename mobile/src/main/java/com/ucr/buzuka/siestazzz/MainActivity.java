@@ -232,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                     return new ViewPagerFragment_Journal();
                 case 2 :
-                    return new ViewPagerFragment_Alarms();
+                    return new ViewPagerFragment_AlarmList();
 
                 //Later Case 3 may be added to display app info.
 //                case 3:
