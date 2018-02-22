@@ -17,12 +17,13 @@ import com.ucr.buzuka.siestazzz.model.SensorReadout;
 import com.ucr.buzuka.siestazzz.util.JSONHelper;
 
 import java.util.ArrayList;
+import java.util.IllegalFormatCodePointException;
 
 public class SleepSessionActivity extends AppCompatActivity implements SensorEventListener {
 
     //set the time interval to pull from sensor, current 300 ms
     private static final int M_SENSOR_DELAY = 300;
-    private static final long M_POLL_INTERVAL = 1000; // not used, but it is for displaying sensor data on app
+    private static int STORAGE_LIMITER = 100;
     private static final String TAG = "SleepSessionActivity";
     //private Queue<Float> sensorLog;
     public  ArrayList<SensorReadout> sensorReadoutList = new ArrayList<SensorReadout>();
@@ -89,18 +90,20 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
 
             /*Write to file if speed is greater than threshold
             * */
-            if (speed > SENSOR_THRESHOLD ) {
+            if (STORAGE_LIMITER == 0) {
+                if (speed > SENSOR_THRESHOLD) {
 
-                SensorReadout sensorReadout = new SensorReadout(curTime, speed);
-                sensorReadoutList.add(sensorReadout);
-                //Log.i(TAG, "Current read out " + sensorReadoutList);
+                    SensorReadout sensorReadout = new SensorReadout(curTime, speed);
+                    sensorReadoutList.add(sensorReadout);
+                    //Log.i(TAG, "Current read out " + sensorReadoutList);
 
-                if (speed != Float.POSITIVE_INFINITY){
-                    MAX_SPEED = speed;
+                    if (speed != Float.POSITIVE_INFINITY) {
+                        MAX_SPEED = speed;
+                    }
                 }
-
-
+                STORAGE_LIMITER = 100;
             }
+            STORAGE_LIMITER--;
 
             TextView textView = findViewById(R.id.textView2);
             textView.setText("x = " + x + "\n" + "y = " + y + "\n"+ "z = " + z + "\n");
