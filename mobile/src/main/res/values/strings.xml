@@ -13,6 +13,11 @@
     <string name="journal_title_hint">Enter a tite for the journal.</string>
     <string name="journal_title_label">Title</string>
     <string name="journal_details_label">Details</string>
+    <string name="journal_date_label">May 21</string>
+    <string name="journal_sleep_duration_label">Sleep Duration:</string>
+    <string name="journal_sleep_time_label">Sleep Time:</string>
+    <string name="journal_wake_time_label">Wake Time:</string>
+    <string name="journal_note_label">Note:</string>
 
 
     <!-- Strings related to Settings -->

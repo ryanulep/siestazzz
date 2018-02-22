@@ -23,7 +23,8 @@ public class JournalEntryFragment extends Fragment {
     private static final String ARG_JOURNAL_ENTRY_ID = "journal_entry_id"; // Used to attach the arguments bundle to a fragment.
 
     private JournalEntry mJournalEntry;
-    private EditText mTitleField;
+    // private EditText mTitleField;
+    private TextView mDateField;
 
     /**
      * Notes on public static JournalEntryFragment newInstance(UUID journalEntryId):
@@ -61,25 +62,31 @@ public class JournalEntryFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_journal_detailed, container, false);
+        View view = inflater.inflate(R.layout.fragment_journal_entry, container, false);
 
-        mTitleField = (EditText) view.findViewById(R.id.journal_entry_title);
-        mTitleField.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // This space intentionally left blank.
-            }
+        mDateField = (TextView) view.findViewById(R.id.journal_entry_date);
+        // mDateField.setText(mJournalEntry.getDateMonthAndDay());
+        mDateField.setText(mJournalEntry.getDateMonthAndDay());
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mJournalEntry.setTitle(s.toString());
-            }
+        // TODO: Wire up the rest of the UI
 
-            @Override
-            public void afterTextChanged(Editable s) {
-                // This one too.
-            }
-        });
+//        mTitleField = (EditText) view.findViewById(R.id.journal_entry_title);
+//        mTitleField.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//                // This space intentionally left blank.
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                mJournalEntry.setTitle(s.toString());
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                // This one too.
+//            }
+//        });
 
         return view;
     }
