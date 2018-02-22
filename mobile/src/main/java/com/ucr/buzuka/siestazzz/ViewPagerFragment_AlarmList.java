@@ -1,5 +1,6 @@
 package com.ucr.buzuka.siestazzz;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -78,7 +79,8 @@ public class ViewPagerFragment_AlarmList extends Fragment {
 
         @Override
         public void onClick(View view) {
-            Toast.makeText(getActivity(), mAlarm.getTitle() + " pressed!",Toast.LENGTH_SHORT).show();
+            Intent intent = AlarmPagerActivity.newIntent(getActivity(), mAlarm.getId());
+            startActivity(intent);
         }
     }
 
