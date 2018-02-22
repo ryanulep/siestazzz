@@ -9,6 +9,12 @@
 
     <string name="title_activity_settings">Settings</string>
 
+    <!-- Strings related to Journal -->
+    <string name="journal_title_hint">Enter a tite for the journal.</string>
+    <string name="journal_title_label">Title</string>
+    <string name="journal_details_label">Details</string>
+
+
     <!-- Strings related to Settings -->
 
     <!-- Example General settings -->
