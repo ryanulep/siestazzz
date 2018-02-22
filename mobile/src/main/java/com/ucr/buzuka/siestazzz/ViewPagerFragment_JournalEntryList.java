@@ -1,5 +1,6 @@
 package com.ucr.buzuka.siestazzz;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -18,7 +18,6 @@ import java.util.List;
  */
 
 public class ViewPagerFragment_JournalEntryList extends Fragment {
-
     private RecyclerView mJournalEntryRecyclerView;
     private JournalEntryAdapter mAdapter;
 
@@ -27,7 +26,7 @@ public class ViewPagerFragment_JournalEntryList extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         // Create a view to inflate.
-        View view  = inflater.inflate(R.layout.fragment_journal,container, false); // inflate is a function that converts a layout to a view.
+        View view  = inflater.inflate(R.layout.fragment_journal_entry_list, container, false); // inflate is a function that converts a layout to a view.
 
         // Wire this class to the UI recycler view.
         mJournalEntryRecyclerView = (RecyclerView) view.findViewById(R.id.journal_recycler_view);
@@ -39,12 +38,26 @@ public class ViewPagerFragment_JournalEntryList extends Fragment {
 
     }
 
+    // TODO: Ryan. There is one more detail to take care of. Overriding the onResume to updateUI.
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateUI();
+    }
+
+    /**
+     * updateUI refreshes the recycler list.
+     */
     public void updateUI(){
         Journal journal = Journal.get(getActivity());
         List<JournalEntry> journalEntries = journal.getJournalEntries();
 
-        mAdapter = new JournalEntryAdapter(journalEntries);
-        mJournalEntryRecyclerView.setAdapter(mAdapter);
+        if (mAdapter == null) {
+            mAdapter = new JournalEntryAdapter(journalEntries);
+            mJournalEntryRecyclerView.setAdapter(mAdapter);
+        } else {
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     // View Holder
@@ -75,7 +88,8 @@ public class ViewPagerFragment_JournalEntryList extends Fragment {
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(getActivity(),mJournalEntry.getTitle() + " clicked!", Toast.LENGTH_SHORT).show();
+            Intent intent = JournalEntryPagerActivity.newIntent(getActivity(), mJournalEntry.getId());
+            startActivity(intent);
         }
 
         public void bind (JournalEntry journalEntry) {
@@ -86,8 +100,6 @@ public class ViewPagerFragment_JournalEntryList extends Fragment {
             mJournalEntryWakeTextView.setText(mJournalEntry.getWakeTime());
             mJournalEntryHoursSleptTextView.setText(String.valueOf(mJournalEntry.getHoursSlept())); // if a method returns int you must cast to string
             mJournalEntryDebtTextView.setText(String.valueOf(mJournalEntry.getSleepDebt()));
-
-            return;
 
         }
     } // End of JournalEntryHolder

@@ -24,13 +24,8 @@ public class SetAlarm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_alarm);
 
-
-
         Button cancelButton = (Button) findViewById(R.id.cancelButton);
         Button setButton = (Button) findViewById(R.id.setAlarm);
-
-
-
 
        // final TextView alarmDisplay =  findViewById(R.id.textView_AlarmTime);
         final TimePicker timerClock = (TimePicker) findViewById(R.id.timePicker);
