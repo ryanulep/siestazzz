@@ -20,8 +20,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-
-
 public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_PERMISSION_WRITE = 1;
