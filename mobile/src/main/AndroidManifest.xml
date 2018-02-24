@@ -50,6 +50,9 @@
         <activity android:name=".JournalEntryPagerActivity">
         </activity>
 
+        <activity android:name=".AlarmPagerActivity">
+        </activity>
+
     </application>
 
 </manifest>

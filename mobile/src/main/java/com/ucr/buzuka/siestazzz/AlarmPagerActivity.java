@@ -9,8 +9,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.FrameMetrics;
-import android.view.View;
 
 import java.util.List;
 import java.util.UUID;
@@ -43,7 +41,7 @@ public class AlarmPagerActivity extends AppCompatActivity {
             @Override
             public Fragment getItem(int position) {
                 Alarm alarm = mAlarms.get(position);
-                return alarm_detail_fragment.newInstance(alarm.getId());
+                return AlarmDetailFragment.newInstance(alarm.getId());
             }
 
             @Override

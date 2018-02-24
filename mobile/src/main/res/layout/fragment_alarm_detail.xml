@@ -1,33 +1,39 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ucr.buzuka.siestazzz.alarm_detail_fragment">
+    tools:context="com.ucr.buzuka.siestazzz.AlarmDetailFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
-    <TextView
+    <EditText
         android:id="@+id/alarm_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginStart="16dp"
         android:text="Title"
-        tools:layout_editor_absoluteX="127dp"
-        tools:layout_editor_absoluteY="114dp" />
+        app:layout_constraintBottom_toTopOf="@+id/alarm_active"
+        app:layout_constraintStart_toStartOf="@+id/alarm_time" />
 
     <TextView
         android:id="@+id/alarm_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
         android:text="TextView"
-        tools:layout_editor_absoluteX="115dp"
-        tools:layout_editor_absoluteY="134dp" />
+        app:layout_constraintEnd_toEndOf="@+id/alarm_active"
+        app:layout_constraintTop_toBottomOf="@+id/alarm_title" />
 
     <CheckBox
         android:id="@+id/alarm_active"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="136dp"
+        android:layout_marginTop="152dp"
         android:text="CheckBox"
-        tools:layout_editor_absoluteX="96dp"
-        tools:layout_editor_absoluteY="153dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
