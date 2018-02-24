@@ -17,6 +17,7 @@ public class Alarm {
     public Alarm() {
         mId = UUID.randomUUID();
         mDate = new Date();
+        mTitle = "Ryan's Alarm";
     }
 
     public UUID getId() {
@@ -46,7 +47,4 @@ public class Alarm {
     public void setActive(boolean active) {
         mActive = active;
     }
-
-
-
 }

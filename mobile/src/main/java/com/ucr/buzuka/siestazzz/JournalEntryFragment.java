@@ -37,7 +37,6 @@ public class JournalEntryFragment extends Fragment {
      * sets it s arguments.
      *
      */
-    // TODO: Ryan, I think this is the part that is missing from your code.
 
     // Attaching arguments to a fragment
     public static JournalEntryFragment newInstance(UUID journalEntryId) {
@@ -53,7 +52,6 @@ public class JournalEntryFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TODO: This part too Ryan.
         // Retrieving arguments.
         UUID journalEntryId = (UUID) getArguments().getSerializable(ARG_JOURNAL_ENTRY_ID);
         mJournalEntry = Journal.get(getActivity()).getJournalEntry(journalEntryId);
