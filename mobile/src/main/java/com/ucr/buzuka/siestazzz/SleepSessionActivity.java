@@ -17,14 +17,12 @@ import com.ucr.buzuka.siestazzz.model.SensorReadout;
 import com.ucr.buzuka.siestazzz.util.JSONHelper;
 
 import java.util.ArrayList;
-import java.util.IllegalFormatCodePointException;
 import java.util.UUID;
 
 public class SleepSessionActivity extends AppCompatActivity implements SensorEventListener {
 
-    //set the time interval to pull from sensor
-    private static final int M_SENSOR_DELAY = 50;
-    private static int STORAGE_LIMITER = 100;
+    //private static final int M_SENSOR_DELAY = 100;      //set the time interval to pull from sensor
+    private static int STORAGE_LIMITER = 100;           //set the time interval to store
     private static final String TAG = "SleepSessionActivity";
     //private Queue<Float> sensorLog;
     public  ArrayList<SensorReadout> sensorReadoutList = new ArrayList<SensorReadout>();
@@ -40,6 +38,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     long diffTime = 0;
     float speed = 0;
     String sessionID;
+    private Context mContext; //global context field to threading
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +48,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         //create, get, register accelerometer
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE); // get an instance of system sensor
         sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER); // get accelerometer
-        sensorManager.registerListener(this, sensorAccelerometer, M_SENSOR_DELAY);
+        sensorManager.registerListener(this, sensorAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 
         //create a new session id
         sessionID = UUID.randomUUID().toString();
@@ -68,7 +67,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     */
     protected void onResume(){
         super.onResume();
-        sensorManager.registerListener(this, sensorAccelerometer, M_SENSOR_DELAY);
+        sensorManager.registerListener(this, sensorAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     protected void onStop(){
@@ -84,46 +83,49 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         /*If sensor is accelerometer
         * and if storage limiter hits zero
         * */
-        if((sensor.getType() == Sensor.TYPE_ACCELEROMETER)&&(STORAGE_LIMITER == 0)) {
-
+        if(sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             //get current accelerometer data
             float x = sensorEvent.values[0];
             float y = sensorEvent.values[1];
             float z = sensorEvent.values[2];
-            //create a time internal
-            curTime = System.currentTimeMillis();
+            if (STORAGE_LIMITER == 0) {
+                //reset
+                STORAGE_LIMITER = 100;
 
-            diffTime = (curTime - lastUpdate) / 100;
-            lastUpdate = curTime;
-            // speed = delta V / time
-            speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime;
+                //create a time internal
+                curTime = System.currentTimeMillis();
+
+                diffTime = (curTime - lastUpdate) / 100;
+                lastUpdate = curTime;
+                // speed = delta V / time
+                speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime;
 
                 /*Write to file if speed is greater than threshold* */
-            if (speed > SENSOR_THRESHOLD) {
+                if (speed > SENSOR_THRESHOLD) {
 
-                SensorReadout sensorReadout = new SensorReadout(sessionID, curTime, speed * 100);
-                sensorReadoutList.add(sensorReadout);
-                //Log.i(TAG, "Current read out " + sensorReadoutList);
+                    SensorReadout sensorReadout = new SensorReadout(sessionID, curTime, speed * 100);
+                    sensorReadoutList.add(sensorReadout);
+                    //Log.i(TAG, "Current read out " + sensorReadoutList);
 
-                if (speed != Float.POSITIVE_INFINITY) {
-                    MAX_SPEED = speed;
+                    if (speed != Float.POSITIVE_INFINITY) {
+                        MAX_SPEED = speed;
+                    }
                 }
+
+                TextView textView = findViewById(R.id.textView2);
+                textView.setText(String.format("x = %s\ny = %s\nz = %s\n", x, y, z));
+                textView.append("Current time " + curTime);
+                textView.append("\nSpeed " + speed);
+                textView.append("\nMax speed " + MAX_SPEED);
+
+                Log.i(TAG, "Array: " + sensorReadoutList);
+
             }
-            STORAGE_LIMITER = 100;
-
-
-            TextView textView = findViewById(R.id.textView2);
-            textView.setText(String.format("x = %s\ny = %s\nz = %s\n", x, y, z));
-            textView.append("Current time " + curTime);
-            textView.append("\nSpeed " + speed);
-            textView.append("\nMax speed " + MAX_SPEED);
-
-            Log.i(TAG, "Array: " + sensorReadoutList);
-
             last_x = x;
             last_y = y;
             last_z = z;
-        } STORAGE_LIMITER--;
+            STORAGE_LIMITER--;
+        }
     }
 
     @Override

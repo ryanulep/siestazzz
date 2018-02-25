@@ -1,6 +1,8 @@
 package com.ucr.buzuka.siestazzz.model;
 
 import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -13,6 +15,7 @@ import java.util.UUID;
  */
 
 /** new table for sensor readout */
+@Entity
 public class SensorReadout implements Parcelable {
 
 /*  ROOM */
@@ -31,6 +34,7 @@ public class SensorReadout implements Parcelable {
     public SensorReadout() {
     }
 
+    @Ignore
     public SensorReadout(String sessionID, long curTime, float speed) {
         this.readOutID = UUID.randomUUID().toString();
 
@@ -40,22 +44,20 @@ public class SensorReadout implements Parcelable {
     }
     
 /** Setters and getters */
-    @NonNull
     public String getReadOutID() { return readOutID; }
 
-    public void setReadOutID(@NonNull String readOutID) { this.readOutID = readOutID;}
+    public void setReadOutID( String readOutID) { this.readOutID = readOutID;}
 
-    @NonNull
     public String getSessionID() { return sessionID; }
 
-    public void setSessionID(@NonNull String sessionID) { this.sessionID = sessionID;}
+    public void setSessionID( String sessionID) { this.sessionID = sessionID;}
 
-    public long getCurTime() {
+    public long getCurrent_Time() {
         return current_Time;
     }
 
-    public void setCurTime(long curTime) {
-        this.current_Time = curTime;
+    public void setCurrent_Time(long current_Time) {
+        this.current_Time = current_Time;
     }
 
     public float getSpeed() {
@@ -67,16 +69,20 @@ public class SensorReadout implements Parcelable {
     }
 
 
-/** Convert all object in data container to a single string */
+    /**
+     * Convert all object in data container to a single string
+     */
     @Override
     public String toString() {
         return "SensorReadout{" +
-                " currentTime= " + current_Time +
-                ", speed= " + speed +
+                "readOutID='" + readOutID + '\'' +
+                ", sessionID='" + sessionID + '\'' +
+                ", current_Time=" + current_Time +
+                ", speed=" + speed +
                 '}';
     }
 
-/**Parcelables functionality for passing data(key value pairs) around activities
+    /**Parcelables functionality for passing data(key value pairs) around activities
  * using Code -> generate -> parcelables
  * usage: start Intent  ->   intent.putExtra(key, value)
  *        in activity   ->   getIntent().getExtras().getParcelable(key)*/
