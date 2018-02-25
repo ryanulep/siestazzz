@@ -78,7 +78,11 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     public void onSensorChanged(SensorEvent sensorEvent) {
         Sensor sensor = sensorEvent.sensor;
 
-        if(sensor.getType() == Sensor.TYPE_ACCELEROMETER){
+
+        /*If sensor is accelerometer
+        * and if storage limiter hits zero
+        * */
+        if((sensor.getType() == Sensor.TYPE_ACCELEROMETER)&&(STORAGE_LIMITER == 0)) {
 
             //get current accelerometer data
             float x = sensorEvent.values[0];
@@ -87,34 +91,27 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
             //create a time internal
             curTime = System.currentTimeMillis();
 
+            diffTime = (curTime - lastUpdate) / 100;
+            lastUpdate = curTime;
+            // speed = delta V / time
+            speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime;
 
-            /*Write to file if speed is greater than threshold
-            * */
-            if (STORAGE_LIMITER == 0) {
+                /*Write to file if speed is greater than threshold* */
+            if (speed > SENSOR_THRESHOLD) {
 
-                diffTime = (curTime - lastUpdate)/100;
-                lastUpdate = curTime;
-                // speed = delta V / time
-                speed = Math.abs(x + y + z - last_x - last_y - last_z)/ diffTime;
+                SensorReadout sensorReadout = new SensorReadout(curTime, speed * 100);
+                sensorReadoutList.add(sensorReadout);
+                //Log.i(TAG, "Current read out " + sensorReadoutList);
 
-
-                    if (speed > SENSOR_THRESHOLD) {
-
-                        SensorReadout sensorReadout = new SensorReadout(curTime, speed * 100 );
-                        sensorReadoutList.add(sensorReadout);
-                        //Log.i(TAG, "Current read out " + sensorReadoutList);
-
-                        if (speed != Float.POSITIVE_INFINITY) {
-                            MAX_SPEED = speed;
-                        }
-                    }
-                STORAGE_LIMITER = 100;
+                if (speed != Float.POSITIVE_INFINITY) {
+                    MAX_SPEED = speed;
+                }
             }
-            STORAGE_LIMITER--;
+            STORAGE_LIMITER = 100;
 
 
             TextView textView = findViewById(R.id.textView2);
-            textView.setText("x = " + x + "\n" + "y = " + y + "\n"+ "z = " + z + "\n");
+            textView.setText(String.format("x = %s\ny = %s\nz = %s\n", x, y, z));
             textView.append("Current time " + curTime);
             textView.append("\nSpeed " + speed);
             textView.append("\nMax speed " + MAX_SPEED);
@@ -124,8 +121,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
             last_x = x;
             last_y = y;
             last_z = z;
-
-        }
+        } STORAGE_LIMITER--;
     }
 
     @Override
