@@ -21,7 +21,7 @@ import java.util.UUID;
 
 public class SleepSessionActivity extends AppCompatActivity implements SensorEventListener {
 
-    //private static final int M_SENSOR_DELAY = 100;      //set the time interval to pull from sensor
+    private static final int M_SENSOR_DELAY = 100;      //set the time interval to pull from sensor
     private static int STORAGE_LIMITER = 100;           //set the time interval to store
     private static final String TAG = "SleepSessionActivity";
     //private Queue<Float> sensorLog;
@@ -48,7 +48,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         //create, get, register accelerometer
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE); // get an instance of system sensor
         sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER); // get accelerometer
-        sensorManager.registerListener(this, sensorAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, sensorAccelerometer, M_SENSOR_DELAY);
 
         //create a new session id
         sessionID = UUID.randomUUID().toString();
@@ -67,7 +67,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     */
     protected void onResume(){
         super.onResume();
-        sensorManager.registerListener(this, sensorAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, sensorAccelerometer, M_SENSOR_DELAY);
     }
 
     protected void onStop(){
