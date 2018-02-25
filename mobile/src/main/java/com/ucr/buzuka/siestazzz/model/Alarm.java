@@ -1,4 +1,4 @@
-package com.ucr.buzuka.siestazzz;
+package com.ucr.buzuka.siestazzz.model;
 
 import java.util.Date;
 import java.util.UUID;

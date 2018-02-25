@@ -10,6 +10,9 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.ucr.buzuka.siestazzz.model.Alarm;
+import com.ucr.buzuka.siestazzz.model.BellTower;
+
 import java.util.List;
 import java.util.UUID;
 

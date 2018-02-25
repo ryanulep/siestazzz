@@ -11,6 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.ucr.buzuka.siestazzz.model.Journal;
+import com.ucr.buzuka.siestazzz.model.JournalEntry;
+
 import java.util.List;
 
 /**
@@ -23,10 +26,12 @@ public class ViewPagerFragment_JournalEntryList extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
 
         // Create a view to inflate.
-        View view  = inflater.inflate(R.layout.fragment_journal_entry_list, container, false); // inflate is a function that converts a layout to a view.
+        View view  = inflater.inflate(R.layout.fragment_journal_entry_list, container, false);
+            // inflate is a function that converts a layout to a view.
 
         // Wire this class to the UI recycler view.
         mJournalEntryRecyclerView = (RecyclerView) view.findViewById(R.id.journal_recycler_view);
@@ -35,7 +40,6 @@ public class ViewPagerFragment_JournalEntryList extends Fragment {
         updateUI();
 
         return view;
-
     }
 
     // TODO: Ryan. There is one more detail to take care of. Overriding the onResume to updateUI.
@@ -116,16 +120,13 @@ public class ViewPagerFragment_JournalEntryList extends Fragment {
         @Override
         public JournalEntryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-
             return new JournalEntryHolder(layoutInflater, parent);
         }
 
         @Override
         public void onBindViewHolder(JournalEntryHolder holder, int position) {
-
             JournalEntry journalEntry = mJournalEntries.get(position);
             holder.bind(journalEntry);
-
         }
 
         @Override

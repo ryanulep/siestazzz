@@ -17,7 +17,6 @@ import com.ucr.buzuka.siestazzz.model.SensorReadout;
 import com.ucr.buzuka.siestazzz.util.JSONHelper;
 
 import java.util.ArrayList;
-import java.util.IllegalFormatCodePointException;
 
 public class SleepSessionActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -45,9 +44,6 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE); // get an instance of system sensor
         sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER); // get accelerometer
         sensorManager.registerListener(this, sensorAccelerometer, M_SENSOR_DELAY);
-
-
-
     }
 
     /** put sensor to sleep when app not in use, will need to comment out in production.
@@ -116,7 +112,6 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
             last_x = x;
             last_y = y;
             last_z = z;
-
         }
     }
 
@@ -135,13 +130,11 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         }else {
             Toast.makeText(this, "Export failed", Toast.LENGTH_SHORT).show();
         }
-
         //finish(); //may needed for closing activity
 
         //intent to go back to MainActivity
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.ucr.buzuka.siestazzz;
+package com.ucr.buzuka.siestazzz.model;
 
 import java.sql.Time;
 import java.text.DateFormat;
