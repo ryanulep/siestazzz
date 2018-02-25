@@ -31,8 +31,6 @@ public class SensorReadout implements Parcelable {
     public SensorReadout() {
     }
 
-
-
     public SensorReadout(String sessionID, long curTime, float speed) {
         this.readOutID = UUID.randomUUID().toString();
 
@@ -68,7 +66,7 @@ public class SensorReadout implements Parcelable {
         this.speed = speed;
     }
 
-    
+
 /** Convert all object in data container to a single string */
     @Override
     public String toString() {
@@ -78,10 +76,11 @@ public class SensorReadout implements Parcelable {
                 '}';
     }
 
-/**Parcelables functionality for passing data around activities
+/**Parcelables functionality for passing data(key value pairs) around activities
  * using Code -> generate -> parcelables
- * usage: start Intent ->   intent.putExtra(key, value)
- *        in activity ->    getIntent().getExtras().getParcelable(key)*/
+ * usage: start Intent  ->   intent.putExtra(key, value)
+ *        in activity   ->   getIntent().getExtras().getParcelable(key)*/
+
     @Override
     public int describeContents() {
         return 0;
@@ -89,18 +88,20 @@ public class SensorReadout implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.readOutID);
         dest.writeString(this.sessionID);
         dest.writeLong(this.current_Time);
         dest.writeFloat(this.speed);
     }
 
     protected SensorReadout(Parcel in) {
+        this.readOutID = in.readString();
         this.sessionID = in.readString();
         this.current_Time = in.readLong();
         this.speed = in.readFloat();
     }
 
-    public static final Parcelable.Creator<SensorReadout> CREATOR = new Parcelable.Creator<SensorReadout>() {
+    public static final Creator<SensorReadout> CREATOR = new Creator<SensorReadout>() {
         @Override
         public SensorReadout createFromParcel(Parcel source) {
             return new SensorReadout(source);
