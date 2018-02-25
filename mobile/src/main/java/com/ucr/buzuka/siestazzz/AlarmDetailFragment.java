@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.TextView;
+
+import com.ucr.buzuka.siestazzz.model.Alarm;
+import com.ucr.buzuka.siestazzz.model.BellTower;
 
 import java.util.UUID;
 

@@ -1,15 +1,15 @@
 package com.ucr.buzuka.siestazzz;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+
+import com.ucr.buzuka.siestazzz.model.Journal;
+import com.ucr.buzuka.siestazzz.model.JournalEntry;
 
 import java.util.List;
 import java.util.UUID;
@@ -60,5 +60,12 @@ public class JournalEntryPagerActivity extends AppCompatActivity {
                 return mJournalEntries.size();
             }
         });
+
+        for (int i = 0; i < mJournalEntries.size(); ++i) {
+            if (mJournalEntries.get(i).getId().equals(journalEntryId)) {
+                mViewPager.setCurrentItem(i);
+                break;
+            }
+        }
     }
 }

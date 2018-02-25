@@ -47,11 +47,13 @@
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".JournalEntryPagerActivity">
-        </activity>
+        <activity
+            android:name=".JournalEntryPagerActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".AlarmPagerActivity">
-        </activity>
+        <activity
+            android:name=".AlarmPagerActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

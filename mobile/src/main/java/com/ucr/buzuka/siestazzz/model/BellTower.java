@@ -1,4 +1,4 @@
-package com.ucr.buzuka.siestazzz;
+package com.ucr.buzuka.siestazzz.model;
 
 import android.content.Context;
 
@@ -16,7 +16,8 @@ import java.util.UUID;
  */
 
 public class BellTower {
-    private static BellTower sBellTower;          // the s prefix on sBelltower is a naming convention indicating that sAlarmKeeper is static.
+    private static BellTower sBellTower;
+            // the s prefix on sBelltower is a naming convention indicating that sAlarmKeeper is static.
     private List<Alarm> mAlarms;
 
     public static BellTower get(Context context) {

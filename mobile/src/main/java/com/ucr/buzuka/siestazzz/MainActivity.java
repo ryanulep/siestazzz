@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
     /* Checks if external storage is available for read and write */
     public boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
@@ -246,5 +245,4 @@ public class MainActivity extends AppCompatActivity {
             return 3;
         }
     }
-
 }

@@ -58,15 +58,11 @@ public class SetAlarm extends AppCompatActivity {
                 cal.set(Calendar.SECOND,0);
                 Log.w("myApp", "Alarm");
 
-
-
                 alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),pendingIntent);
 
                 finish();
             }
         });
-
-
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
