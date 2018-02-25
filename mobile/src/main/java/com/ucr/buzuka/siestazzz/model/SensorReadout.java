@@ -15,6 +15,7 @@ import java.util.UUID;
 /** new table for sensor readout */
 public class SensorReadout implements Parcelable {
 
+/*  ROOM */
     @PrimaryKey
     @NonNull
     private String sessionID;
@@ -31,6 +32,7 @@ public class SensorReadout implements Parcelable {
         if (sessionID == null){
             sessionID = UUID.randomUUID().toString();
         }
+        this.sessionID  = sessionID;
         this.current_Time = curTime;
         this.speed = speed;
     }

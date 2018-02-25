@@ -18,6 +18,7 @@ import com.ucr.buzuka.siestazzz.util.JSONHelper;
 
 import java.util.ArrayList;
 import java.util.IllegalFormatCodePointException;
+import java.util.UUID;
 
 public class SleepSessionActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -38,6 +39,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     long curTime = 0;
     long diffTime = 0;
     float speed = 0;
+    String sessionID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +51,8 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER); // get accelerometer
         sensorManager.registerListener(this, sensorAccelerometer, M_SENSOR_DELAY);
 
-
-
+        //create a new session id
+        sessionID = UUID.randomUUID().toString();
     }
 
     /** put sensor to sleep when app not in use, will need to comment out in production.
@@ -99,7 +101,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
                 /*Write to file if speed is greater than threshold* */
             if (speed > SENSOR_THRESHOLD) {
 
-                SensorReadout sensorReadout = new SensorReadout(null, curTime, speed * 100);
+                SensorReadout sensorReadout = new SensorReadout(sessionID, curTime, speed * 100);
                 sensorReadoutList.add(sensorReadout);
                 //Log.i(TAG, "Current read out " + sensorReadoutList);
 
