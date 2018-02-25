@@ -21,8 +21,8 @@ import java.util.IllegalFormatCodePointException;
 
 public class SleepSessionActivity extends AppCompatActivity implements SensorEventListener {
 
-    //set the time interval to pull from sensor, current 300 ms
-    private static final int M_SENSOR_DELAY = 300;
+    //set the time interval to pull from sensor
+    private static final int M_SENSOR_DELAY = 50;
     private static int STORAGE_LIMITER = 100;
     private static final String TAG = "SleepSessionActivity";
     //private Queue<Float> sensorLog;
@@ -33,8 +33,11 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     //local variable for sensor data
     private long lastUpdate = 0;
     private float last_x, last_y, last_z; //last position
-    private float SENSOR_THRESHOLD = 0.00005f;
+    private float SENSOR_THRESHOLD = 0.01f;
     private float MAX_SPEED = Float.NEGATIVE_INFINITY;
+    long curTime = 0;
+    long diffTime = 0;
+    float speed = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,34 +79,39 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         Sensor sensor = sensorEvent.sensor;
 
         if(sensor.getType() == Sensor.TYPE_ACCELEROMETER){
+
             //get current accelerometer data
             float x = sensorEvent.values[0];
             float y = sensorEvent.values[1];
             float z = sensorEvent.values[2];
-
             //create a time internal
-            long curTime = System.currentTimeMillis();
-            long diffTime = (curTime - lastUpdate)*1000;
-            lastUpdate = curTime;
-            // speed = delta V / time
-            float speed = Math.abs(x + y + z - last_x - last_y - last_z)/ diffTime;
+            curTime = System.currentTimeMillis();
+
 
             /*Write to file if speed is greater than threshold
             * */
             if (STORAGE_LIMITER == 0) {
-                if (speed > SENSOR_THRESHOLD) {
 
-                    SensorReadout sensorReadout = new SensorReadout(curTime, speed);
-                    sensorReadoutList.add(sensorReadout);
-                    //Log.i(TAG, "Current read out " + sensorReadoutList);
+                diffTime = (curTime - lastUpdate)/100;
+                lastUpdate = curTime;
+                // speed = delta V / time
+                speed = Math.abs(x + y + z - last_x - last_y - last_z)/ diffTime;
 
-                    if (speed != Float.POSITIVE_INFINITY) {
-                        MAX_SPEED = speed;
+
+                    if (speed > SENSOR_THRESHOLD) {
+
+                        SensorReadout sensorReadout = new SensorReadout(curTime, speed * 100 );
+                        sensorReadoutList.add(sensorReadout);
+                        //Log.i(TAG, "Current read out " + sensorReadoutList);
+
+                        if (speed != Float.POSITIVE_INFINITY) {
+                            MAX_SPEED = speed;
+                        }
                     }
-                }
                 STORAGE_LIMITER = 100;
             }
             STORAGE_LIMITER--;
+
 
             TextView textView = findViewById(R.id.textView2);
             textView.setText("x = " + x + "\n" + "y = " + y + "\n"+ "z = " + z + "\n");

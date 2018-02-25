@@ -1,12 +1,22 @@
 package com.ucr.buzuka.siestazzz.model;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
+
 /**
  * Created by jakex on 2/11/2018.
  */
 
 //new table for sensor readout
 public class SensorReadout {
+
+    @PrimaryKey
+    @NonNull
+    private String sessionID;
+    @ColumnInfo
     private long current_Time;
+    @ColumnInfo
     private float speed;
     
 //  Constructors
