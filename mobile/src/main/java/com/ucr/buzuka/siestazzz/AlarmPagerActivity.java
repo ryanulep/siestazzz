@@ -33,6 +33,8 @@ public class AlarmPagerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm_pager);
 
+        UUID alarmID = (UUID) getIntent().getSerializableExtra(EXTRA_ALARM_ID);
+
         mViewPager = (ViewPager) findViewById(R.id.alarm_view_pager);
         mAlarms = BellTower.get(this).getAlarms();
         final FragmentManager fragmentManager = getSupportFragmentManager();
@@ -49,5 +51,12 @@ public class AlarmPagerActivity extends AppCompatActivity {
                 return mAlarms.size();
             }
         });
+
+        for (int i = 0; i < mAlarms.size(); ++i) {
+            if (mAlarms.get(i).getId().equals(alarmID)) {
+                mViewPager.setCurrentItem(i);
+                break;
+            }
+        }
     }
 }
