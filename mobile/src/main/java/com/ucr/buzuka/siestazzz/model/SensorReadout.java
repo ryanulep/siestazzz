@@ -18,6 +18,9 @@ public class SensorReadout implements Parcelable {
 /*  ROOM */
     @PrimaryKey
     @NonNull
+    private String readOutID;
+    @ColumnInfo
+    @NonNull
     private String sessionID;
     @ColumnInfo
     private long current_Time;
@@ -28,16 +31,27 @@ public class SensorReadout implements Parcelable {
     public SensorReadout() {
     }
 
+
+
     public SensorReadout(String sessionID, long curTime, float speed) {
-        if (sessionID == null){
-            sessionID = UUID.randomUUID().toString();
-        }
+        this.readOutID = UUID.randomUUID().toString();
+
         this.sessionID  = sessionID;
         this.current_Time = curTime;
         this.speed = speed;
     }
     
 /** Setters and getters */
+    @NonNull
+    public String getReadOutID() { return readOutID; }
+
+    public void setReadOutID(@NonNull String readOutID) { this.readOutID = readOutID;}
+
+    @NonNull
+    public String getSessionID() { return sessionID; }
+
+    public void setSessionID(@NonNull String sessionID) { this.sessionID = sessionID;}
+
     public long getCurTime() {
         return current_Time;
     }
@@ -54,6 +68,7 @@ public class SensorReadout implements Parcelable {
         this.speed = speed;
     }
 
+    
 /** Convert all object in data container to a single string */
     @Override
     public String toString() {
