@@ -2,14 +2,18 @@ package com.ucr.buzuka.siestazzz.model;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.PrimaryKey;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
+
+import java.util.UUID;
 
 /**
  * Created by jakex on 2/11/2018.
  */
 
-//new table for sensor readout
-public class SensorReadout {
+/** new table for sensor readout */
+public class SensorReadout implements Parcelable {
 
     @PrimaryKey
     @NonNull
@@ -19,16 +23,19 @@ public class SensorReadout {
     @ColumnInfo
     private float speed;
     
-//  Constructors
+/** Constructors */
     public SensorReadout() {
     }
 
-    public SensorReadout(long curTime, float speed) {
+    public SensorReadout(String sessionID, long curTime, float speed) {
+        if (sessionID == null){
+            sessionID = UUID.randomUUID().toString();
+        }
         this.current_Time = curTime;
         this.speed = speed;
     }
     
-//  Setters and getters
+/** Setters and getters */
     public long getCurTime() {
         return current_Time;
     }
@@ -45,7 +52,7 @@ public class SensorReadout {
         this.speed = speed;
     }
 
-//  convert all object in data container to a single string
+/** Convert all object in data container to a single string */
     @Override
     public String toString() {
         return "SensorReadout{" +
@@ -53,4 +60,38 @@ public class SensorReadout {
                 ", speed= " + speed +
                 '}';
     }
+
+/**Parcelables functionality for passing data around activities
+ * using Code -> generate -> parcelables
+ * usage: start Intent ->   intent.putExtra(key, value)
+ *        in activity ->    getIntent().getExtras().getParcelable(key)*/
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.sessionID);
+        dest.writeLong(this.current_Time);
+        dest.writeFloat(this.speed);
+    }
+
+    protected SensorReadout(Parcel in) {
+        this.sessionID = in.readString();
+        this.current_Time = in.readLong();
+        this.speed = in.readFloat();
+    }
+
+    public static final Parcelable.Creator<SensorReadout> CREATOR = new Parcelable.Creator<SensorReadout>() {
+        @Override
+        public SensorReadout createFromParcel(Parcel source) {
+            return new SensorReadout(source);
+        }
+
+        @Override
+        public SensorReadout[] newArray(int size) {
+            return new SensorReadout[size];
+        }
+    };
 }

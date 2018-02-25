@@ -99,7 +99,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
                 /*Write to file if speed is greater than threshold* */
             if (speed > SENSOR_THRESHOLD) {
 
-                SensorReadout sensorReadout = new SensorReadout(curTime, speed * 100);
+                SensorReadout sensorReadout = new SensorReadout(null, curTime, speed * 100);
                 sensorReadoutList.add(sensorReadout);
                 //Log.i(TAG, "Current read out " + sensorReadoutList);
 
