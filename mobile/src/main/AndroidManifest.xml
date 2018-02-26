@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"
@@ -47,11 +48,13 @@
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".JournalEntryPagerActivity">
-        </activity>
+        <activity
+            android:name=".JournalEntryPagerActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".AlarmPagerActivity">
-        </activity>
+        <activity
+            android:name=".AlarmPagerActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

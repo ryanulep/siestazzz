@@ -1,4 +1,4 @@
-package com.ucr.buzuka.siestazzz;
+package com.ucr.buzuka.siestazzz.model;
 
 import java.util.Date;
 import java.util.UUID;
@@ -10,14 +10,20 @@ import java.util.UUID;
 public class Alarm {
 
     private UUID mId;
-    private  String mTitle;
+    private String mTitle;
     private Date mDate;
     private boolean mActive;
 
     public Alarm() {
         mId = UUID.randomUUID();
         mDate = new Date();
-        mTitle = "Ryan's Alarm";
+        mTitle = "Default Alarm";
+    }
+
+    public Alarm(String title, Date date, boolean active) {
+        mId = UUID.randomUUID();
+        mDate = date;
+        mActive = active;
     }
 
     public UUID getId() {

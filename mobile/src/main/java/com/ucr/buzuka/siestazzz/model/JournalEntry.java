@@ -1,5 +1,11 @@
-package com.ucr.buzuka.siestazzz;
+package com.ucr.buzuka.siestazzz.model;
 
+import android.content.Context;
+import android.media.MediaPlayer;
+import android.util.Log;
+import android.view.View;
+
+import java.io.IOException;
 import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -7,12 +13,14 @@ import java.time.Month;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
+import android.content.Context;
 
 import javax.xml.datatype.Duration;
 
 /**
  * Created by Rick Boshae on 2/18/18.
  */
+
 
 public class JournalEntry {
     private UUID mId;
@@ -23,6 +31,8 @@ public class JournalEntry {
     private int mHoursSlept; // SleepDebt represents the difference between how many hours the user was actually asleep vs. how many hours the user should have slept.
     private int mSleepDebt;
     private int desiredHoursOfSleep;
+
+
 
     public JournalEntry() {
         mDate = new Date();

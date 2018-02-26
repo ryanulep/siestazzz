@@ -10,6 +10,9 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.ucr.buzuka.siestazzz.model.Alarm;
+import com.ucr.buzuka.siestazzz.model.BellTower;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -33,6 +36,8 @@ public class AlarmPagerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm_pager);
 
+        UUID alarmID = (UUID) getIntent().getSerializableExtra(EXTRA_ALARM_ID);
+
         mViewPager = (ViewPager) findViewById(R.id.alarm_view_pager);
         mAlarms = BellTower.get(this).getAlarms();
         final FragmentManager fragmentManager = getSupportFragmentManager();
@@ -49,5 +54,12 @@ public class AlarmPagerActivity extends AppCompatActivity {
                 return mAlarms.size();
             }
         });
+
+        for (int i = 0; i < mAlarms.size(); ++i) {
+            if (mAlarms.get(i).getId().equals(alarmID)) {
+                mViewPager.setCurrentItem(i);
+                break;
+            }
+        }
     }
 }

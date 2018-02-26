@@ -1,43 +1,23 @@
 package com.ucr.buzuka.siestazzz;
 
 
-import android.app.AlertDialog;
-import android.app.NotificationManager;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.MediaPlayer;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.Build;
-import android.util.Log;
-
-import android.widget.RemoteViews;
-import android.widget.Toast;
-
-import android.support.v4.app.NotificationCompat;
 import android.os.Vibrator;
-
-
+import android.support.v4.app.NotificationCompat;
+import android.util.Log;
+import android.widget.Toast;
 
 /**
  * Created by Ammar on 2/7/18.
  */
 
-
-
 public class Mote extends BroadcastReceiver {
     NotificationCompat.Builder notification;
     private static final String TAG =  "Mote.java";
 
-
-
     public void onReceive(Context context, Intent intent) {
-
-
 
         //        To Launch snooze activity, Change to dialog
 //        Intent i = new Intent();
@@ -66,12 +46,7 @@ public class Mote extends BroadcastReceiver {
 //                .setIcon(android.R.drawable.ic_dialog_alert)
 //                .show();
 
-
-
-
         // TODO Auto-generated method stub
-
-
 
         Toast.makeText(context, "Alarm worked.", Toast.LENGTH_LONG).show();
 
@@ -79,26 +54,12 @@ public class Mote extends BroadcastReceiver {
 
         vibe.vibrate(10000);
 
-
         Log.v(TAG, "Initializing sounds...");
-
-       // MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.sound_file_1);
+        // MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.sound_file_1);
         //mediaPlayer.start();
-
         Log.v(TAG, "Playing sound...");
 
-
-
         Log.w("myApp", "Alarm at");
-
-
-
     }
-
-
-
-
-
-
 }
 

@@ -1,12 +1,18 @@
 package com.ucr.buzuka.siestazzz;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
+import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +24,13 @@ import com.ucr.buzuka.siestazzz.model.SensorReadout;
 import com.ucr.buzuka.siestazzz.model.Session;
 import com.ucr.buzuka.siestazzz.util.JSONHelper;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.UUID;
 
 public class SleepSessionActivity extends AppCompatActivity implements SensorEventListener {
@@ -43,12 +55,68 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     private Context mContext; //global context field to threading
     private AppDatabase db;
 
+    private static final String LOG_TAG = "AudioRecordTest";
+    private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
+    private static String mFileName = null;
+
+    private MediaRecorder mRecorder = null;
+    private MediaPlayer mPlayer = null;
+    private Date mDate=new Date();
+    private String fDate;
+
+
+    private void stopRecording() {
+        mRecorder.stop();
+        mRecorder.release();
+        mRecorder = null;
+    }
+
+
+
+    private void startRecording() {
+        mFileName = getExternalCacheDir().getAbsolutePath();
+        long yourmilliseconds = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMddyyyHHmm");
+        Date resultdate = new Date(yourmilliseconds);
+        mFileName +="/";
+        mFileName +=fDate;
+        mFileName +="/";
+        mFileName += "1.3gp";
+        Log.d("AUDIO", mFileName);
+        mRecorder = new MediaRecorder();
+        mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        mRecorder.setOutputFile(mFileName);
+        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
+        try {
+            mRecorder.prepare();
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "prepare() failed");
+        }
+
+        mRecorder.start();
+        Log.d("RECORD", "Start Recording is being executed");
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sleep_session);
+        DateFormat df = new SimpleDateFormat("M_d");
+        fDate = df.format(mDate);
 
-//        create, get, register accelerometer
+        long yourmilliseconds = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMddyyyHHmm");
+        Date resultdate = new Date(yourmilliseconds);
+
+        File myDir = new File(getExternalCacheDir().getAbsolutePath(), fDate);
+        if(!myDir.exists()){
+            myDir.mkdir();
+        }
+        Log.d("RECORD", myDir.getPath());
+
+        startRecording();//create, get, register accelerometer
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE); // get an instance of system sensor
         assert sensorManager != null;
         sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER); // get accelerometer
@@ -70,6 +138,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         db.sensorReadoutDao().insertAll(sensorReadout);
 //        new session
         db.sessionDao().insertAll(session);
+        Log.d("RECORD", "OnCreate Completed");
     }
 
     /** put sensor to sleep when app not in use, will need to comment out in production.
@@ -90,6 +159,8 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
 
     protected void onStop(){
         super.onStop();
+        stopRecording();
+        Log.d("RECORD", "onStop() called");
         sensorManager.unregisterListener(this);
     }
 
@@ -102,6 +173,12 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         * and if storage limiter hits zero
         * */
         if(sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            int volume = mRecorder.getMaxAmplitude();
+            if (volume > 2000) {
+                Log.d("RECORD", String.valueOf(volume));
+            }
+        }
+        if(sensor.getType() == Sensor.TYPE_ACCELEROMETER){
             //get current accelerometer data
             float x = sensorEvent.values[0];
             float y = sensorEvent.values[1];
@@ -173,7 +250,6 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         //intent to go back to MainActivity
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-
     }
 
     @Override
