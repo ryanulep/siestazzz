@@ -18,8 +18,11 @@
     <string name="journal_sleep_time_label">Sleep Time:</string>
     <string name="journal_wake_time_label">Wake Time:</string>
     <string name="journal_note_label">Note:</string>
+    <string name="date_picker_title">Set Date:</string>
     <string name="time_picker_title_sleep">Sleep Time:</string>
     <string name="time_picker_title_wake">Wake Time:</string>
+    <string name="date_picker_title_sleep">Sleep Date:</string>
+    <string name="date_picker_title_wake">Wake Date:</string>
 
     <!-- Strings related to Settings -->
 
