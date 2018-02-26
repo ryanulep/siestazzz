@@ -63,7 +63,6 @@ public class JournalEntryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_journal_entry, container, false);
 
         mDateField = (TextView) view.findViewById(R.id.journal_entry_date);
-        // mDateField.setText(mJournalEntry.getDateMonthAndDay());
         mDateField.setText(mJournalEntry.getDateMonthAndDay());
 
         // TODO: Wire up the rest of the UI

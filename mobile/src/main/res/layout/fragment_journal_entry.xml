@@ -11,10 +11,8 @@
     <TextView
         android:id="@+id/journal_entry_date"
         style="?android:listSeparatorTextViewStyle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="162dp"
-        android:layout_marginStart="163dp"
         android:layout_marginTop="4dp"
         android:text="@string/journal_date_label"
         android:textAlignment="center"
@@ -26,7 +24,6 @@
 
     <TextView
         android:id="@+id/textViewSleepDuration"
-        style="?android:listSeparatorTextViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -37,7 +34,7 @@
 
     <TextView
         android:id="@+id/textViewSleepTime"
-        style="?android:listSeparatorTextViewStyle"
+        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
@@ -47,7 +44,7 @@
 
     <TextView
         android:id="@+id/textViewWakeTime"
-        style="?android:listSeparatorTextViewStyle"
+        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
@@ -57,7 +54,7 @@
 
     <TextView
         android:id="@+id/textViewNote"
-        style="?android:listSeparatorTextViewStyle"
+        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"

@@ -96,7 +96,7 @@ public class JournalEntry {
 
     public String getDateMonthAndDay() {
 
-        DateFormat df = new SimpleDateFormat("M/d");
+        DateFormat df = new SimpleDateFormat("MMM dd");
         String fDate = df.format(mDate);
 
         return fDate;
