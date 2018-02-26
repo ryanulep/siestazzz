@@ -26,13 +26,6 @@ public class AlarmDetailFragment extends Fragment {
 
     // TODO: Add additional UI implementations
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment AlarmDetailFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static AlarmDetailFragment newInstance(UUID alarmId) {
         Bundle args = new Bundle();
         args.putSerializable(ARG_ALARM_ID, alarmId);

@@ -42,7 +42,6 @@ public class ViewPagerFragment_JournalEntryList extends Fragment {
         return view;
     }
 
-    // TODO: Ryan. There is one more detail to take care of. Overriding the onResume to updateUI.
     @Override
     public void onResume() {
         super.onResume();
