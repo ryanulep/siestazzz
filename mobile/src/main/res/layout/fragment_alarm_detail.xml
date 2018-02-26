@@ -6,34 +6,46 @@
     android:layout_height="match_parent"
     tools:context="com.ucr.buzuka.siestazzz.AlarmDetailFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- TODO: Fix the layout of this fragment -->
 
     <EditText
         android:id="@+id/alarm_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="184dp"
+        android:layout_marginStart="184dp"
+        android:layout_marginTop="158dp"
         android:text="Title"
-        app:layout_constraintBottom_toTopOf="@+id/alarm_active"
-        app:layout_constraintStart_toStartOf="@+id/alarm_time" />
+        app:layout_constraintBottom_toTopOf="@+id/alarm_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/alarm_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="176dp"
+        android:layout_marginStart="176dp"
+        android:layout_marginTop="7dp"
+        android:gravity="center_horizontal"
         android:text="TextView"
-        app:layout_constraintEnd_toEndOf="@+id/alarm_active"
+        app:layout_constraintBottom_toTopOf="@+id/alarm_active"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/alarm_title" />
 
     <CheckBox
         android:id="@+id/alarm_active"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="136dp"
-        android:layout_marginTop="152dp"
-        android:text="CheckBox"
+        android:layout_marginEnd="170dp"
+        android:layout_marginStart="169dp"
+        android:layout_marginTop="8dp"
+        android:text="Active"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/alarm_time" />
 </android.support.constraint.ConstraintLayout>

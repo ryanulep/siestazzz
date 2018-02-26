@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.ucr.buzuka.siestazzz.model.Alarm;
 import com.ucr.buzuka.siestazzz.model.BellTower;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -68,9 +69,11 @@ public class ViewPagerFragment_AlarmList extends Fragment {
 
         // bind is used to attach personal information to each list_item_alarm.
         public void bind(Alarm alarm) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMM. d - H:mm a");
+
             mAlarm = alarm;
             mTitleTextView.setText(mAlarm.getTitle());
-            mInfoTextView.setText(mAlarm.getDate().toString());
+            mInfoTextView.setText(dateFormat.format(mAlarm.getDate()));
         }
 
         @Override
@@ -90,26 +93,20 @@ public class ViewPagerFragment_AlarmList extends Fragment {
 
         @Override
         public AlarmHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-
             return new AlarmHolder(layoutInflater, parent);
         }
 
         @Override
         public void onBindViewHolder(AlarmHolder holder, int position) {
-
             //Call bind on alarm to personalize the list_item_alarm
             Alarm alarm = mAlarms.get(position);
             holder.bind(alarm);
-
         }
 
         @Override
         public int getItemCount() {
             return mAlarms.size();
         }
-
-
     }
 }
