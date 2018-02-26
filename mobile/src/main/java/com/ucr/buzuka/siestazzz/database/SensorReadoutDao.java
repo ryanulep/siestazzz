@@ -18,7 +18,7 @@ import java.util.List;
 @Dao
 public interface SensorReadoutDao {
     @Insert
-    void insetAll(List<SensorReadout> items);
+    void insertAll(List<SensorReadout> items);
 
     @Insert
     void insertAll(SensorReadout... items);

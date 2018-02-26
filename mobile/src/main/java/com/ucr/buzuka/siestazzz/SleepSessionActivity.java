@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.ucr.buzuka.siestazzz.database.AppDatabase;
 import com.ucr.buzuka.siestazzz.model.SensorReadout;
+import com.ucr.buzuka.siestazzz.model.Session;
 import com.ucr.buzuka.siestazzz.util.JSONHelper;
 
 import java.util.ArrayList;
@@ -55,16 +56,20 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
 
 //        create a new session id
         sessionID = UUID.randomUUID().toString();
-//        log session start
-        SensorReadout sensorReadout = new SensorReadout(sessionID, System.currentTimeMillis(), 0);
         //sensorReadoutList.add(sensorReadout);
+        SensorReadout sensorReadout = new SensorReadout(sessionID, System.currentTimeMillis(), 0);
+        Session         session     = new Session(sessionID);
 
 //        get an instance of database
         db = AppDatabase.getInstance(this);
 //        drop table
 //        db.sensorReadoutDao().clearTable();
+
+//        log session start
 //        insert start
         db.sensorReadoutDao().insertAll(sensorReadout);
+//        new session
+        db.sessionDao().insertAll(session);
     }
 
     /** put sensor to sleep when app not in use, will need to comment out in production.
