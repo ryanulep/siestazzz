@@ -116,7 +116,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         }
         Log.d("RECORD", myDir.getPath());
 
-        startRecording();//create, get, register accelerometer
+
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE); // get an instance of system sensor
         assert sensorManager != null;
         sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER); // get accelerometer
@@ -155,6 +155,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     protected void onResume(){
         super.onResume();
         sensorManager.registerListener(this, sensorAccelerometer, M_SENSOR_DELAY);
+        startRecording();//create, get, register accelerometer
     }
 
     protected void onStop(){
