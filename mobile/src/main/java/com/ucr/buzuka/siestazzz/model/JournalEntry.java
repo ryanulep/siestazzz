@@ -96,13 +96,12 @@ public class JournalEntry {
 
     public String getDateMonthAndDay() {
 
-        DateFormat df = new SimpleDateFormat("MMM dd");
-        String fDate = df.format(mDate);
+        DateFormat df = new SimpleDateFormat("MMM dd"); // Set Parse Grammar.
 
-        return fDate;
+        return df.format(mDate);
     }
 
     public void setDate(Date date) {
-        this.mDate = mDate;
+        this.mDate = date;
     }
 }
