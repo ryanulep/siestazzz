@@ -9,11 +9,14 @@ import com.ucr.buzuka.siestazzz.model.SensorReadout;
 
 /**
  * Created by jakex on 2/25/2018.
+ * Abstract database class
  */
 @Database(entities = {SensorReadout.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 /** Create a private instance of the database*/
     private static AppDatabase instance;
+/** Implement Dao */
+public abstract SensorReadoutDao sensorReadoutDao();
 
 /** Using context to create a database instance and pass the reference*/
     public static AppDatabase getInstance(Context context){
