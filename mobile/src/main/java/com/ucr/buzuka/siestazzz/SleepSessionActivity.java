@@ -204,9 +204,9 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
 
         // export to json file
         boolean result = JSONHelper.exportToJSON(this, sensorReadoutList);
-        if(result){
+        if (result) {
             Toast.makeText(this, "Data exported", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
             Toast.makeText(this, "Export failed", Toast.LENGTH_SHORT).show();
         }
         //finish(); //may needed for closing activity

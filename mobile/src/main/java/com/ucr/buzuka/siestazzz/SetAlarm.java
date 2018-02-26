@@ -45,6 +45,7 @@ public class SetAlarm extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Alarm Set!", Toast.LENGTH_SHORT).show();
 
                 // TODO: Add comments explainging what code is doing here.
+                // TODO: Determine why we are not adding the set alarm to BellTower
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     hour = timerClock.getHour();
                     minute = timerClock.getMinute();
@@ -58,7 +59,7 @@ public class SetAlarm extends AppCompatActivity {
                 cal.set(Calendar.SECOND,0);
                 Log.w("myApp", "Alarm");
 
-                alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),pendingIntent);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
 
                 finish();
             }

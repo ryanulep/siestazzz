@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.ucr.buzuka.siestazzz.model.Alarm;
 import com.ucr.buzuka.siestazzz.model.BellTower;
@@ -22,6 +23,7 @@ public class AlarmDetailFragment extends Fragment {
 
     private Alarm mAlarm;
     private EditText mTitleField;
+    private TextView mAlarmTime;
     private CheckBox mIsAlarmActive;
 
     // TODO: Add additional UI implementations
@@ -32,7 +34,6 @@ public class AlarmDetailFragment extends Fragment {
      *
      * @return A new instance of fragment AlarmDetailFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static AlarmDetailFragment newInstance(UUID alarmId) {
         Bundle args = new Bundle();
         args.putSerializable(ARG_ALARM_ID, alarmId);
@@ -56,9 +57,15 @@ public class AlarmDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_alarm_detail, container, false);
+
         // TODO: Wire up the fragment to the UI
         mTitleField = (EditText) v.findViewById(R.id.alarm_title);
+        mAlarmTime = (TextView) v.findViewById(R.id.alarm_time);
         mIsAlarmActive = (CheckBox) v.findViewById(R.id.alarm_active);
+
+        mTitleField.setText(mAlarm.getTitle());
+        mAlarmTime.setText(mAlarm.getDate().toString());
+        mIsAlarmActive.setActivated(mAlarm.isActive());
 
         mTitleField.addTextChangedListener(new TextWatcher() {
             @Override
@@ -80,7 +87,7 @@ public class AlarmDetailFragment extends Fragment {
         mIsAlarmActive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isActive) {
-                mIsAlarmActive.setActivated(isActive);
+                mIsAlarmActive.setChecked(isActive);
             }
         });
 
