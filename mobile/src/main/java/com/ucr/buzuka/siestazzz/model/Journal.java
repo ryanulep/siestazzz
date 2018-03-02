@@ -45,7 +45,8 @@ public class Journal {
 
             Date gDate = new GregorianCalendar(year, month, day).getTime();
 
-            journalEntry.setDate(gDate);
+            journalEntry.setSleepDate(gDate);
+            journalEntry.setWakeDate(new GregorianCalendar(year, month, day +1).getTime());
             mJournalEntries.add(journalEntry);
         }
     }

@@ -99,8 +99,8 @@ public class ViewPagerFragment_JournalEntryList extends Fragment {
 
             mJournalEntry = journalEntry;
             mJournalEntryDateTextView.setText(mJournalEntry.getDateMonthAndDay());
-            mJournalEntrySleepTextView.setText(mJournalEntry.getSleepTime());
-            mJournalEntryWakeTextView.setText(mJournalEntry.getWakeTime());
+            mJournalEntrySleepTextView.setText(mJournalEntry.getSleepHourAndMinute());
+            mJournalEntryWakeTextView.setText(mJournalEntry.getWakeDateAndTime());
             mJournalEntryHoursSleptTextView.setText(String.valueOf(mJournalEntry.getHoursSlept())); // if a method returns int you must cast to string
             mJournalEntryDebtTextView.setText(String.valueOf(mJournalEntry.getSleepDebt()));
 

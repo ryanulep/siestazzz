@@ -1,8 +1,6 @@
 package com.ucr.buzuka.siestazzz;
 
 import android.app.Activity;
-import android.app.DialogFragment;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,6 +15,7 @@ import android.widget.TextView;
 import com.ucr.buzuka.siestazzz.model.Journal;
 import com.ucr.buzuka.siestazzz.model.JournalEntry;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
@@ -34,10 +33,10 @@ public class JournalEntryFragment extends Fragment {
     private JournalEntry mJournalEntry;
     // private EditText mTitleField;
     private TextView mTitleField;
-    private Button mSleepDateStart;
-    private Button mSleepDateEnd;
-    private Button mSleepTimeStart;
-    private Button mSleepTimeEnd;
+    private Button mSleepDateStartButton;
+    private Button mSleepDateEndButton;
+    private Button mSleepTimeStartButton;
+    private Button mSleepTimeEndButton;
 
     /**
      * Notes on public static JournalEntryFragment newInstance(UUID journalEntryId):
@@ -78,31 +77,32 @@ public class JournalEntryFragment extends Fragment {
         mTitleField = (TextView) view.findViewById(R.id.journal_entry_date);
         mTitleField.setText(mJournalEntry.getDateMonthAndDay());
 
-        mSleepDateStart = (Button) view.findViewById(R.id.journal_entry_sleep_date_start);
-        mSleepDateStart.setOnClickListener(new View.OnClickListener() {
+        mSleepDateStartButton = (Button) view.findViewById(R.id.journal_entry_sleep_date_start);
+        updateSleepStartDate();
+        mSleepDateStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 android.support.v4.app.FragmentManager manager = getFragmentManager();
-                DatePickerFragment dialog = DatePickerFragment.newInstance(mJournalEntry.getDate());
-                dialog.setTargetFragment(JournalEntryFragment.this, REQUEST_DATE);
-                dialog.show(manager, DIALOG_DATE);
-            }
-        });
-        mSleepDateEnd = (Button) view.findViewById(R.id.journal_entry_sleep_date_end);
-
-        mSleepDateEnd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                android.support.v4.app.FragmentManager manager = getFragmentManager();
-                DatePickerFragment dialog = DatePickerFragment.newInstance(mJournalEntry.getDate());
+                DatePickerFragment dialog = DatePickerFragment.newInstance(mJournalEntry.getSleepDateAndTime());
                 dialog.setTargetFragment(JournalEntryFragment.this, REQUEST_DATE);
                 dialog.show(manager, DIALOG_DATE);
             }
         });
 
-        mSleepTimeStart = (Button) view.findViewById(R.id.journal_entry_sleep_time_start);
+        mSleepDateEndButton = (Button) view.findViewById(R.id.journal_entry_sleep_date_end);
+        mSleepDateEndButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.support.v4.app.FragmentManager manager = getFragmentManager();
+                DatePickerFragment dialog = DatePickerFragment.newInstance(mJournalEntry.getSleepDateAndTime());
+                dialog.setTargetFragment(JournalEntryFragment.this, REQUEST_DATE);
+                dialog.show(manager, DIALOG_DATE);
+            }
+        });
 
-        mSleepTimeEnd = (Button) view.findViewById(R.id.journal_entry_sleep_time_end);
+        mSleepTimeStartButton = (Button) view.findViewById(R.id.journal_entry_sleep_time_start);
+
+        mSleepTimeEndButton = (Button) view.findViewById(R.id.journal_entry_sleep_time_end);
 
 
 
@@ -141,8 +141,19 @@ public class JournalEntryFragment extends Fragment {
 
         if (requestCode == REQUEST_DATE) {
             Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
-            mJournalEntry.setDate(date);
-           // mDateStartButton.setText(mJournalEntry.getDate().toString());
+            mJournalEntry.setSleepDate(date);
+
+            // Note: Some code I found to do Time math.
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(mJournalEntry.getSleepDateAndTime());
+            calendar.add(Calendar.HOUR, 8);
+
+            mJournalEntry.setWakeDate(calendar.getTime()); // Auto set wake time to desired sleep time.
+            updateSleepStartDate();
         }
+    }
+
+    private void updateSleepStartDate() {
+        mSleepDateStartButton.setText(mJournalEntry.getNumbericDate());
     }
 }
