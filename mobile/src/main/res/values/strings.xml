@@ -29,6 +29,7 @@
     <string name="journal_entry_motion_light">Light</string>
     <string name="journal_entry_motion_moderate">Moderate</string>
     <string name="journal_entry_motion_heavy">Heavy</string>
+    <string name="time_picker_title">Set Time</string>
 
     <!-- Strings related to Settings -->
 

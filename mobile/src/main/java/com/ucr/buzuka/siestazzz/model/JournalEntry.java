@@ -150,6 +150,19 @@ public class JournalEntry {
         return mDesiredHoursOfSleep;
     }
 
+    public void setSleepTime(Date date) {
+
+        Calendar newDate = Calendar.getInstance();
+        newDate.setTime(date);
+
+        Calendar mTempSleepDateandTime = Calendar.getInstance();
+
+        mTempSleepDateandTime.setTime(mSleepDateAndTime);             // Set to current SleepTimeAndDate
+        mTempSleepDateandTime.set(Calendar.HOUR, newDate.get(Calendar.HOUR));
+        mTempSleepDateandTime.set(Calendar.MINUTE, newDate.get(Calendar.MINUTE));
+        this.mSleepDateAndTime = mTempSleepDateandTime.getTime();
+    }
+
     public void setRecordingPlaybackDirectory(String file_location) {
         this.mRecordingPlaybackDirectory = file_location;
     }

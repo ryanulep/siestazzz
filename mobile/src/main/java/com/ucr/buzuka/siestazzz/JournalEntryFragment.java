@@ -30,9 +30,12 @@ public class JournalEntryFragment extends Fragment {
 
     private static final String ARG_JOURNAL_ENTRY_ID = "journal_entry_id"; // Used to attach the arguments bundle to a fragment.
     private static final String DIALOG_DATE = "DialogDate";
+    private static final String DIALOG_TIME = "DialogTime";
 
     private static final int REQUEST_SLEEP_DATE = 0;
     private static final int REQUEST_WAKE_DATE = 1;
+    private static final int REQUEST_SLEEP_TIME = 2;
+    private static final int REQUEST_WAKE_TIME = 3;
 
     private JournalEntry mJournalEntry;
     // private EditText mTitleField;
@@ -109,11 +112,10 @@ public class JournalEntryFragment extends Fragment {
         mSleepTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                FragmentManager manager = getFragmentManager();
-//                DatePickerFragment dialog = DatePickerFragment.newInstance(mJournalEntry.getSleepDateAndTime());
-//                dialog.setTargetFragment(JournalEntryFragment.this, REQUEST_SLEEP_DATE);
-//                dialog.show(manager, DIALOG_DATE);
-                Toast.makeText(getContext(), "Start Time Clicked", Toast.LENGTH_SHORT).show();
+                FragmentManager manager = getFragmentManager();
+                TimePickerFragment dialog = TimePickerFragment.newInstance(mJournalEntry.getSleepDateAndTime());
+                dialog.setTargetFragment(JournalEntryFragment.this, REQUEST_SLEEP_TIME);
+                dialog.show(manager, DIALOG_TIME);
             }
         });
 //
@@ -164,6 +166,24 @@ public class JournalEntryFragment extends Fragment {
             mJournalEntry.setWakeDate(date);
 
             mWakeDateButton.setText(mJournalEntry.getNumericWakeDate());
+            updateSleepStartDate();
+        }
+
+        if (requestCode == REQUEST_SLEEP_TIME) {
+            Date time = (Date) data.getSerializableExtra(TimePickerFragment.EXTRA_TIME);
+            mJournalEntry.setSleepTime(time);
+
+            // Auto set wake time to desired sleep time + Sleep time
+//            Calendar calendar = Calendar.getInstance();
+//            calendar.setTime(mJournalEntry.getSleepDateAndTime());
+//            calendar.add(Calendar.HOUR, mJournalEntry.getDesiredHoursOfSleep());
+
+//            Log.d("JournalEntryFragment", "Sleep time: " + mJournalEntry.getSleepDateAndTime());
+//            Log.d("JournalEntryFragment", "Wake time after add: " + calendar.getTime());
+//            mJournalEntry.setWakeDateAndTime(calendar.getTime());
+            mSleepTimeButton.setText(mJournalEntry.getSleepHourAndMinute());
+//            mWakeTimeButton.setText(mJournalEntry.getWakeHourAndMinute());
+//            mWakeDateButton.setText(mJournalEntry.getNumericWakeDate());
             updateSleepStartDate();
         }
 
