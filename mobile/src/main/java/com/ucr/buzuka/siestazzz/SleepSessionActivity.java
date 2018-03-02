@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ucr.buzuka.siestazzz.database.AppDatabase;
+import com.ucr.buzuka.siestazzz.model.JournalEntry;
 import com.ucr.buzuka.siestazzz.model.SensorReadout;
 import com.ucr.buzuka.siestazzz.model.Session;
 import com.ucr.buzuka.siestazzz.util.JSONHelper;
@@ -163,6 +164,9 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         stopRecording();
         Log.d("RECORD", "onStop() called");
         sensorManager.unregisterListener(this);
+
+        // TODO Create JournalEntryObject
+        JournalEntry journalEntry = new JournalEntry();
     }
 
     @Override

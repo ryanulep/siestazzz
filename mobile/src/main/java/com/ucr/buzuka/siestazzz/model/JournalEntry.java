@@ -31,6 +31,7 @@ public class JournalEntry {
     private int mHoursSlept; // SleepDebt represents the difference between how many hours the user was actually asleep vs. how many hours the user should have slept.
     private int mSleepDebt;
     private int desiredHoursOfSleep;
+    private String mRecordingPlaybackDirectory;
 
 
 
@@ -113,5 +114,9 @@ public class JournalEntry {
 
     public void setDate(Date date) {
         this.mDate = date;
+    }
+
+    public void setRecordingPlaybackDirectory(String file_location) {
+        this.mRecordingPlaybackDirectory = file_location;
     }
 }

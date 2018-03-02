@@ -34,30 +34,30 @@
 
     <TextView
         android:id="@+id/textViewSleepTime"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="32dp"
         android:text="@string/journal_sleep_time_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewSleepDuration" />
 
     <TextView
         android:id="@+id/textViewWakeTime"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="32dp"
         android:text="@string/journal_wake_time_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewSleepTime" />
 
     <TextView
         android:id="@+id/textViewNote"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:text="@string/journal_note_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewWakeTime" />
@@ -66,65 +66,41 @@
         android:id="@+id/textViewSleepDurationAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="8 hours"
-        app:layout_constraintBottom_toTopOf="@+id/editTextSleepTimeStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.93"
         app:layout_constraintStart_toEndOf="@+id/textViewSleepDuration"
         app:layout_constraintTop_toBottomOf="@+id/journal_entry_date" />
 
 
-    <EditText
-        android:id="@+id/editTextSleepTimeStart"
-        android:layout_width="67dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:ems="10"
-        android:inputType="time"
-        android:textSize="12sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textViewSleepTime"
-        app:layout_constraintEnd_toStartOf="@+id/editTextWakeTimeEnd"
-        app:layout_constraintHorizontal_bias="0.972"
-        app:layout_constraintStart_toEndOf="@+id/textViewSleepTime" />
-
-    <EditText
-        android:id="@+id/editTextSleepTimeEnd"
-        android:layout_width="67dp"
+    <Button
+        android:id="@+id/journal_entry_sleep_date_start"
+        android:layout_width="80"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:inputType="time"
-        android:textSize="12sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/editTextWakeTimeStart"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <EditText
-        android:id="@+id/editTextWakeTimeStart"
-        android:layout_width="67dp"
-        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:ems="10"
-        android:inputType="time"
-        android:textSize="12sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textViewWakeTime"
-        app:layout_constraintEnd_toStartOf="@+id/editTextSleepTimeEnd"
-        app:layout_constraintHorizontal_bias="0.975"
-        app:layout_constraintStart_toEndOf="@+id/textViewWakeTime" />
+        android:text="start date"
+        android:textSize="10sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/journal_entry_sleep_time_start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toEndOf="@+id/journal_entry_sleep_time_start" />
 
-    <EditText
-        android:id="@+id/editTextWakeTimeEnd"
-        android:layout_width="67dp"
+    <Button
+        android:id="@+id/journal_entry_sleep_date_end"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:inputType="time"
-        android:textSize="12sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/editTextSleepTimeStart"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_marginStart="8dp"
+        android:text="End Date"
+        android:textSize="10sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/journal_entry_sleep_time_end"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/journal_entry_sleep_time_end" />
 
     <MultiAutoCompleteTextView
         android:id="@+id/multiAutoCompleteTextView"
@@ -137,6 +113,64 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.652"
         app:layout_constraintStart_toEndOf="@+id/textViewNote" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/journal_entry_play_sound"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="60dp"
+        android:text="@string/journal_entry_motion"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNote" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:text="@string/journal_entry_motion_none"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        tools:text="@string/journal_entry_motion_none" />
+
+    <Button
+        android:id="@+id/journal_entry_sleep_time_start"
+        android:layout_width="80"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:text="start time"
+        android:textSize="10sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textViewSleepTime"
+        app:layout_constraintStart_toEndOf="@+id/textViewSleepTime" />
+
+    <Button
+        android:id="@+id/journal_entry_sleep_time_end"
+        android:layout_width="80"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:text="end time"
+        android:textSize="10sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textViewWakeTime"
+        app:layout_constraintStart_toEndOf="@+id/textViewWakeTime" />
 
 
 </android.support.constraint.ConstraintLayout>

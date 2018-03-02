@@ -1,5 +1,9 @@
 package com.ucr.buzuka.siestazzz;
 
+import android.app.Activity;
+import android.app.DialogFragment;
+import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -7,11 +11,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.ucr.buzuka.siestazzz.model.Journal;
 import com.ucr.buzuka.siestazzz.model.JournalEntry;
 
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -21,10 +27,17 @@ import java.util.UUID;
 public class JournalEntryFragment extends Fragment {
 
     private static final String ARG_JOURNAL_ENTRY_ID = "journal_entry_id"; // Used to attach the arguments bundle to a fragment.
+    private static final String DIALOG_DATE = "DialogDate";
+
+    private static final int REQUEST_DATE = 0;
 
     private JournalEntry mJournalEntry;
     // private EditText mTitleField;
-    private TextView mDateField;
+    private TextView mTitleField;
+    private Button mSleepDateStart;
+    private Button mSleepDateEnd;
+    private Button mSleepTimeStart;
+    private Button mSleepTimeEnd;
 
     /**
      * Notes on public static JournalEntryFragment newInstance(UUID journalEntryId):
@@ -62,8 +75,40 @@ public class JournalEntryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_journal_entry, container, false);
 
-        mDateField = (TextView) view.findViewById(R.id.journal_entry_date);
-        mDateField.setText(mJournalEntry.getDateMonthAndDay());
+        mTitleField = (TextView) view.findViewById(R.id.journal_entry_date);
+        mTitleField.setText(mJournalEntry.getDateMonthAndDay());
+
+        mSleepDateStart = (Button) view.findViewById(R.id.journal_entry_sleep_date_start);
+        mSleepDateStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.support.v4.app.FragmentManager manager = getFragmentManager();
+                DatePickerFragment dialog = DatePickerFragment.newInstance(mJournalEntry.getDate());
+                dialog.setTargetFragment(JournalEntryFragment.this, REQUEST_DATE);
+                dialog.show(manager, DIALOG_DATE);
+            }
+        });
+        mSleepDateEnd = (Button) view.findViewById(R.id.journal_entry_sleep_date_end);
+
+        mSleepDateEnd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.support.v4.app.FragmentManager manager = getFragmentManager();
+                DatePickerFragment dialog = DatePickerFragment.newInstance(mJournalEntry.getDate());
+                dialog.setTargetFragment(JournalEntryFragment.this, REQUEST_DATE);
+                dialog.show(manager, DIALOG_DATE);
+            }
+        });
+
+        mSleepTimeStart = (Button) view.findViewById(R.id.journal_entry_sleep_time_start);
+
+        mSleepTimeEnd = (Button) view.findViewById(R.id.journal_entry_sleep_time_end);
+
+
+
+
+
+
 
         // TODO: Wire up the rest of the UI
 
@@ -86,5 +131,18 @@ public class JournalEntryFragment extends Fragment {
 //        });
 
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+
+        if (requestCode == REQUEST_DATE) {
+            Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+            mJournalEntry.setDate(date);
+           // mDateStartButton.setText(mJournalEntry.getDate().toString());
+        }
     }
 }
