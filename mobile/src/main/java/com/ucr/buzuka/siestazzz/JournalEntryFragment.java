@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ucr.buzuka.siestazzz.model.Journal;
 import com.ucr.buzuka.siestazzz.model.JournalEntry;
@@ -30,7 +31,7 @@ public class JournalEntryFragment extends Fragment {
     private static final String ARG_JOURNAL_ENTRY_ID = "journal_entry_id"; // Used to attach the arguments bundle to a fragment.
     private static final String DIALOG_DATE = "DialogDate";
 
-    private static final int REQUEST_DATE = 0;
+    private static final int REQUEST_SLEEP_DATE = 0;
     private static final int REQUEST_WAKE_DATE = 1;
 
     private JournalEntry mJournalEntry;
@@ -46,11 +47,10 @@ public class JournalEntryFragment extends Fragment {
      * =========================================================================================================
      * To attach the arguments bundle to a fragment, you call Fragment.setArguments(Bundle). Attaching
      * arguments to a fragment must be done after the fragment is created but before it is added to an activity.
-     *
+     * <p>
      * To hit this window. It is a common Android programming convection to add a static method named
      * newInstance() to the Fragment class. This method creates the fragment instance and bundles up and
      * sets it s arguments.
-     *
      */
 
     // Attaching arguments to a fragment
@@ -74,7 +74,7 @@ public class JournalEntryFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_journal_entry, container, false);
 
         mTitleField = (TextView) view.findViewById(R.id.journal_entry_date);
@@ -87,7 +87,7 @@ public class JournalEntryFragment extends Fragment {
             public void onClick(View v) {
                 FragmentManager manager = getFragmentManager();
                 DatePickerFragment dialog = DatePickerFragment.newInstance(mJournalEntry.getSleepDateAndTime());
-                dialog.setTargetFragment(JournalEntryFragment.this, REQUEST_DATE);
+                dialog.setTargetFragment(JournalEntryFragment.this, REQUEST_SLEEP_DATE);
                 dialog.show(manager, DIALOG_DATE);
             }
         });
@@ -106,15 +106,28 @@ public class JournalEntryFragment extends Fragment {
 
         mSleepTimeButton = (Button) view.findViewById(R.id.journal_entry_sleep_time);
         mSleepTimeButton.setText(mJournalEntry.getSleepHourAndMinute());
-        mSleepDateButton.setOnClickListener(new View.OnClickListener() {
+        mSleepTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager manager = getFragmentManager();
-                DatePickerFragment dialog = DatePickerFragment.newInstance(mJournalEntry.getSleepDateAndTime());
-                dialog.setTargetFragment(JournalEntryFragment.this, REQUEST_DATE);
-                dialog.show(manager, DIALOG_DATE);
+//                FragmentManager manager = getFragmentManager();
+//                DatePickerFragment dialog = DatePickerFragment.newInstance(mJournalEntry.getSleepDateAndTime());
+//                dialog.setTargetFragment(JournalEntryFragment.this, REQUEST_SLEEP_DATE);
+//                dialog.show(manager, DIALOG_DATE);
+                Toast.makeText(getContext(), "Start Time Clicked", Toast.LENGTH_SHORT).show();
             }
         });
+//
+//        mWakeTimeButton = (Button) view.findViewById(R.id.journal_entry_wake_time);
+//        mWakeTimeButton.setText(mJournalEntry.getWakeHourAndMinute());
+//        mWakeDateButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                FragmentManager manager = getFragmentManager();
+////                DatePickerFragment dialog = DatePickerFragment.newInstance(mJournalEntry.getSleepDateAndTime());
+////                dialog.setTargetFragment(JournalEntryFragment.this, REQUEST_SLEEP_DATE);
+////                dialog.show(manager, DIALOG_DATE);
+//            }
+//        });
 
 //        mSleepDateButton = (Button) view.findViewById(R.id.journal_entry_sleep_time);
 //
@@ -130,7 +143,7 @@ public class JournalEntryFragment extends Fragment {
             return;
         }
 
-        if (requestCode == REQUEST_DATE) {
+        if (requestCode == REQUEST_SLEEP_DATE) {
             Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
             mJournalEntry.setSleepDate(date);
 
@@ -158,16 +171,9 @@ public class JournalEntryFragment extends Fragment {
 
     private void updateSleepStartDate() {
         mSleepDateButton.setText(mJournalEntry.getNumericSleepDate());
-      //  mWakeDateButton.setText(mJournalEntry.getNumericWakeDate());
+        //  mWakeDateButton.setText(mJournalEntry.getNumericWakeDate());
     }
 }
-
-
-
-
-
-
-
 
 
 // TODO: Wire up the rest of the UI

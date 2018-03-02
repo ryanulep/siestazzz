@@ -78,25 +78,26 @@
 
     <Button
         android:id="@+id/journal_entry_sleep_date"
-        android:layout_width="80dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="8dp"
         android:ems="10"
         android:text="05/20/1990"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/journal_entry_sleep_time"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/journal_entry_sleep_time" />
 
     <Button
         android:id="@+id/journal_entry_wake_date"
-        android:layout_width="80dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="8dp"
+        android:ems="10"
         android:text="05/21/1990"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/journal_entry_wake_time"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/journal_entry_wake_time" />
@@ -152,21 +153,21 @@
 
     <Button
         android:id="@+id/journal_entry_sleep_time"
-        android:layout_width="80dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
+        android:layout_marginStart="40dp"
         android:text="06:59 PM"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/textViewSleepTime"
         app:layout_constraintStart_toEndOf="@+id/textViewSleepTime" />
 
     <Button
         android:id="@+id/journal_entry_wake_time"
-        android:layout_width="80dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
+        android:layout_marginStart="40dp"
         android:text="07:00 PM"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/textViewWakeTime"
         app:layout_constraintStart_toEndOf="@+id/textViewWakeTime" />
 
