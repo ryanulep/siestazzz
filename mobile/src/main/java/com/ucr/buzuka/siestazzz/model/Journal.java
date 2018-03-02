@@ -36,17 +36,22 @@ public class Journal {
             Date date = new Date();
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
+//            int year = calendar.get(Calendar.YEAR);
+//            int month = calendar.get(Calendar.MONTH);
             calendar.add((Calendar.DAY_OF_MONTH), -i);
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
+//            int day = calendar.get(Calendar.DAY_OF_MONTH);
 
 
 
-            Date gDate = new GregorianCalendar(year, month, day).getTime();
+//            Date gDate = new GregorianCalendar(year, month, day).getTime();
 
-            journalEntry.setSleepDate(gDate);
-            journalEntry.setWakeDate(new GregorianCalendar(year, month, day +1).getTime());
+//            journalEntry.setSleepDate(gDate);
+            journalEntry.setWakeDateAndTime(calendar.getTime());
+
+            calendar.add((Calendar.HOUR), -8);
+
+            journalEntry.setSleepDateAndTime(calendar.getTime());
+
             mJournalEntries.add(journalEntry);
         }
     }
