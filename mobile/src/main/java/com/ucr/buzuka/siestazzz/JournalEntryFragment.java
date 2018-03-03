@@ -7,18 +7,15 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ucr.buzuka.siestazzz.model.Journal;
 import com.ucr.buzuka.siestazzz.model.JournalEntry;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
@@ -44,6 +41,7 @@ public class JournalEntryFragment extends Fragment {
     private Button mWakeDateButton;
     private Button mSleepTimeButton;
     private Button mWakeTimeButton;
+    private TextView mSleepDurationField;
 
     /**
      * Notes on public static JournalEntryFragment newInstance(UUID journalEntryId):
@@ -83,8 +81,12 @@ public class JournalEntryFragment extends Fragment {
         mTitleField = (TextView) view.findViewById(R.id.journal_entry_date);
         mTitleField.setText(mJournalEntry.getWakeMonthAndDay());
 
+        mSleepDurationField = (TextView) view.findViewById(R.id.journal_entry_sleep_duration_value);
+        updateHoursSlept();
+
         mSleepDateButton = (Button) view.findViewById(R.id.journal_entry_sleep_date);
         updateSleepStartDate();
+
         mSleepDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,7 +103,7 @@ public class JournalEntryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentManager manager = getFragmentManager();
-                DatePickerFragment dialog = DatePickerFragment.newInstance(mJournalEntry.getSleepDateAndTime());
+                DatePickerFragment dialog = DatePickerFragment.newInstance(mJournalEntry.getWakeDateAndTime());
                 dialog.setTargetFragment(JournalEntryFragment.this, REQUEST_WAKE_DATE);
                 dialog.show(manager, DIALOG_DATE);
             }
@@ -118,23 +120,18 @@ public class JournalEntryFragment extends Fragment {
                 dialog.show(manager, DIALOG_TIME);
             }
         });
-//
-//        mWakeTimeButton = (Button) view.findViewById(R.id.journal_entry_wake_time);
-//        mWakeTimeButton.setText(mJournalEntry.getWakeHourAndMinute());
-//        mWakeDateButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                FragmentManager manager = getFragmentManager();
-////                DatePickerFragment dialog = DatePickerFragment.newInstance(mJournalEntry.getSleepDateAndTime());
-////                dialog.setTargetFragment(JournalEntryFragment.this, REQUEST_SLEEP_DATE);
-////                dialog.show(manager, DIALOG_DATE);
-//            }
-//        });
 
-//        mSleepDateButton = (Button) view.findViewById(R.id.journal_entry_sleep_time);
-//
-//        mWakeDateButton = (Button) view.findViewById(R.id.journal_entry_wake_time);
-
+        mWakeTimeButton = (Button) view.findViewById(R.id.journal_entry_wake_time);
+        mWakeTimeButton.setText(mJournalEntry.getWakeHourAndMinute());
+        mWakeTimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = getFragmentManager();
+                TimePickerFragment dialog = TimePickerFragment.newInstance(mJournalEntry.getWakeDateAndTime());
+                dialog.setTargetFragment(JournalEntryFragment.this, REQUEST_WAKE_TIME);
+                dialog.show(manager, DIALOG_TIME);
+            }
+        });
 
         return view;
     }
@@ -148,17 +145,9 @@ public class JournalEntryFragment extends Fragment {
         if (requestCode == REQUEST_SLEEP_DATE) {
             Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
             mJournalEntry.setSleepDate(date);
-
-            // Auto set wake time to desired sleep time + Sleep time
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(mJournalEntry.getSleepDateAndTime());
-            calendar.add(Calendar.HOUR, mJournalEntry.getDesiredHoursOfSleep());
-
-            Log.d("JournalEntryFragment", "Sleep time: " + mJournalEntry.getSleepDateAndTime());
-            Log.d("JournalEntryFragment", "Wake time after add: " + calendar.getTime());
-            mJournalEntry.setWakeDate(calendar.getTime());
-            mWakeDateButton.setText(mJournalEntry.getNumericWakeDate());
             updateSleepStartDate();
+            updateHoursSlept();
+
         }
 
         if (requestCode == REQUEST_WAKE_DATE) {
@@ -166,32 +155,37 @@ public class JournalEntryFragment extends Fragment {
             mJournalEntry.setWakeDate(date);
 
             mWakeDateButton.setText(mJournalEntry.getNumericWakeDate());
-            updateSleepStartDate();
+            mTitleField.setText(mJournalEntry.getWakeMonthAndDay());
+            updateHoursSlept();
+
         }
 
         if (requestCode == REQUEST_SLEEP_TIME) {
             Date time = (Date) data.getSerializableExtra(TimePickerFragment.EXTRA_TIME);
             mJournalEntry.setSleepTime(time);
 
-            // Auto set wake time to desired sleep time + Sleep time
-//            Calendar calendar = Calendar.getInstance();
-//            calendar.setTime(mJournalEntry.getSleepDateAndTime());
-//            calendar.add(Calendar.HOUR, mJournalEntry.getDesiredHoursOfSleep());
-
-//            Log.d("JournalEntryFragment", "Sleep time: " + mJournalEntry.getSleepDateAndTime());
-//            Log.d("JournalEntryFragment", "Wake time after add: " + calendar.getTime());
-//            mJournalEntry.setWakeDateAndTime(calendar.getTime());
             mSleepTimeButton.setText(mJournalEntry.getSleepHourAndMinute());
-//            mWakeTimeButton.setText(mJournalEntry.getWakeHourAndMinute());
-//            mWakeDateButton.setText(mJournalEntry.getNumericWakeDate());
-            updateSleepStartDate();
+            updateHoursSlept();
+        }
+
+        //TODO COMPLETE BELOW
+        if (requestCode == REQUEST_WAKE_TIME) {
+            Date time = (Date) data.getSerializableExtra(TimePickerFragment.EXTRA_TIME);
+            mJournalEntry.setWakeTime(time);  // TODO Create Method.
+
+            mWakeTimeButton.setText(mJournalEntry.getWakeHourAndMinute());
+            updateHoursSlept();
         }
 
     }
 
     private void updateSleepStartDate() {
         mSleepDateButton.setText(mJournalEntry.getNumericSleepDate());
-        //  mWakeDateButton.setText(mJournalEntry.getNumericWakeDate());
+//        mWakeDateButton.setText(mJournalEntry.getNumericWakeDate());
+    }
+
+    private void updateHoursSlept() {
+        mSleepDurationField.setText(String.valueOf(mJournalEntry.getHoursSlept()));
     }
 }
 

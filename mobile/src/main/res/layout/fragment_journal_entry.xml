@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textViewSleepDuration"
+        android:id="@+id/journal_entry_sleep_duration_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -40,7 +40,7 @@
         android:layout_marginTop="32dp"
         android:text="@string/journal_sleep_time_label"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSleepDuration" />
+        app:layout_constraintTop_toBottomOf="@+id/journal_entry_sleep_duration_label" />
 
     <TextView
         android:id="@+id/textViewWakeTime"
@@ -63,7 +63,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewWakeTime" />
 
     <TextView
-        android:id="@+id/textViewSleepDurationAmount"
+        android:id="@+id/journal_entry_sleep_duration_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -72,7 +72,7 @@
         android:text="8 hours"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.93"
-        app:layout_constraintStart_toEndOf="@+id/textViewSleepDuration"
+        app:layout_constraintStart_toEndOf="@+id/journal_entry_sleep_duration_label"
         app:layout_constraintTop_toBottomOf="@+id/journal_entry_date" />
 
 
