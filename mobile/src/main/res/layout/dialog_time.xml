@@ -3,5 +3,4 @@
     android:id="@+id/dialog_time_picker"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
 </TimePicker>

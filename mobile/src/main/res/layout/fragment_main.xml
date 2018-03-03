@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/mainbackground">
 
-    <!-- TODO: In setAlarmButton replace "@drawable/setalarm" with "@drawable/alarms"-->
-
     <ImageView
         android:id="@+id/timeView"
         android:layout_width="wrap_content"

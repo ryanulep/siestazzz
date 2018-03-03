@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ucr.buzuka.siestazzz.model.Journal;
 import com.ucr.buzuka.siestazzz.model.JournalEntry;
@@ -42,6 +43,7 @@ public class JournalEntryFragment extends Fragment {
     private Button mSleepTimeButton;
     private Button mWakeTimeButton;
     private TextView mSleepDurationField;
+    private Button mCloseButton;
 
     /**
      * Notes on public static JournalEntryFragment newInstance(UUID journalEntryId):
@@ -130,6 +132,14 @@ public class JournalEntryFragment extends Fragment {
                 TimePickerFragment dialog = TimePickerFragment.newInstance(mJournalEntry.getWakeDateAndTime());
                 dialog.setTargetFragment(JournalEntryFragment.this, REQUEST_WAKE_TIME);
                 dialog.show(manager, DIALOG_TIME);
+            }
+        });
+
+        mCloseButton = (Button) view.findViewById(R.id.closebutton);
+        mCloseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
             }
         });
 

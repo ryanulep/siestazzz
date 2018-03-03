@@ -5,17 +5,19 @@
     android:id="@+id/contraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/mainbackground"
     tools:layout_editor_absoluteX="16dp"
     tools:layout_editor_absoluteY="25dp">
 
     <TextView
         android:id="@+id/journal_entry_date"
         style="?android:listSeparatorTextViewStyle"
-        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="24dp"
         android:text="@string/journal_date_label"
+        android:fontFamily="Roboto"
         android:textAlignment="center"
+        android:textColor="@color/colorPrimaryLight"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -29,6 +31,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="@string/journal_sleep_duration_label"
+        android:textColor="@android:color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/journal_entry_date" />
 
@@ -39,6 +42,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:text="@string/journal_sleep_time_label"
+        android:textColor="@android:color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/journal_entry_sleep_duration_label" />
 
@@ -49,6 +53,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:text="@string/journal_wake_time_label"
+        android:textColor="@android:color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewSleepTime" />
 
@@ -59,6 +64,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:text="@string/journal_note_label"
+        android:textColor="@android:color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewWakeTime" />
 
@@ -70,11 +76,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="8 hours"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.93"
         app:layout_constraintStart_toEndOf="@+id/journal_entry_sleep_duration_label"
         app:layout_constraintTop_toBottomOf="@+id/journal_entry_date" />
-
 
     <Button
         android:id="@+id/journal_entry_sleep_date"
@@ -85,6 +91,10 @@
         android:ems="10"
         android:text="05/20/1990"
         android:textSize="12sp"
+        android:fontFamily="Roboto"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@color/purple"
         app:layout_constraintBaseline_toBaselineOf="@+id/journal_entry_sleep_time"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/journal_entry_sleep_time" />
@@ -97,7 +107,11 @@
         android:layout_marginStart="8dp"
         android:ems="10"
         android:text="05/21/1990"
+        android:fontFamily="Roboto"
+        android:textStyle="bold"
         android:textSize="12sp"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@color/purple"
         app:layout_constraintBaseline_toBaselineOf="@+id/journal_entry_wake_time"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/journal_entry_wake_time" />
@@ -108,25 +122,12 @@
         android:layout_height="0dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:textColor="@android:color/white"
+        android:fontFamily="Roboto"
         app:layout_constraintBaseline_toBaselineOf="@+id/textViewNote"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.652"
         app:layout_constraintStart_toEndOf="@+id/textViewNote" />
-
-    <Button
-        android:id="@+id/sleep_session_play_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/journal_entry_play_sound"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/journal_entry_motion_output" />
 
     <TextView
         android:id="@+id/journal_entry_motion"
@@ -135,7 +136,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="60dp"
         android:text="@string/journal_entry_motion"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/white"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -149,7 +150,8 @@
         android:text="@string/journal_entry_motion_none"
         app:layout_constraintBaseline_toBaselineOf="@+id/journal_entry_motion"
         app:layout_constraintStart_toEndOf="@+id/journal_entry_motion"
-        tools:text="@string/journal_entry_motion_none" />
+        tools:text="@string/journal_entry_motion_none"
+        android:textColor="@android:color/white" />
 
     <Button
         android:id="@+id/journal_entry_sleep_time"
@@ -157,6 +159,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:text="06:59 PM"
+        android:fontFamily="Roboto"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@color/purple"
         android:textSize="12sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/textViewSleepTime"
         app:layout_constraintStart_toEndOf="@+id/textViewSleepTime" />
@@ -168,8 +174,43 @@
         android:layout_marginStart="40dp"
         android:text="07:00 PM"
         android:textSize="12sp"
+        android:fontFamily="Roboto"
+        android:textStyle="bold"
+        android:backgroundTint="@color/purple"
+        android:textColor="@android:color/white"
         app:layout_constraintBaseline_toBaselineOf="@+id/textViewWakeTime"
         app:layout_constraintStart_toEndOf="@+id/textViewWakeTime" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/sleep_session_play_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@mipmap/playbackbutton"
+            app:layout_constraintBottom_toTopOf="@+id/button2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/journal_entry_motion_output" />
+
+        <Button
+            android:id="@+id/closebutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="52dp"
+            android:background="@drawable/closebutton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </LinearLayout>
 
 
 </android.support.constraint.ConstraintLayout>

@@ -77,7 +77,7 @@ public class ViewPagerFragment_JournalEntryList extends Fragment {
 
         // Inflate the list item and immediately pass it to the super ViewHolders constructor.
         public JournalEntryHolder(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.list_item_joural_entry, parent, false));
+            super(inflater.inflate(R.layout.list_item_journal_entry, parent, false));
 
             itemView.setOnClickListener(this);
 
