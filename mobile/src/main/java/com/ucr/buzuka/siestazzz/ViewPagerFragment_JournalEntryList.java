@@ -42,7 +42,6 @@ public class ViewPagerFragment_JournalEntryList extends Fragment {
         return view;
     }
 
-    // TODO: Ryan. There is one more detail to take care of. Overriding the onResume to updateUI.
     @Override
     public void onResume() {
         super.onResume();
@@ -99,9 +98,9 @@ public class ViewPagerFragment_JournalEntryList extends Fragment {
         public void bind (JournalEntry journalEntry) {
 
             mJournalEntry = journalEntry;
-            mJournalEntryDateTextView.setText(mJournalEntry.getDateMonthAndDay());
-            mJournalEntrySleepTextView.setText(mJournalEntry.getSleepTime());
-            mJournalEntryWakeTextView.setText(mJournalEntry.getWakeTime());
+            mJournalEntryDateTextView.setText(mJournalEntry.getWakeMonthAndDay());
+            mJournalEntrySleepTextView.setText(mJournalEntry.getSleepHourAndMinute());
+            mJournalEntryWakeTextView.setText(mJournalEntry.getWakeHourAndMinute());
             mJournalEntryHoursSleptTextView.setText(String.valueOf(mJournalEntry.getHoursSlept())); // if a method returns int you must cast to string
             mJournalEntryDebtTextView.setText(String.valueOf(mJournalEntry.getSleepDebt()));
 

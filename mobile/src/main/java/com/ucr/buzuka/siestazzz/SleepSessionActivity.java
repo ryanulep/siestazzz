@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ucr.buzuka.siestazzz.database.AppDatabase;
+import com.ucr.buzuka.siestazzz.model.JournalEntry;
 import com.ucr.buzuka.siestazzz.model.SensorReadout;
 import com.ucr.buzuka.siestazzz.model.Session;
 import com.ucr.buzuka.siestazzz.util.JSONHelper;
@@ -116,7 +117,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         }
         Log.d("RECORD", myDir.getPath());
 
-        startRecording();//create, get, register accelerometer
+
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE); // get an instance of system sensor
         assert sensorManager != null;
         sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER); // get accelerometer
@@ -155,6 +156,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     protected void onResume(){
         super.onResume();
         sensorManager.registerListener(this, sensorAccelerometer, M_SENSOR_DELAY);
+        startRecording();//create, get, register accelerometer
     }
 
     protected void onStop(){
@@ -162,6 +164,9 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         stopRecording();
         Log.d("RECORD", "onStop() called");
         sensorManager.unregisterListener(this);
+
+        // TODO Create JournalEntryObject
+        JournalEntry journalEntry = new JournalEntry();
     }
 
     @Override

@@ -28,12 +28,6 @@ public class AlarmDetailFragment extends Fragment {
 
     // TODO: Add additional UI implementations
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment AlarmDetailFragment.
-     */
     public static AlarmDetailFragment newInstance(UUID alarmId) {
         Bundle args = new Bundle();
         args.putSerializable(ARG_ALARM_ID, alarmId);
@@ -57,7 +51,6 @@ public class AlarmDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_alarm_detail, container, false);
-
         // TODO: Wire up the fragment to the UI
         mTitleField = (EditText) v.findViewById(R.id.alarm_title);
         mAlarmTime = (TextView) v.findViewById(R.id.alarm_time);

@@ -1,21 +1,11 @@
 package com.ucr.buzuka.siestazzz.model;
 
-import android.content.Context;
-import android.media.MediaPlayer;
-import android.util.Log;
-import android.view.View;
-
-import java.io.IOException;
 import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.Month;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
-import android.content.Context;
-
-import javax.xml.datatype.Duration;
 
 /**
  * Created by Rick Boshae on 2/18/18.
@@ -25,66 +15,83 @@ import javax.xml.datatype.Duration;
 public class JournalEntry {
     private UUID mId;
     private String mTitle;
-    private Date mDate;
-    private Date mSleepTime;
-    private Date mWakeTime;
+    private Date mSleepDateAndTime; // keeps track of sleep date and time
+    private Date mWakeDateAndTime;  // keeps track of time and date
     private int mHoursSlept; // SleepDebt represents the difference between how many hours the user was actually asleep vs. how many hours the user should have slept.
     private int mSleepDebt;
-    private int desiredHoursOfSleep;
+    private int mDesiredHoursOfSleep;
+    private String mRecordingPlaybackDirectory;
 
 
 
     public JournalEntry() {
-        mDate = new Date();
         mId = UUID.randomUUID();
-        mSleepTime = mDate;
-        desiredHoursOfSleep = 8;
+        mDesiredHoursOfSleep = 8;
 
-        // Some code I found to do Time math.
+        mWakeDateAndTime = new Date();
+
+        // Note: Some code I found to do Time math.
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(mSleepTime);
-        calendar.add(Calendar.HOUR, 8);
+        calendar.setTime(mWakeDateAndTime);
+        calendar.add(Calendar.HOUR, -1*(mDesiredHoursOfSleep));
 
-        mWakeTime = calendar.getTime();
+        mSleepDateAndTime = calendar.getTime();
     }
 
     public int getHoursSlept() {
-        long sleepDiff = Math.abs(mWakeTime.getTime() - mSleepTime.getTime())/(1000*60*60);
+        long sleepDiff = Math.abs(mWakeDateAndTime.getTime() - mSleepDateAndTime.getTime())/(1000*60*60);
         mHoursSlept = (int)sleepDiff;
         return mHoursSlept;
     }
 
     // SleepDebt represents the difference between how many hours the user was actually asleep vs. how many hours the user should have slept.
     public int getSleepDebt() {
-
-        mSleepDebt = desiredHoursOfSleep - getHoursSlept();
+        mSleepDebt = mDesiredHoursOfSleep - getHoursSlept();
         return mSleepDebt;
     }
 
-    public String getWakeTime() {
+    public String getWakeHourAndMinute() {
 
         DateFormat df = new SimpleDateFormat("h:mm a");
-        String fWakeTime = df.format(mWakeTime);
+        String fWakeTime = df.format(mWakeDateAndTime);
 
         return fWakeTime;
     }
 
-    public void setWake(Time wakeTime) {
-        this.mWakeTime = wakeTime;
+    public void setWakeTime(Date wakeTime) {
+
+        Calendar newDate = Calendar.getInstance();
+        newDate.setTime(wakeTime);
+
+        Calendar mTempWakeDateAndTime = Calendar.getInstance();
+
+        mTempWakeDateAndTime.setTime(mWakeDateAndTime);             // Set to current SleepTimeAndDate
+        mTempWakeDateAndTime.set(Calendar.HOUR, newDate.get(Calendar.HOUR));
+        mTempWakeDateAndTime.set(Calendar.MINUTE, newDate.get(Calendar.MINUTE));
+        this.mWakeDateAndTime = mTempWakeDateAndTime.getTime();
     }
 
 
 
-    public String getSleepTime() {
+    public String getSleepHourAndMinute() {
 
         DateFormat df = new SimpleDateFormat("h:mm a");
-        String fSleepTime = df.format(mSleepTime);
+        String fSleepTime = df.format(mSleepDateAndTime);
 
         return fSleepTime;
     }
 
-    public void setSleepTime(Time sleepTime) {
-        this.mSleepTime = sleepTime;
+    public Date getWakeDateAndTime() {
+
+        return this.mWakeDateAndTime;
+    }
+
+    public void setSleepDateAndTime(Date sleepDateAndTime) {
+        this.mSleepDateAndTime = sleepDateAndTime;
+    }
+
+    public void setWakeDateAndTime(Date wakeDateAndTime) {
+        this.mWakeDateAndTime = wakeDateAndTime;
     }
 
 
@@ -100,19 +107,86 @@ public class JournalEntry {
         this.mTitle = title;
     }
 
-    public Date getDate() {
-        return mDate;
+    public Date getSleepDateAndTime() {
+        return mSleepDateAndTime;
     }
 
-    public String getDateMonthAndDay() {
+    // Returns Values in the Form of: Dec 25
+    public String getSleepMonthAndDay() {
 
-        DateFormat df = new SimpleDateFormat("M/d");
-        String fDate = df.format(mDate);
+        DateFormat df = new SimpleDateFormat("MMM dd"); // Set Parse Grammar.
 
-        return fDate;
+        return df.format(mSleepDateAndTime);
     }
 
-    public void setDate(Date date) {
-        this.mDate = mDate;
+    // Returns Values in the Form of: Dec 25
+    public String getWakeMonthAndDay() {
+
+        DateFormat df = new SimpleDateFormat("MMM dd"); // Set Parse Grammar.
+
+        return df.format(mWakeDateAndTime);
+    }
+
+    // Returns Values in the Form of: MM/DD/YYYY
+    public String getNumericSleepDate() {
+
+        DateFormat df = new SimpleDateFormat("MM/dd/YY"); // Set Parse Grammar.
+
+        return df.format(mSleepDateAndTime);
+    }
+
+    // Returns Values in the Form of: MM/DD/YYYY
+    public String getNumericWakeDate() {
+
+        DateFormat df = new SimpleDateFormat("MM/dd/YY"); // Set Parse Grammar.
+
+        return df.format(mWakeDateAndTime);
+    }
+
+    public void setSleepDate(Date date) {
+        Calendar newDate = Calendar.getInstance();
+        newDate.setTime(date);
+
+        Calendar mTempSleepDateAndTime = Calendar.getInstance();
+
+        mTempSleepDateAndTime.setTime(mSleepDateAndTime);             // Set to current SleepTimeAndDate
+        mTempSleepDateAndTime.set(Calendar.YEAR, newDate.get(Calendar.YEAR));
+        mTempSleepDateAndTime.set(Calendar.MONTH, newDate.get(Calendar.MONTH));
+        mTempSleepDateAndTime.set(Calendar.DAY_OF_MONTH, newDate.get(Calendar.DAY_OF_MONTH));
+        this.mSleepDateAndTime = mTempSleepDateAndTime.getTime();
+    }
+    public void setWakeDate(Date date) {
+
+        Calendar newDate = Calendar.getInstance();
+        newDate.setTime(date);
+
+        Calendar mTempWakeDateAndTime = Calendar.getInstance();
+
+        mTempWakeDateAndTime.setTime(mWakeDateAndTime);             // Set to current SleepTimeAndDate
+        mTempWakeDateAndTime.set(Calendar.YEAR, newDate.get(Calendar.YEAR));
+        mTempWakeDateAndTime.set(Calendar.MONTH, newDate.get(Calendar.MONTH));
+        mTempWakeDateAndTime.set(Calendar.DAY_OF_MONTH, newDate.get(Calendar.DAY_OF_MONTH));
+        this.mWakeDateAndTime = mTempWakeDateAndTime.getTime();
+    }
+
+    public int getDesiredHoursOfSleep() {
+        return mDesiredHoursOfSleep;
+    }
+
+    public void setSleepTime(Date date) {
+
+        Calendar newDate = Calendar.getInstance();
+        newDate.setTime(date);
+
+        Calendar mTempSleepDateandTime = Calendar.getInstance();
+
+        mTempSleepDateandTime.setTime(mSleepDateAndTime);             // Set to current SleepTimeAndDate
+        mTempSleepDateandTime.set(Calendar.HOUR, newDate.get(Calendar.HOUR));
+        mTempSleepDateandTime.set(Calendar.MINUTE, newDate.get(Calendar.MINUTE));
+        this.mSleepDateAndTime = mTempSleepDateandTime.getTime();
+    }
+
+    public void setRecordingPlaybackDirectory(String file_location) {
+        this.mRecordingPlaybackDirectory = file_location;
     }
 }

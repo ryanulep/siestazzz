@@ -9,7 +9,7 @@
 
     <string name="title_activity_settings">Settings</string>
 
-    <!-- Strings related to Journal -->
+    <!-- Strings related to Journal Entry -->
     <string name="journal_title_hint">Enter a tite for the journal.</string>
     <string name="journal_title_label">Title</string>
     <string name="journal_details_label">Details</string>
@@ -18,7 +18,18 @@
     <string name="journal_sleep_time_label">Sleep Time:</string>
     <string name="journal_wake_time_label">Wake Time:</string>
     <string name="journal_note_label">Note:</string>
-
+    <string name="date_picker_title">Set Date:</string>
+    <string name="time_picker_title_sleep">Sleep Time:</string>
+    <string name="time_picker_title_wake">Wake Time:</string>
+    <string name="date_picker_title_sleep">Sleep Date:</string>
+    <string name="date_picker_title_wake">Wake Date:</string>
+    <string name="journal_entry_play_sound">Playback Sleep Sound</string>
+    <string name="journal_entry_motion">Motion:</string>
+    <string name="journal_entry_motion_none">No Motion Detected</string>
+    <string name="journal_entry_motion_light">Light</string>
+    <string name="journal_entry_motion_moderate">Moderate</string>
+    <string name="journal_entry_motion_heavy">Heavy</string>
+    <string name="time_picker_title">Set Time</string>
 
     <!-- Strings related to Settings -->
 
