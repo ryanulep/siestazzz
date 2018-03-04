@@ -1,6 +1,9 @@
 package com.ucr.buzuka.siestazzz.model;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.ucr.buzuka.siestazzz.JournalEntryBaseHelper;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -15,7 +18,11 @@ import java.util.UUID;
 
 public class Journal {
     private static Journal sJournal;
-    private List<JournalEntry> mJournalEntries;
+
+//    private List<JournalEntry> mJournalEntries;
+    // Variables needed to add SQLiteOpenHelper to get rid of the grunt work of opening a SQLiteDatabase.
+    private Context mContext;
+    private SQLiteDatabase mDatabase;
 
     public static Journal get(Context context) {
         if (sJournal == null) {
@@ -25,8 +32,22 @@ public class Journal {
     }
 
     private Journal(Context context){
+
+        mContext = context.getApplicationContext();
+
+        /**
+         * When getWritableDatabase() is called JournalEntryBaseHelper will do the following:
+         *  - Open /data/data/<path>/databases/journalEntryBase.db
+         *  - If this is the first time the database has been created, call onCreate(SQLiteDatabase), then save out the
+         *    latest version number
+         *  - If hits is not the first time, check the version umber in the database. If the version number in
+         *    JournalEntryBaseHelper is higher call onUpgrade(SQLiteDatabase, int, int).
+         */
+        mDatabase = new JournalEntryBaseHelper(mContext)
+                .getWritableDatabase();
+
         // Create an ArrayList<>() which will store all the journal entries.
-        mJournalEntries = new ArrayList<>();
+//        mJournalEntries = new ArrayList<>();
 
         // Temp Variables for Journal
         for (int i = 0; i < 14; i++) {
@@ -57,15 +78,17 @@ public class Journal {
     }
 
     public List<JournalEntry> getJournalEntries() {
-        return mJournalEntries;
+
+//        return mJournalEntries;
+        return new ArrayList<>();
     }
 
     public JournalEntry getJournalEntry(UUID id) {
-        for (JournalEntry journalEntry : mJournalEntries) {
-            if(journalEntry.getId().equals(id)) {
-                return journalEntry;
-            }
-        }
+//        for (JournalEntry journalEntry : mJournalEntries) {
+//            if(journalEntry.getId().equals(id)) {
+//                return journalEntry;
+//            }
+//        }
         return null;
     }
 }
