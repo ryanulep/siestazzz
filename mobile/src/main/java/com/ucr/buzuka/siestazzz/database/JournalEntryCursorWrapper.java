@@ -17,6 +17,11 @@ public class JournalEntryCursorWrapper extends CursorWrapper {
 
     public JournalEntry getJournalEntry() {
         String uuidString = getString(getColumnIndex(JournalEntryDbSchema.JournalEntryTable.Cols.UUID));
+        String sleepDateAndTime = getString(getColumnIndex(JournalEntryDbSchema.JournalEntryTable.Cols.SLEEPDATEANDTIME));
+        String wakeDateAndTime = getString(getColumnIndex(JournalEntryDbSchema.JournalEntryTable.Cols.WAKEDATEANDTIME));
+        String motionDataPath = getString(getColumnIndex(JournalEntryDbSchema.JournalEntryTable.Cols.MOTIONDATAPATH));
+        String soundDataPath = getString(getColumnIndex(JournalEntryDbSchema.JournalEntryTable.Cols.SOUNDDATAPATH));
+        String notes = getString(getColumnIndex(JournalEntryDbSchema.JournalEntryTable.Cols.NOTES));
 
         return null;
     }
