@@ -20,7 +20,9 @@ public class JournalEntry {
     private int mHoursSlept; // SleepDebt represents the difference between how many hours the user was actually asleep vs. how many hours the user should have slept.
     private int mSleepDebt;
     private int mDesiredHoursOfSleep;
-    private String mRecordingPlaybackDirectory;
+    private String mMotionDataPath;
+    private String mSoundDataPath;
+
 
 
 
@@ -186,7 +188,19 @@ public class JournalEntry {
         this.mSleepDateAndTime = mTempSleepDateandTime.getTime();
     }
 
-    public void setRecordingPlaybackDirectory(String file_location) {
-        this.mRecordingPlaybackDirectory = file_location;
+    public String getMotionDataPath() {
+        return mMotionDataPath;
+    }
+
+    public void setMotionDataPath(String motionDataPath) {
+        mMotionDataPath = motionDataPath;
+    }
+
+    public String getSoundDataPath() {
+        return mSoundDataPath;
+    }
+
+    public void setSoundDataPath(String soundDataPath) {
+        mSoundDataPath = soundDataPath;
     }
 }
