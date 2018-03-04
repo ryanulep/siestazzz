@@ -19,15 +19,19 @@ public class JournalEntry {
     private Date mWakeDateAndTime;  // keeps track of time and date
     private int mHoursSlept; // SleepDebt represents the difference between how many hours the user was actually asleep vs. how many hours the user should have slept.
     private int mSleepDebt;
-    private int mDesiredHoursOfSleep;
-    private String mRecordingPlaybackDirectory;
-
-
+    private int mDesiredHoursOfSleep = 8;
+    private String mMotionDataPath;
+    private String mSoundDataPath;
+    private String mSleepNotes;
 
     public JournalEntry() {
-        mId = UUID.randomUUID();
-        mDesiredHoursOfSleep = 8;
 
+        this(UUID.randomUUID());
+
+    }
+
+    public JournalEntry(UUID id) {
+        mId = id;
         mWakeDateAndTime = new Date();
 
         // Note: Some code I found to do Time math.
@@ -36,6 +40,7 @@ public class JournalEntry {
         calendar.add(Calendar.HOUR, -1*(mDesiredHoursOfSleep));
 
         mSleepDateAndTime = calendar.getTime();
+
     }
 
     public int getHoursSlept() {
@@ -186,7 +191,27 @@ public class JournalEntry {
         this.mSleepDateAndTime = mTempSleepDateandTime.getTime();
     }
 
-    public void setRecordingPlaybackDirectory(String file_location) {
-        this.mRecordingPlaybackDirectory = file_location;
+    public String getMotionDataPath() {
+        return mMotionDataPath;
+    }
+
+    public void setMotionDataPath(String motionDataPath) {
+        mMotionDataPath = motionDataPath;
+    }
+
+    public String getSoundDataPath() {
+        return mSoundDataPath;
+    }
+
+    public void setSoundDataPath(String soundDataPath) {
+        mSoundDataPath = soundDataPath;
+    }
+
+    public String getSleepNotes() {
+        return mSleepNotes;
+    }
+
+    public void setSleepNotes(String sleepNotes) {
+        mSleepNotes = sleepNotes;
     }
 }
