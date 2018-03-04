@@ -8,14 +8,17 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.ucr.buzuka.siestazzz.model.Alarm;
 import com.ucr.buzuka.siestazzz.model.BellTower;
 
+import java.text.SimpleDateFormat;
 import java.util.UUID;
 
 public class AlarmDetailFragment extends Fragment {
@@ -24,7 +27,8 @@ public class AlarmDetailFragment extends Fragment {
     private Alarm mAlarm;
     private EditText mTitleField;
     private TextView mAlarmTime;
-    private CheckBox mIsAlarmActive;
+    private Switch mIsAlarmActive;
+    private Button mCloseButton;
 
     // TODO: Add additional UI implementations
 
@@ -54,10 +58,15 @@ public class AlarmDetailFragment extends Fragment {
         // TODO: Wire up the fragment to the UI
         mTitleField = (EditText) v.findViewById(R.id.alarm_title);
         mAlarmTime = (TextView) v.findViewById(R.id.alarm_time);
-        mIsAlarmActive = (CheckBox) v.findViewById(R.id.alarm_active);
+        mIsAlarmActive = (Switch) v.findViewById(R.id.alarm_active);
 
         mTitleField.setText(mAlarm.getTitle());
-        mAlarmTime.setText(mAlarm.getDate().toString());
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMMM d \n h:mm a");
+
+        mAlarmTime.setText(mAlarm.getTitle());
+        mAlarmTime.setText(dateFormat.format(mAlarm.getDate()));
+
         mIsAlarmActive.setActivated(mAlarm.isActive());
 
         mTitleField.addTextChangedListener(new TextWatcher() {
@@ -81,6 +90,14 @@ public class AlarmDetailFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isActive) {
                 mIsAlarmActive.setChecked(isActive);
+            }
+        });
+
+        mCloseButton = (Button) v.findViewById(R.id.closebutton);
+        mCloseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
             }
         });
 

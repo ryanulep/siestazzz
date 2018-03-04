@@ -12,24 +12,15 @@ public class ListAlarmsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_alarms);
+        setContentView(R.layout.list_item_alarm);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setAlarm(view);
-            }
-        });
-
-        // Todo: Connect setAlarm with ListAlarmsActivity.
+        // TODO: Connect setAlarm with ListAlarmsActivity.
     }
 
     public void setAlarm(View view) {
         Intent intent = new Intent(this, SetAlarm.class);
         startActivity(intent);
     }
-
 }
