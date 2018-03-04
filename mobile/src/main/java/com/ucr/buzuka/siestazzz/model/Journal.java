@@ -135,8 +135,8 @@ public class Journal {
                 whereClause,
                 whereArgs,
                 null, // groupBy
-                null, // having
-                null // orderBy
+                null,  // having
+                null  // orderBy
         );
 
         return new JournalEntryCursorWrapper(cursor);
