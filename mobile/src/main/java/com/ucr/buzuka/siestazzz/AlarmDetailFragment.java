@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.ucr.buzuka.siestazzz.model.Alarm;
 import com.ucr.buzuka.siestazzz.model.BellTower;
 
+import java.text.SimpleDateFormat;
 import java.util.UUID;
 
 public class AlarmDetailFragment extends Fragment {
@@ -60,7 +61,12 @@ public class AlarmDetailFragment extends Fragment {
         mIsAlarmActive = (Switch) v.findViewById(R.id.alarm_active);
 
         mTitleField.setText(mAlarm.getTitle());
-        mAlarmTime.setText(mAlarm.getDate().toString());
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMMM d \n h:mm a");
+
+        mAlarmTime.setText(mAlarm.getTitle());
+        mAlarmTime.setText(dateFormat.format(mAlarm.getDate()));
+
         mIsAlarmActive.setActivated(mAlarm.isActive());
 
         mTitleField.addTextChangedListener(new TextWatcher() {

@@ -212,5 +212,4 @@
             app:layout_constraintStart_toStartOf="parent" />
     </LinearLayout>
 
-
 </android.support.constraint.ConstraintLayout>
