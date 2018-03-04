@@ -3,6 +3,7 @@ package com.ucr.buzuka.siestazzz;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +24,7 @@ import java.util.List;
 public class ViewPagerFragment_JournalEntryList extends Fragment {
     private RecyclerView mJournalEntryRecyclerView;
     private JournalEntryAdapter mAdapter;
+    private FloatingActionButton mAddJournalEntry;
 
     @Nullable
     @Override
@@ -38,6 +40,18 @@ public class ViewPagerFragment_JournalEntryList extends Fragment {
         mJournalEntryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         updateUI();
+
+        mAddJournalEntry = (FloatingActionButton) view.findViewById(R.id.add_journal_entry_fab);
+        mAddJournalEntry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                JournalEntry journalEntry = new JournalEntry();
+                Journal.get(getActivity()).addJournalEntry(journalEntry);
+                Intent intent = JournalEntryPagerActivity.newIntent(getActivity(), journalEntry.getId());
+                startActivity(intent);
+                //updateUI();
+            }
+        });
 
         return view;
     }
@@ -59,6 +73,7 @@ public class ViewPagerFragment_JournalEntryList extends Fragment {
             mAdapter = new JournalEntryAdapter(journalEntries);
             mJournalEntryRecyclerView.setAdapter(mAdapter);
         } else {
+            mAdapter.setJournalEntries(journalEntries); // Added to read from db
             mAdapter.notifyDataSetChanged();
         }
     }
@@ -131,6 +146,11 @@ public class ViewPagerFragment_JournalEntryList extends Fragment {
         @Override
         public int getItemCount() {
             return mJournalEntries.size();
+        }
+
+        // Added to read from database
+        public void setJournalEntries(List<JournalEntry> journalEntries) {
+            mJournalEntries = journalEntries;
         }
     }
 }

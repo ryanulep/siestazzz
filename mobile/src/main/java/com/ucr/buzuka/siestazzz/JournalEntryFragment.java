@@ -7,10 +7,16 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
 import com.ucr.buzuka.siestazzz.model.Journal;
@@ -35,13 +41,13 @@ public class JournalEntryFragment extends Fragment {
     private static final int REQUEST_WAKE_TIME = 3;
 
     private JournalEntry mJournalEntry;
-    // private EditText mTitleField;
     private TextView mTitleField;
     private Button mSleepDateButton;
     private Button mWakeDateButton;
     private Button mSleepTimeButton;
     private Button mWakeTimeButton;
     private TextView mSleepDurationField;
+    private EditText mSleepNotes;
 
     /**
      * Notes on public static JournalEntryFragment newInstance(UUID journalEntryId):
@@ -77,6 +83,26 @@ public class JournalEntryFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_journal_entry, container, false);
+
+        mSleepNotes = (EditText) view.findViewById(R.id.journal_entry_notes);
+        mSleepNotes.setText(mJournalEntry.getSleepNotes());
+        mSleepNotes.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mJournalEntry.setSleepNotes(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
 
         mTitleField = (TextView) view.findViewById(R.id.journal_entry_date);
         mTitleField.setText(mJournalEntry.getWakeMonthAndDay());
@@ -134,6 +160,18 @@ public class JournalEntryFragment extends Fragment {
         });
 
         return view;
+    }
+
+    /**
+     * JournalEntry instances get modified in JournalEntryFragment and will need to be written out when
+     * JournalEntryFragment is done. Adding an override to JournalFragment.onPause() updates Journal's
+     * copy of the JournalEntry
+     */
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        Journal.get(getActivity()).updateJournalEntry(mJournalEntry);
     }
 
     @Override
