@@ -4,9 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.ucr.buzuka.siestazzz.database.JournalEntryDbSchema;
 import com.ucr.buzuka.siestazzz.database.JournalEntryDbSchema.JournalEntryTable;
-import com.ucr.buzuka.siestazzz.model.JournalEntry;
 
 /**
  * Created by Rick Boshae on 3/3/2018.
@@ -37,8 +35,8 @@ public class JournalEntryBaseHelper extends SQLiteOpenHelper {
                 JournalEntryTable.Cols.UUID + ", " +
                 JournalEntryTable.Cols.SLEEPDATEANDTIME + ", " +
                 JournalEntryTable.Cols.WAKEDATEANDTIME + ", " +
-                JournalEntryTable.Cols.MOTIONDATA + ", " +
-                JournalEntryTable.Cols.SOUNDDATA + ", " +
+                JournalEntryTable.Cols.MOTIONDATAPATH + ", " +
+                JournalEntryTable.Cols.SOUNDDATAPATH + ", " +
                 JournalEntryTable.Cols.NOTES +
                 ")"
         );

@@ -136,6 +136,18 @@ public class JournalEntryFragment extends Fragment {
         return view;
     }
 
+    /**
+     * JournalEntry instances get modified in JournalEntryFragment and will need to be written out when
+     * JournalEntryFragment is done. Adding an override to JournalFragment.onPause() updates Journal's
+     * copy of the JournalEntry
+     */
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        Journal.get(getActivity()).updateJournalEntry(mJournalEntry);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != Activity.RESULT_OK) {

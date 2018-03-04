@@ -22,6 +22,7 @@ public class JournalEntry {
     private int mDesiredHoursOfSleep;
     private String mMotionDataPath;
     private String mSoundDataPath;
+    private String mSleepNotes;
 
 
 
@@ -202,5 +203,13 @@ public class JournalEntry {
 
     public void setSoundDataPath(String soundDataPath) {
         mSoundDataPath = soundDataPath;
+    }
+
+    public String getSleepNotes() {
+        return mSleepNotes;
+    }
+
+    public void setSleepNotes(String sleepNotes) {
+        mSleepNotes = sleepNotes;
     }
 }
