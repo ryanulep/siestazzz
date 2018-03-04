@@ -16,12 +16,11 @@ public class ListAlarmsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Todo: Connect setAlarm with ListAlarmsActivity.
+        // TODO: Connect setAlarm with ListAlarmsActivity.
     }
 
     public void setAlarm(View view) {
         Intent intent = new Intent(this, SetAlarm.class);
         startActivity(intent);
     }
-
 }
