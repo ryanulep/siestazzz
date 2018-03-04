@@ -19,7 +19,7 @@ public class JournalEntry {
     private Date mWakeDateAndTime;  // keeps track of time and date
     private int mHoursSlept; // SleepDebt represents the difference between how many hours the user was actually asleep vs. how many hours the user should have slept.
     private int mSleepDebt;
-    private int mDesiredHoursOfSleep;
+    private int mDesiredHoursOfSleep = 8;
     private String mMotionDataPath;
     private String mSoundDataPath;
     private String mSleepNotes;
@@ -28,9 +28,22 @@ public class JournalEntry {
 
 
     public JournalEntry() {
-        mId = UUID.randomUUID();
-        mDesiredHoursOfSleep = 8;
+//        mId = UUID.randomUUID();
+        this(UUID.randomUUID());
+//        mDesiredHoursOfSleep = 8;
+//
+//        mWakeDateAndTime = new Date();
+//
+//        // Note: Some code I found to do Time math.
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(mWakeDateAndTime);
+//        calendar.add(Calendar.HOUR, -1*(mDesiredHoursOfSleep));
+//
+//        mSleepDateAndTime = calendar.getTime();
+    }
 
+    public JournalEntry(UUID id) {
+        mId = id;
         mWakeDateAndTime = new Date();
 
         // Note: Some code I found to do Time math.
@@ -39,6 +52,7 @@ public class JournalEntry {
         calendar.add(Calendar.HOUR, -1*(mDesiredHoursOfSleep));
 
         mSleepDateAndTime = calendar.getTime();
+
     }
 
     public int getHoursSlept() {

@@ -3,7 +3,11 @@ package com.ucr.buzuka.siestazzz.database;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 
+import com.ucr.buzuka.siestazzz.model.Journal;
 import com.ucr.buzuka.siestazzz.model.JournalEntry;
+
+import java.util.Date;
+import java.util.UUID;
 
 /**
  * Created by Rick Boshae on 3/3/2018.
@@ -17,12 +21,19 @@ public class JournalEntryCursorWrapper extends CursorWrapper {
 
     public JournalEntry getJournalEntry() {
         String uuidString = getString(getColumnIndex(JournalEntryDbSchema.JournalEntryTable.Cols.UUID));
-        String sleepDateAndTime = getString(getColumnIndex(JournalEntryDbSchema.JournalEntryTable.Cols.SLEEPDATEANDTIME));
-        String wakeDateAndTime = getString(getColumnIndex(JournalEntryDbSchema.JournalEntryTable.Cols.WAKEDATEANDTIME));
+        long sleepDateAndTime = getLong(getColumnIndex(JournalEntryDbSchema.JournalEntryTable.Cols.SLEEPDATEANDTIME));
+        long wakeDateAndTime = getLong(getColumnIndex(JournalEntryDbSchema.JournalEntryTable.Cols.WAKEDATEANDTIME));
         String motionDataPath = getString(getColumnIndex(JournalEntryDbSchema.JournalEntryTable.Cols.MOTIONDATAPATH));
         String soundDataPath = getString(getColumnIndex(JournalEntryDbSchema.JournalEntryTable.Cols.SOUNDDATAPATH));
-        String notes = getString(getColumnIndex(JournalEntryDbSchema.JournalEntryTable.Cols.NOTES));
+        String sleepNotes = getString(getColumnIndex(JournalEntryDbSchema.JournalEntryTable.Cols.NOTES));
 
-        return null;
+        JournalEntry journalEntry = new JournalEntry(UUID.fromString(uuidString));
+        journalEntry.setSleepDateAndTime(new Date(sleepDateAndTime));
+        journalEntry.setWakeDateAndTime(new Date(wakeDateAndTime));
+        journalEntry.setMotionDataPath(motionDataPath);
+        journalEntry.setSoundDataPath(soundDataPath);
+        journalEntry.setSleepNotes(sleepNotes);
+
+        return journalEntry;
     }
 }

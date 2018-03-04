@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.ucr.buzuka.siestazzz.JournalEntryBaseHelper;
+import com.ucr.buzuka.siestazzz.database.JournalEntryCursorWrapper;
 import com.ucr.buzuka.siestazzz.database.JournalEntryDbSchema;
 
 import java.util.ArrayList;
@@ -76,11 +77,38 @@ public class Journal {
     }
 
     public List<JournalEntry> getJournalEntries() {
-        return new ArrayList<>();
+//        return new ArrayList<>();
+        List<JournalEntry> journalEntries = new ArrayList<>();
+
+        JournalEntryCursorWrapper cursor = queryJournalEntries(null, null);
+
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                journalEntries.add(cursor.getJournalEntry());
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+        return journalEntries;
     }
 
     public JournalEntry getJournalEntry(UUID id) {
-        return null;
+        JournalEntryCursorWrapper cursor = queryJournalEntries(
+                JournalEntryDbSchema.JournalEntryTable.Cols.UUID + " = ?",
+                new String[]{ id.toString() }
+        );
+        try {
+            if (cursor.getCount() == 0) {
+                return null;
+            }
+
+            cursor.moveToFirst();
+            return cursor.getJournalEntry();
+        }   finally {
+            cursor.close();
+        }
     }
 
     public void updateJournalEntry(JournalEntry journalEntry) {
@@ -100,7 +128,7 @@ public class Journal {
     /**
      * Reading in data from SQLite is done using the query(...) method.
      */
-    private Cursor queryJournalEntries(String whereClause, String[] whereArgs) {
+    private JournalEntryCursorWrapper queryJournalEntries(String whereClause, String[] whereArgs) {
         Cursor cursor = mDatabase.query(
                 JournalEntryDbSchema.JournalEntryTable.NAME,
                 null, // columns - null selects all columns
@@ -111,7 +139,7 @@ public class Journal {
                 null // orderBy
         );
 
-        return cursor;
+        return new JournalEntryCursorWrapper(cursor);
     }
 
     private static ContentValues getContentValues(JournalEntry journalEntry) {
