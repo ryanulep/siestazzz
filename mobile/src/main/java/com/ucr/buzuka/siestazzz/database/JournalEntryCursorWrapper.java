@@ -3,8 +3,8 @@ package com.ucr.buzuka.siestazzz.database;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 
-import com.ucr.buzuka.siestazzz.model.Journal;
 import com.ucr.buzuka.siestazzz.model.JournalEntry;
+import com.ucr.buzuka.siestazzz.database.JournalEntryDbSchema.JournalEntryTable;
 
 import java.util.Date;
 import java.util.UUID;

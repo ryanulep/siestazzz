@@ -5,13 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.ucr.buzuka.siestazzz.JournalEntryBaseHelper;
+import com.ucr.buzuka.siestazzz.database.JournalEntryBaseHelper;
 import com.ucr.buzuka.siestazzz.database.JournalEntryCursorWrapper;
 import com.ucr.buzuka.siestazzz.database.JournalEntryDbSchema;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,22 +46,6 @@ public class Journal {
          */
         mDatabase = new JournalEntryBaseHelper(mContext)
                 .getWritableDatabase();
-
-//        for (int i = 0; i < 14; i++) {
-//            JournalEntry journalEntry = new JournalEntry();
-//            journalEntry.setTitle("Journal Entry #" + i);
-//
-//            Date date = new Date();
-//            Calendar calendar = Calendar.getInstance();
-//            calendar.setTime(date);
-//            calendar.add((Calendar.DAY_OF_MONTH), -i);
-//            journalEntry.setWakeDateAndTime(calendar.getTime());
-//            calendar.add((Calendar.HOUR), -8);
-//
-//            journalEntry.setSleepDateAndTime(calendar.getTime());
-//
-//            mJournalEntries.add(journalEntry);
-//        }
     }
 
     public void addJournalEntry(JournalEntry j) {
@@ -77,7 +59,6 @@ public class Journal {
     }
 
     public List<JournalEntry> getJournalEntries() {
-//        return new ArrayList<>();
         List<JournalEntry> journalEntries = new ArrayList<>();
 
         JournalEntryCursorWrapper cursor = queryJournalEntries(null, null);
@@ -148,8 +129,8 @@ public class Journal {
         // to store the kinds of data SQLite can hold.
         ContentValues values = new ContentValues();
         values.put(JournalEntryDbSchema.JournalEntryTable.Cols.UUID, journalEntry.getId().toString());
-        values.put(JournalEntryDbSchema.JournalEntryTable.Cols.SLEEPDATEANDTIME, journalEntry.getSleepDateAndTime().toString());
-        values.put(JournalEntryDbSchema.JournalEntryTable.Cols.WAKEDATEANDTIME, journalEntry.getWakeDateAndTime().toString());
+        values.put(JournalEntryDbSchema.JournalEntryTable.Cols.SLEEPDATEANDTIME, journalEntry.getSleepDateAndTime().getTime());
+        values.put(JournalEntryDbSchema.JournalEntryTable.Cols.WAKEDATEANDTIME, journalEntry.getWakeDateAndTime().getTime());
         values.put(JournalEntryDbSchema.JournalEntryTable.Cols.MOTIONDATAPATH, journalEntry.getMotionDataPath());
         values.put(JournalEntryDbSchema.JournalEntryTable.Cols.SOUNDDATAPATH, journalEntry.getSoundDataPath());
         values.put(JournalEntryDbSchema.JournalEntryTable.Cols.NOTES, journalEntry.getSleepNotes());

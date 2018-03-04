@@ -1,4 +1,4 @@
-package com.ucr.buzuka.siestazzz;
+package com.ucr.buzuka.siestazzz.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
