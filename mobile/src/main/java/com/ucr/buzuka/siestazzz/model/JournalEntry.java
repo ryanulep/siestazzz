@@ -24,22 +24,10 @@ public class JournalEntry {
     private String mSoundDataPath;
     private String mSleepNotes;
 
-
-
-
     public JournalEntry() {
-//        mId = UUID.randomUUID();
+
         this(UUID.randomUUID());
-//        mDesiredHoursOfSleep = 8;
-//
-//        mWakeDateAndTime = new Date();
-//
-//        // Note: Some code I found to do Time math.
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTime(mWakeDateAndTime);
-//        calendar.add(Calendar.HOUR, -1*(mDesiredHoursOfSleep));
-//
-//        mSleepDateAndTime = calendar.getTime();
+
     }
 
     public JournalEntry(UUID id) {
