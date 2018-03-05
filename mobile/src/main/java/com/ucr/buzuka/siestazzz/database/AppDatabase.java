@@ -12,7 +12,7 @@ import com.ucr.buzuka.siestazzz.model.Session;
  * Created by jakex on 2/25/2018.
  * Abstract database class
  */
-@Database(entities = {SensorReadout.class, Session.class}, version = 2)
+@Database(entities = {SensorReadout.class, Session.class}, version = 3)
 public abstract class AppDatabase extends RoomDatabase {
 /** Create a private instance of the database*/
     private static AppDatabase instance;

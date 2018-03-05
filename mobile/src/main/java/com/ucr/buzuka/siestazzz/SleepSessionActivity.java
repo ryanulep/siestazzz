@@ -104,7 +104,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sleep_session);
-        DateFormat df = new SimpleDateFormat("M_d");
+        DateFormat df = new SimpleDateFormat("M_d_h_m");
         fDate = df.format(mDate);
 
         long yourmilliseconds = System.currentTimeMillis();
@@ -127,8 +127,8 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         sessionID = UUID.randomUUID().toString();
         //sensorReadoutList.add(sensorReadout);
         SensorReadout sensorReadout = new SensorReadout(sessionID, System.currentTimeMillis(), 0, 0);
-        Session         session     = new Session(sessionID);
-
+        Session         session     = new Session(sessionID, myDir.getPath());
+        Log.d("SESSION", "Session:" + session);
 //        get an instance of database
         db = AppDatabase.getInstance(this);
 //        drop table

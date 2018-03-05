@@ -14,12 +14,15 @@ public class Session {
     @NonNull
     private String sessionID;
 
+    private String path;
+
     public Session() {
     }
 
     @Ignore
-    public Session(String sessionID){
+    public Session(String sessionID, String path){
         this.sessionID = sessionID;
+        this.path = path;
     }
 
     public String getSessionID() {
@@ -30,10 +33,18 @@ public class Session {
         this.sessionID = sessionID;
     }
 
+    public String getPath(){
+        return path;
+    }
+
+    public void setPath(String path){
+        this.path=path;
+    }
     @Override
     public String toString() {
         return "Session{" +
                 "sessionID='" + sessionID + '\'' +
+                "path=" + path +
                 '}';
     }
 }
