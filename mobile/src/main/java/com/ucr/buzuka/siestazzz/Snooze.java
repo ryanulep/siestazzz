@@ -54,9 +54,5 @@ public class Snooze extends AppCompatActivity {
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
-
-
-
-
     }
 }

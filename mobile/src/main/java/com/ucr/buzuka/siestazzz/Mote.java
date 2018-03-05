@@ -1,12 +1,8 @@
 package com.ucr.buzuka.siestazzz;
 
 
-import android.app.AlertDialog;
-import android.app.NotificationManager;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.Ringtone;
@@ -14,15 +10,10 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
-import android.util.Log;
-
-import android.widget.RemoteViews;
-import android.widget.Toast;
-
-import android.support.v4.app.NotificationCompat;
 import android.os.Vibrator;
-
-
+import android.support.v4.app.NotificationCompat;
+import android.util.Log;
+import android.widget.Toast;
 
 /**
  * Created by Ammar on 2/7/18.
@@ -43,7 +34,6 @@ public class Mote extends BroadcastReceiver {
         Toast.makeText(context, "Alarm worked.", Toast.LENGTH_LONG).show();
         Vibrator vibe = (Vibrator)context.getSystemService(context.VIBRATOR_SERVICE);
         vibe.vibrate(10000);
-
 
         Log.v(TAG, "Initializing sounds...");
 
@@ -74,3 +64,4 @@ public class Mote extends BroadcastReceiver {
         }
     }
 }
+

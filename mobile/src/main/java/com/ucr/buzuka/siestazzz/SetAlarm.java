@@ -3,7 +3,9 @@ package com.ucr.buzuka.siestazzz;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -18,21 +20,29 @@ import java.util.Calendar;
 public class SetAlarm extends AppCompatActivity {
     private int hour;
     private int minute;
+    public static final String SMART_ALARM = "smart_alarm_toggle";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_alarm);
 
-
-
         Button cancelButton = (Button) findViewById(R.id.cancelButton);
         Button setButton = (Button) findViewById(R.id.setAlarm);
 
+        //get toggle preference
+        SharedPreferences prefs = getSharedPreferences(MainActivity.GLOBAL_PREFS, MODE_PRIVATE);
+        boolean isSmart = Boolean.parseBoolean(prefs.getString(SMART_ALARM, "false"));
+        Log.i("SetAlarm", String.valueOf(isSmart));
+
+        //just display smart alarm toggle onCreate
+        if (isSmart){
+            Toast.makeText(this,"Smart alarm toggled", Toast.LENGTH_SHORT).show();
+        }
 
 
-
-        final TextView alarmDisplay =  findViewById(R.id.textView_AlarmTime);
+       // final TextView alarmDisplay =  findViewById(R.id.textView_AlarmTime);
         final TimePicker timerClock = (TimePicker) findViewById(R.id.timePicker);
 
         final Calendar cal=Calendar.getInstance();
@@ -49,7 +59,8 @@ public class SetAlarm extends AppCompatActivity {
                 // Toast to indicate that the alarm has been set by the user.
                 Toast.makeText(getApplicationContext(), "Alarm Set!", Toast.LENGTH_SHORT).show();
 
-                // TODO: Add comments explainging what code is doing here.
+                // TODO: Add comments explaining what code is doing here.
+                // TODO: Determine why we are not adding the set alarm to BellTower
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     hour = timerClock.getHour();
                     minute = timerClock.getMinute();
@@ -63,15 +74,11 @@ public class SetAlarm extends AppCompatActivity {
                 cal.set(Calendar.SECOND,0);
                 Log.w("myApp", "Alarm");
 
-
-
-                alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),pendingIntent);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
 
                 finish();
             }
         });
-
-
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,4 +88,5 @@ public class SetAlarm extends AppCompatActivity {
             }
         });
     }
+
 }
