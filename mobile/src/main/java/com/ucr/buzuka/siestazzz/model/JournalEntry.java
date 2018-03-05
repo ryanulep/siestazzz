@@ -71,7 +71,7 @@ public class JournalEntry {
         Calendar mTempWakeDateAndTime = Calendar.getInstance();
 
         mTempWakeDateAndTime.setTime(mWakeDateAndTime);             // Set to current SleepTimeAndDate
-        mTempWakeDateAndTime.set(Calendar.HOUR, newDate.get(Calendar.HOUR));
+        mTempWakeDateAndTime.set(Calendar.HOUR_OF_DAY, newDate.get(Calendar.HOUR_OF_DAY));
         mTempWakeDateAndTime.set(Calendar.MINUTE, newDate.get(Calendar.MINUTE));
         this.mWakeDateAndTime = mTempWakeDateAndTime.getTime();
     }
@@ -186,7 +186,7 @@ public class JournalEntry {
         Calendar mTempSleepDateandTime = Calendar.getInstance();
 
         mTempSleepDateandTime.setTime(mSleepDateAndTime);             // Set to current SleepTimeAndDate
-        mTempSleepDateandTime.set(Calendar.HOUR, newDate.get(Calendar.HOUR));
+        mTempSleepDateandTime.set(Calendar.HOUR_OF_DAY, newDate.get(Calendar.HOUR_OF_DAY));
         mTempSleepDateandTime.set(Calendar.MINUTE, newDate.get(Calendar.MINUTE));
         this.mSleepDateAndTime = mTempSleepDateandTime.getTime();
     }
