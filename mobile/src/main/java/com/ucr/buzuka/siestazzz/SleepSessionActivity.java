@@ -58,6 +58,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     private AppDatabase db;
     public static final String SENSOR_ACCEL = "accelerometer_toggle";
     public static final String SENSOR_AUDIO = "audio_toggle";
+    private Session session = new Session();
 
     private static final String LOG_TAG = "AudioRecordTest";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
@@ -142,9 +143,10 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         }
 //        create a new session id
         sessionID = UUID.randomUUID().toString();
+        long currtime = System.currentTimeMillis();
         //sensorReadoutList.add(sensorReadout);
-        SensorReadout sensorReadout = new SensorReadout(sessionID, System.currentTimeMillis(), 0, 0);
-        Session         session     = new Session(sessionID, myDir.getPath());
+        SensorReadout sensorReadout = new SensorReadout(sessionID, currtime, 0, 0);
+        session     = new Session(sessionID, myDir.getPath(), currtime, 0 , "");
         Log.d("DATABASE", "Session:" + session);
 //        get an instance of database
         db = AppDatabase.getInstance(this);
@@ -155,7 +157,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
 //        insert start
         db.sensorReadoutDao().insertAll(sensorReadout);
 //        new session
-        db.sessionDao().insertAll(session);
+//        db.sessionDao().insertAll(session);
         Log.d("RECORD", "OnCreate Completed");
     }
 
@@ -194,7 +196,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         }
 
         // TODO Create JournalEntryObject
-        JournalEntry journalEntry = new JournalEntry();
+//        JournalEntry journalEntry = new JournalEntry();
     }
 
     @Override
@@ -267,9 +269,14 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
 
         if (toggle_accel) {
 //        log session end
-        SensorReadout sensorReadout = new SensorReadout(sessionID, System.currentTimeMillis(), 0,0);
+        long currtime = System.currentTimeMillis();
+        SensorReadout sensorReadout = new SensorReadout(sessionID, currtime, 0,0);
+        session.setWakeDateAndTime(currtime);
+
         //sensorReadoutList.add(sensorReadout);
         db.sensorReadoutDao().insertAll(sensorReadout);
+
+        db.sessionDao().insertAll(session);
 
             // export to json file
             boolean result = JSONHelper.exportToJSON(this, db.sensorReadoutDao().findById(sessionID));
