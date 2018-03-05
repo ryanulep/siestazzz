@@ -119,20 +119,21 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         Log.i(TAG, "accel: " + String.valueOf(toggle_accel));
         Log.i(TAG, "audio: " + String.valueOf(toggle_audio));
 
-        if (toggle_audio) {
-            DateFormat df = new SimpleDateFormat("M_d_h_m");
-            fDate = df.format(mDate);
 
-            long yourmilliseconds = System.currentTimeMillis();
-            SimpleDateFormat sdf = new SimpleDateFormat("MMMddyyyHHmm");
-            Date resultdate = new Date(yourmilliseconds);
+        DateFormat df = new SimpleDateFormat("M_d_h_m");
+        fDate = df.format(mDate);
 
-            myDir = new File(getExternalCacheDir().getAbsolutePath(), fDate);
-            if (!myDir.exists()) {
-                myDir.mkdir();
-            }
-            Log.d("RECORD", myDir.getPath());
+        long yourmilliseconds = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMddyyyHHmm");
+        Date resultdate = new Date(yourmilliseconds);
+
+        myDir = new File(getExternalCacheDir().getAbsolutePath(), fDate);
+        if (!myDir.exists()) {
+            myDir.mkdir();
         }
+        Log.d("RECORD", myDir.getPath());
+        myDir = new File(getExternalCacheDir().getAbsolutePath(), fDate);
+
 
         if (toggle_accel) {
             sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE); // get an instance of system sensor
@@ -140,6 +141,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
             sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER); // get accelerometer
             sensorManager.registerListener(this, sensorAccelerometer, M_SENSOR_DELAY);
         }
+
 //        create a new session id
         sessionID = UUID.randomUUID().toString();
         //sensorReadoutList.add(sensorReadout);
