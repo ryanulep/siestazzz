@@ -27,12 +27,12 @@ public class Alarm {
         mSmart = false;
     }
 
-    public Alarm(String alarmTitle, Date alarmTime, boolean active) {
-        mId = UUID.randomUUID();
-        mAlarmTitle = alarmTitle;
-        mAlarmTime = alarmTime;
-        mActive = active;
-    }
+//    public Alarm(String alarmTitle, Date alarmTime, boolean active) {
+//        mId = UUID.randomUUID();
+//        mAlarmTitle = alarmTitle;
+//        mAlarmTime = alarmTime;
+//        mActive = active;
+//    }
 
     public UUID getId() {
         return mId;
