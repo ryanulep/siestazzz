@@ -214,11 +214,9 @@ public class JournalEntryFragment extends Fragment {
             updateHoursSlept();
         }
 
-        // TODO COMPLETE BELOW
         if (requestCode == REQUEST_WAKE_TIME) {
             Date time = (Date) data.getSerializableExtra(TimePickerFragment.EXTRA_TIME);
-            mJournalEntry.setWakeTime(time);  // TODO Create Method.
-
+            mJournalEntry.setWakeTime(time);
             mWakeTimeButton.setText(mJournalEntry.getWakeHourAndMinute());
             updateHoursSlept();
         }
@@ -227,7 +225,6 @@ public class JournalEntryFragment extends Fragment {
 
     private void updateSleepStartDate() {
         mSleepDateButton.setText(mJournalEntry.getNumericSleepDate());
-//        mWakeDateButton.setText(mJournalEntry.getNumericWakeDate());
     }
 
     private void updateHoursSlept() {
