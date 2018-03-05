@@ -23,14 +23,14 @@ public class JournalEntryCursorWrapper extends CursorWrapper {
         String uuidString = getString(getColumnIndex(JournalEntryDbSchema.JournalEntryTable.Cols.UUID));
         long sleepDateAndTime = getLong(getColumnIndex(JournalEntryDbSchema.JournalEntryTable.Cols.SLEEPDATEANDTIME));
         long wakeDateAndTime = getLong(getColumnIndex(JournalEntryDbSchema.JournalEntryTable.Cols.WAKEDATEANDTIME));
-        String motionDataPath = getString(getColumnIndex(JournalEntryDbSchema.JournalEntryTable.Cols.MOTIONDATAPATH));
+        /*String motionDataPath = getString(getColumnIndex(JournalEntryDbSchema.JournalEntryTable.Cols.MOTIONDATAPATH));*/
         String soundDataPath = getString(getColumnIndex(JournalEntryDbSchema.JournalEntryTable.Cols.SOUNDDATAPATH));
         String sleepNotes = getString(getColumnIndex(JournalEntryDbSchema.JournalEntryTable.Cols.NOTES));
 
         JournalEntry journalEntry = new JournalEntry(UUID.fromString(uuidString));
         journalEntry.setSleepDateAndTime(new Date(sleepDateAndTime));
         journalEntry.setWakeDateAndTime(new Date(wakeDateAndTime));
-        journalEntry.setMotionDataPath(motionDataPath);
+//        journalEntry.setMotionDataPath(motionDataPath);
         journalEntry.setSoundDataPath(soundDataPath);
         journalEntry.setSleepNotes(sleepNotes);
 

@@ -35,7 +35,7 @@ public class JournalEntryBaseHelper extends SQLiteOpenHelper {
                 JournalEntryTable.Cols.UUID + ", " +
                 JournalEntryTable.Cols.SLEEPDATEANDTIME + ", " +
                 JournalEntryTable.Cols.WAKEDATEANDTIME + ", " +
-                JournalEntryTable.Cols.MOTIONDATAPATH + ", " +
+                /*JournalEntryTable.Cols.MOTIONDATAPATH + ", " +*/
                 JournalEntryTable.Cols.SOUNDDATAPATH + ", " +
                 JournalEntryTable.Cols.NOTES +
                 ")"

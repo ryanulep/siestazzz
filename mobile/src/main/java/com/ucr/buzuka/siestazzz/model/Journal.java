@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.ucr.buzuka.siestazzz.database.AppDatabase;
 import com.ucr.buzuka.siestazzz.database.JournalEntryBaseHelper;
 import com.ucr.buzuka.siestazzz.database.JournalEntryCursorWrapper;
 import com.ucr.buzuka.siestazzz.database.JournalEntryDbSchema;
@@ -23,6 +24,7 @@ public class Journal {
     // Variables needed to add SQLiteOpenHelper to get rid of the grunt work of opening a SQLiteDatabase.
     private Context mContext;
     private SQLiteDatabase mDatabase;
+    private AppDatabase db;  // Unified DB
 
     public static Journal get(Context context) {
         // if an instance of Journal does not exist, create one.
@@ -46,6 +48,8 @@ public class Journal {
          */
         mDatabase = new JournalEntryBaseHelper(mContext)
                 .getWritableDatabase();
+
+//        db = AppDatabase.getInstance(this); //getting an instance of unified db
     }
 
     public void addJournalEntry(JournalEntry j) {
@@ -131,7 +135,7 @@ public class Journal {
         values.put(JournalEntryDbSchema.JournalEntryTable.Cols.UUID, journalEntry.getId().toString());
         values.put(JournalEntryDbSchema.JournalEntryTable.Cols.SLEEPDATEANDTIME, journalEntry.getSleepDateAndTime().getTime());
         values.put(JournalEntryDbSchema.JournalEntryTable.Cols.WAKEDATEANDTIME, journalEntry.getWakeDateAndTime().getTime());
-        values.put(JournalEntryDbSchema.JournalEntryTable.Cols.MOTIONDATAPATH, journalEntry.getMotionDataPath());
+//        values.put(JournalEntryDbSchema.JournalEntryTable.Cols.MOTIONDATAPATH, journalEntry.getMotionDataPath());
         values.put(JournalEntryDbSchema.JournalEntryTable.Cols.SOUNDDATAPATH, journalEntry.getSoundDataPath());
         values.put(JournalEntryDbSchema.JournalEntryTable.Cols.NOTES, journalEntry.getSleepNotes());
 

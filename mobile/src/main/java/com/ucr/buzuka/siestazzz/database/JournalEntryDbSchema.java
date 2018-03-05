@@ -22,8 +22,8 @@ public class JournalEntryDbSchema {
             public static final String UUID = "uuid";
             public static final String SLEEPDATEANDTIME = "sleepDateAndTime";
             public static final String WAKEDATEANDTIME = "wakeDateAndTime";
-            public static final String MOTIONDATAPATH = "motionDataPath";
-            public static final String SOUNDDATAPATH = "soundDataPath";
+            // public static final String MOTIONDATAPATH = "motionDataPath"; // not needed
+            public static final String SOUNDDATAPATH = "soundDataPath";   // this id okay
             public static final String NOTES = "notes";
         }
     }
