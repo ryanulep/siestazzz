@@ -56,15 +56,13 @@ public class AlarmDetailFragment extends Fragment {
         mTitleField = (EditText) v.findViewById(R.id.alarm_title);
         mAlarmTime = (TextView) v.findViewById(R.id.alarm_time);
         mIsAlarmActive = (Switch) v.findViewById(R.id.alarm_active);
-
-        mTitleField.setText(mAlarm.getAlarmTitle());
+        mCloseButton = (Button) v.findViewById(R.id.closebutton);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMMM d\nh:mm a");
 
-        mAlarmTime.setText(mAlarm.getAlarmTitle());
+        mTitleField.setText(mAlarm.getAlarmTitle());
         mAlarmTime.setText(dateFormat.format(mAlarm.getAlarmTime()));
-
-        mIsAlarmActive.setActivated(mAlarm.isActive());
+        mIsAlarmActive.setChecked(mAlarm.isActive());
 
         mTitleField.addTextChangedListener(new TextWatcher() {
             @Override
@@ -86,11 +84,10 @@ public class AlarmDetailFragment extends Fragment {
         mIsAlarmActive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isActive) {
-                mIsAlarmActive.setChecked(isActive);
+                mAlarm.setActive(isActive);
             }
         });
 
-        mCloseButton = (Button) v.findViewById(R.id.closebutton);
         mCloseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

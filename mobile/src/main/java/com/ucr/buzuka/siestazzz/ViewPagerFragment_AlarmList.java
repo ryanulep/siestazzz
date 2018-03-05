@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.ucr.buzuka.siestazzz.model.Alarm;
@@ -83,6 +85,7 @@ public class ViewPagerFragment_AlarmList extends Fragment {
 
         private TextView mTitleTextView;
         private TextView mInfoTextView;
+        private Switch mIsAlarmActive;
 
         // In AlarmHolder constructor inflate list_item_alarm. Immediately pass it into super(...)
         public AlarmHolder(LayoutInflater inflater, ViewGroup parent) {
@@ -92,6 +95,7 @@ public class ViewPagerFragment_AlarmList extends Fragment {
 
             mTitleTextView = (TextView) itemView.findViewById(R.id.alarm_title);
             mInfoTextView = (TextView) itemView.findViewById(R.id.alarm_info);
+            mIsAlarmActive = (Switch) itemView.findViewById(R.id.activeSwitch);
         }
 
         // bind is used to attach personal information to each list_item_alarm.
@@ -101,6 +105,15 @@ public class ViewPagerFragment_AlarmList extends Fragment {
             mAlarm = alarm;
             mTitleTextView.setText(mAlarm.getAlarmTitle());
             mInfoTextView.setText(dateFormat.format(mAlarm.getAlarmTime()));
+            mIsAlarmActive.setChecked(mAlarm.isActive());
+
+            mIsAlarmActive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean isActive) {
+                    mAlarm.setActive(isActive);
+                    mIsAlarmActive.setChecked(isActive);
+                }
+            });
         }
 
         @Override
