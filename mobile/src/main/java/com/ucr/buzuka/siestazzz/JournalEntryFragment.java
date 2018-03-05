@@ -48,6 +48,7 @@ public class JournalEntryFragment extends Fragment {
     private Button mWakeTimeButton;
     private TextView mSleepDurationField;
     private EditText mSleepNotes;
+    private Button mCloseButton;
 
     /**
      * Notes on public static JournalEntryFragment newInstance(UUID journalEntryId):
@@ -159,6 +160,14 @@ public class JournalEntryFragment extends Fragment {
             }
         });
 
+        mCloseButton = (Button) view.findViewById(R.id.closebutton);
+        mCloseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
+
         return view;
     }
 
@@ -209,8 +218,7 @@ public class JournalEntryFragment extends Fragment {
         //TODO COMPLETE BELOW
         if (requestCode == REQUEST_WAKE_TIME) {
             Date time = (Date) data.getSerializableExtra(TimePickerFragment.EXTRA_TIME);
-            mJournalEntry.setWakeTime(time);  // TODO Create Method.
-
+            mJournalEntry.setWakeTime(time);
             mWakeTimeButton.setText(mJournalEntry.getWakeHourAndMinute());
             updateHoursSlept();
         }
@@ -219,7 +227,6 @@ public class JournalEntryFragment extends Fragment {
 
     private void updateSleepStartDate() {
         mSleepDateButton.setText(mJournalEntry.getNumericSleepDate());
-//        mWakeDateButton.setText(mJournalEntry.getNumericWakeDate());
     }
 
     private void updateHoursSlept() {

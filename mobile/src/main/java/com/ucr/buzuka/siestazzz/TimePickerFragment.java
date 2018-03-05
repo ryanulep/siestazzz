@@ -1,5 +1,6 @@
 package com.ucr.buzuka.siestazzz;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -23,7 +24,7 @@ import java.util.GregorianCalendar;
  */
 
 public class TimePickerFragment extends DialogFragment {
-    public static final String EXTRA_TIME = "com.buzuka.android.siestazzz.time";
+    public static final String EXTRA_TIME = "com.ucr.buzuka.android.siestazzz.time";
 
     private static final String ARG_TIME = "time";
 
@@ -39,7 +40,8 @@ public class TimePickerFragment extends DialogFragment {
         return fragment;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+
+    @TargetApi(Build.VERSION_CODES.N)
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -70,10 +72,17 @@ public class TimePickerFragment extends DialogFragment {
 
 
                         Calendar time = Calendar.getInstance();
-                        time.set(Calendar.HOUR, hour);
+                        time.set(Calendar.HOUR_OF_DAY, hour);
+                        //time.set(Calendar.HOUR, hour);
                         time.set(Calendar.MINUTE, minute);
+//                        if (hour > 12) {
+//                            time.set(Calendar.AM_PM, Calendar.PM);
+//                        } else {
+//                            time.set(Calendar.AM_PM, Calendar.AM);
+//                        }
+                        Date retTime = time.getTime();
 
-                        sendResult(Activity.RESULT_OK, time.getTime());
+                        sendResult(Activity.RESULT_OK, retTime);
                     }
                 })
                 .create();
