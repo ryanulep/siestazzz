@@ -79,8 +79,6 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         mRecorder = null;
     }
 
-
-
     private void startRecording() {
         mFileName = getExternalCacheDir().getAbsolutePath();
         long yourmilliseconds = System.currentTimeMillis();
@@ -118,7 +116,6 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         toggle_audio = Boolean.parseBoolean(prefs.getString(String.valueOf(SENSOR_AUDIO), ""));
         Log.i(TAG, "accel: " + String.valueOf(toggle_accel));
         Log.i(TAG, "audio: " + String.valueOf(toggle_audio));
-
 
         DateFormat df = new SimpleDateFormat("M_d_h_m");
         fDate = df.format(mDate);
@@ -160,7 +157,6 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         db.sessionDao().insertAll(session);
         Log.d("RECORD", "OnCreate Completed");
     }
-
 
     /** put sensor to sleep when app not in use, will need to comment out in production.
     *   will need to make sensor polling into a service
@@ -223,7 +219,6 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
 
                     //create a time internal
 
-
                     diffTime = (curTime - lastUpdate) / 100;
                     lastUpdate = curTime;
                     // speed = delta V / time
@@ -231,7 +226,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
 
                     /*Write to file if speed is greater than threshold* */
 
-    //                Log.i(TAG, "Array: " + sensorReadoutList);
+                    // Log.i(TAG, "Array: " + sensorReadoutList);
 
                 }
                 last_x = x;
@@ -284,9 +279,9 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         }
 
         finish(); //may needed for closing activity
-        //intent to go back to MainActivity
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+//        //intent to go back to MainActivity
+//        Intent intent = new Intent(this, MainActivity.class);
+//        startActivity(intent);
     }
 
     @Override
