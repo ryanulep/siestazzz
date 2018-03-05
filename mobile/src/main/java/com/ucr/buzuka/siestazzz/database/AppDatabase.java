@@ -12,7 +12,7 @@ import com.ucr.buzuka.siestazzz.model.Session;
  * Created by jakex on 2/25/2018.
  * Abstract database class
  */
-@Database(entities = {SensorReadout.class, Session.class}, version = 1)
+@Database(entities = {SensorReadout.class, Session.class}, version = 3)
 public abstract class AppDatabase extends RoomDatabase {
 /** Create a private instance of the database*/
     private static AppDatabase instance;
@@ -25,7 +25,7 @@ public abstract class AppDatabase extends RoomDatabase {
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
                     AppDatabase.class, "app-database")
-                    .allowMainThreadQueries()
+                    .allowMainThreadQueries().fallbackToDestructiveMigration()
                     .build();
         }
         return instance;

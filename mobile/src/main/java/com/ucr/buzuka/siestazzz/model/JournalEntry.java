@@ -40,7 +40,6 @@ public class JournalEntry {
         calendar.add(Calendar.HOUR, -1*(mDesiredHoursOfSleep));
 
         mSleepDateAndTime = calendar.getTime();
-
     }
 
     public int getHoursSlept() {
