@@ -139,13 +139,13 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
             assert sensorManager != null;
             sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER); // get accelerometer
             sensorManager.registerListener(this, sensorAccelerometer, M_SENSOR_DELAY);
-
+        }
 //        create a new session id
         sessionID = UUID.randomUUID().toString();
         //sensorReadoutList.add(sensorReadout);
         SensorReadout sensorReadout = new SensorReadout(sessionID, System.currentTimeMillis(), 0, 0);
         Session         session     = new Session(sessionID, myDir.getPath());
-        Log.d("SESSION", "Session:" + session);
+        Log.d("DATABASE", "Session:" + session);
 //        get an instance of database
         db = AppDatabase.getInstance(this);
 //        drop table
@@ -158,6 +158,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         db.sessionDao().insertAll(session);
         Log.d("RECORD", "OnCreate Completed");
     }
+
 
     /** put sensor to sleep when app not in use, will need to comment out in production.
     *   will need to make sensor polling into a service
@@ -278,9 +279,6 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
             } else {
                 Toast.makeText(this, "Export failed", Toast.LENGTH_SHORT).show();
             }
-        }
-        if (toggle_audio) {
-            stopRecording();
         }
 
         finish(); //may needed for closing activity
