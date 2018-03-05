@@ -3,6 +3,7 @@ package com.ucr.buzuka.siestazzz;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +26,8 @@ public class ViewPagerFragment_AlarmList extends Fragment {
 
     private RecyclerView mAlarmRecyclerView;
     private AlarmAdapter mAdapter;
+    private FloatingActionButton mAddAlarm;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
@@ -35,15 +38,40 @@ public class ViewPagerFragment_AlarmList extends Fragment {
 
         updateUI();
 
+        mAddAlarm = (FloatingActionButton) rootView.findViewById(R.id.add_alarm_fab);
+        mAddAlarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Alarm alarm = new Alarm();
+                BellTower.get(getActivity()).addAlarm(alarm);
+                Intent intent = AlarmPagerActivity.newIntent(getActivity(), alarm.getId());
+                startActivity(intent);
+            }
+        });
+
         return rootView; // inflate is a function that converts a layout to a view.
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateUI();
+    }
+
+    /**
+     * updateUI refreshes the recycler list.
+     */
     private void updateUI() {
         BellTower bellTower = BellTower.get(getActivity());
         List<Alarm> alarms = bellTower.getAlarms();
 
-        mAdapter = new AlarmAdapter(alarms);
-        mAlarmRecyclerView.setAdapter(mAdapter);
+        if (mAdapter == null) {
+            mAdapter = new AlarmAdapter(alarms);
+            mAlarmRecyclerView.setAdapter(mAdapter);
+        } else {
+            mAdapter.setAlarms(alarms); // Added to read from db
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     // Implementing a ViewHolder and an Adapter
@@ -106,6 +134,11 @@ public class ViewPagerFragment_AlarmList extends Fragment {
         @Override
         public int getItemCount() {
             return mAlarms.size();
+        }
+
+        // Added to read from database
+        public void setAlarms(List<Alarm> alarms) {
+            mAlarms = alarms;
         }
     }
 }
