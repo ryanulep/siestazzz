@@ -1,5 +1,8 @@
 package com.ucr.buzuka.siestazzz.model;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+
 import java.util.Date;
 import java.util.UUID;
 
