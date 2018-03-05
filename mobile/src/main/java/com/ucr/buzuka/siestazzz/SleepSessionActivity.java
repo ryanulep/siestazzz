@@ -3,6 +3,7 @@ package com.ucr.buzuka.siestazzz;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -55,6 +56,8 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     String sessionID;
     private Context mContext; //global context field to threading
     private AppDatabase db;
+    public static final String SENSOR_ACCEL = "accelerometer_toggle";
+    public static final String SENSOR_AUDIO = "audio_toggle";
 
     private static final String LOG_TAG = "AudioRecordTest";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
@@ -64,6 +67,9 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     private MediaPlayer mPlayer = null;
     private Date mDate=new Date();
     private String fDate;
+
+    private static boolean toggle_accel;
+    private static boolean toggle_audio;
 
 
     private void stopRecording() {
@@ -104,41 +110,52 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sleep_session);
-        DateFormat df = new SimpleDateFormat("M_d");
-        fDate = df.format(mDate);
 
-        long yourmilliseconds = System.currentTimeMillis();
-        SimpleDateFormat sdf = new SimpleDateFormat("MMMddyyyHHmm");
-        Date resultdate = new Date(yourmilliseconds);
+        //get toggle preference
+        SharedPreferences prefs = getSharedPreferences(MainActivity.GLOBAL_PREFS, MODE_PRIVATE);
+        toggle_accel = Boolean.parseBoolean(prefs.getString(String.valueOf(SENSOR_ACCEL), ""));
+        toggle_audio = Boolean.parseBoolean(prefs.getString(String.valueOf(SENSOR_AUDIO), ""));
+        Log.i(TAG, "accel: " + String.valueOf(toggle_accel));
+        Log.i(TAG, "audio: " + String.valueOf(toggle_audio));
 
-        File myDir = new File(getExternalCacheDir().getAbsolutePath(), fDate);
-        if(!myDir.exists()){
-            myDir.mkdir();
+        if (toggle_audio) {
+            DateFormat df = new SimpleDateFormat("M_d");
+            fDate = df.format(mDate);
+
+            long yourmilliseconds = System.currentTimeMillis();
+            SimpleDateFormat sdf = new SimpleDateFormat("MMMddyyyHHmm");
+            Date resultdate = new Date(yourmilliseconds);
+
+            File myDir = new File(getExternalCacheDir().getAbsolutePath(), fDate);
+            if (!myDir.exists()) {
+                myDir.mkdir();
+            }
+            Log.d("RECORD", myDir.getPath());
         }
-        Log.d("RECORD", myDir.getPath());
 
-
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE); // get an instance of system sensor
-        assert sensorManager != null;
-        sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER); // get accelerometer
-        sensorManager.registerListener(this, sensorAccelerometer, M_SENSOR_DELAY);
+        if (toggle_accel) {
+            sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE); // get an instance of system sensor
+            assert sensorManager != null;
+            sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER); // get accelerometer
+            sensorManager.registerListener(this, sensorAccelerometer, M_SENSOR_DELAY);
 
 //        create a new session id
-        sessionID = UUID.randomUUID().toString();
-        //sensorReadoutList.add(sensorReadout);
-        SensorReadout sensorReadout = new SensorReadout(sessionID, System.currentTimeMillis(), 0);
-        Session         session     = new Session(sessionID);
+            sessionID = UUID.randomUUID().toString();
+            //sensorReadoutList.add(sensorReadout);
+            SensorReadout sensorReadout = new SensorReadout(sessionID, System.currentTimeMillis(), 0);
+            Session session = new Session(sessionID);
 
 //        get an instance of database
-        db = AppDatabase.getInstance(this);
+            db = AppDatabase.getInstance(this);
 //        drop table
 //        db.sensorReadoutDao().clearTable();
 
 //        log session start
 //        insert start
-        db.sensorReadoutDao().insertAll(sensorReadout);
+            db.sensorReadoutDao().insertAll(sensorReadout);
 //        new session
-        db.sessionDao().insertAll(session);
+            db.sessionDao().insertAll(session);
+        }
         Log.d("RECORD", "OnCreate Completed");
     }
 
@@ -147,7 +164,9 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     */
     protected void onPause(){
         super.onPause();
-        sensorManager.unregisterListener(this);
+        if (toggle_accel) {
+            sensorManager.unregisterListener(this);
+        }
     }
     
     /**
@@ -155,15 +174,23 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     */
     protected void onResume(){
         super.onResume();
-        sensorManager.registerListener(this, sensorAccelerometer, M_SENSOR_DELAY);
-        startRecording();//create, get, register accelerometer
+        if (toggle_accel) {
+            sensorManager.registerListener(this, sensorAccelerometer, M_SENSOR_DELAY);
+        }
+        if (toggle_audio) {
+            startRecording();//create, get, register accelerometer
+        }
     }
 
     protected void onStop(){
         super.onStop();
-        stopRecording();
-        Log.d("RECORD", "onStop() called");
-        sensorManager.unregisterListener(this);
+        if (toggle_audio) {
+            stopRecording();
+            Log.d("RECORD", "onStop() called");
+        }
+        if (toggle_accel) {
+            sensorManager.unregisterListener(this);
+        }
 
         // TODO Create JournalEntryObject
         JournalEntry journalEntry = new JournalEntry();
@@ -171,61 +198,62 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        Sensor sensor = sensorEvent.sensor;
-
-
-        /*If sensor is accelerometer
-        * and if storage limiter hits zero
-        * */
-        if(sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+        if (toggle_audio) {
             int volume = mRecorder.getMaxAmplitude();
             if (volume > 2000) {
                 Log.d("RECORD", String.valueOf(volume));
             }
         }
-        if(sensor.getType() == Sensor.TYPE_ACCELEROMETER){
-            //get current accelerometer data
-            float x = sensorEvent.values[0];
-            float y = sensorEvent.values[1];
-            float z = sensorEvent.values[2];
-            if (STORAGE_LIMITER == 0) {
-                //reset
-                STORAGE_LIMITER = 150;
 
-                //create a time internal
-                curTime = System.currentTimeMillis();
+        if (toggle_accel) {
+            Sensor sensor = sensorEvent.sensor;
+        /*If sensor is accelerometer
+        * and if storage limiter hits zero
+        * */
+            if (sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+                //get current accelerometer data
+                float x = sensorEvent.values[0];
+                float y = sensorEvent.values[1];
+                float z = sensorEvent.values[2];
+                if (STORAGE_LIMITER == 0) {
+                    //reset
+                    STORAGE_LIMITER = 150;
 
-                diffTime = (curTime - lastUpdate) / 100;
-                lastUpdate = curTime;
-                // speed = delta V / time
-                speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime;
+                    //create a time internal
+                    curTime = System.currentTimeMillis();
+
+                    diffTime = (curTime - lastUpdate) / 100;
+                    lastUpdate = curTime;
+                    // speed = delta V / time
+                    speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime;
 
                 /*Write to file if speed is greater than threshold* */
-                if (speed > SENSOR_THRESHOLD) {
+                    if (speed > SENSOR_THRESHOLD) {
 
-                    SensorReadout sensorReadout = new SensorReadout(sessionID, curTime, speed * 100);
-                    db.sensorReadoutDao().insertAll(sensorReadout);
+                        SensorReadout sensorReadout = new SensorReadout(sessionID, curTime, speed * 100);
+                        db.sensorReadoutDao().insertAll(sensorReadout);
 //                    sensorReadoutList.add(sensorReadout);
 //                    Log.i(TAG, "Current read out " + sensorReadoutList);
 
-                    if (speed != Float.POSITIVE_INFINITY) {
-                        MAX_SPEED = speed;
+                        if (speed != Float.POSITIVE_INFINITY) {
+                            MAX_SPEED = speed;
+                        }
                     }
-                }
 
-                TextView textView = findViewById(R.id.textView2);
-                textView.setText(String.format("x = %s\ny = %s\nz = %s\n", x, y, z));
-                textView.append("Current time " + curTime);
-                textView.append("\nSpeed " + speed);
-                textView.append("\nMax speed " + MAX_SPEED);
+                    TextView textView = findViewById(R.id.textView2);
+                    textView.setText(String.format("x = %s\ny = %s\nz = %s\n", x, y, z));
+                    textView.append("Current time " + curTime);
+                    textView.append("\nSpeed " + speed);
+                    textView.append("\nMax speed " + MAX_SPEED);
 
 //                Log.i(TAG, "Array: " + sensorReadoutList);
 
+                }
+                last_x = x;
+                last_y = y;
+                last_z = z;
+                STORAGE_LIMITER--;
             }
-            last_x = x;
-            last_y = y;
-            last_z = z;
-            STORAGE_LIMITER--;
         }
     }
 
@@ -237,18 +265,23 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
 //  onClick listener for going back to MainActivity to end session
     public void GoHome(View view){
 
+        if (toggle_accel) {
 //        log session end
-        SensorReadout sensorReadout = new SensorReadout(sessionID, System.currentTimeMillis(), 0);
-        //sensorReadoutList.add(sensorReadout);
-        db.sensorReadoutDao().insertAll(sensorReadout);
+            SensorReadout sensorReadout = new SensorReadout(sessionID, System.currentTimeMillis(), 0);
+            //sensorReadoutList.add(sensorReadout);
+            db.sensorReadoutDao().insertAll(sensorReadout);
 
-        // export to json file
-        boolean result = JSONHelper.exportToJSON(this, db.sensorReadoutDao().findById(sessionID));
+            // export to json file
+            boolean result = JSONHelper.exportToJSON(this, db.sensorReadoutDao().findById(sessionID));
 
-        if(result){
-            Toast.makeText(this, "Data exported", Toast.LENGTH_SHORT).show();
-        }else {
-            Toast.makeText(this, "Export failed", Toast.LENGTH_SHORT).show();
+            if (result) {
+                Toast.makeText(this, "Data exported", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Export failed", Toast.LENGTH_SHORT).show();
+            }
+        }
+        if (toggle_audio) {
+            stopRecording();
         }
 
         finish(); //may needed for closing activity
@@ -261,8 +294,11 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     protected void onDestroy() {
         super.onDestroy();
 //        unregister sensor
-        sensorManager.unregisterListener(this);
-//        close app database
-        AppDatabase.destroyInstance();
+        if (toggle_accel) {
+            sensorManager.unregisterListener(this);
+            //        close app database
+            AppDatabase.destroyInstance();
+        }
+
     }
 }
