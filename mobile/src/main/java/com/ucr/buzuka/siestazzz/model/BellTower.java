@@ -34,7 +34,7 @@ public class BellTower {
         // For now populate a list of alarms
         for (int i = 0; i < 5; i++) {
             Alarm alarm = new Alarm();
-            alarm.setTitle("Alarm #" + i);
+            alarm.setAlarmTitle("Alarm #" + i);
             alarm.setActive(i % 2 == 0); // Set every other alarm active
             mAlarms.add(alarm);
         }

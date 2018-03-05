@@ -71,8 +71,8 @@ public class ViewPagerFragment_AlarmList extends Fragment {
             SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMMM d -- h:mm a");
 
             mAlarm = alarm;
-            mTitleTextView.setText(mAlarm.getTitle());
-            mInfoTextView.setText(dateFormat.format(mAlarm.getDate()));
+            mTitleTextView.setText(mAlarm.getAlarmTitle());
+            mInfoTextView.setText(dateFormat.format(mAlarm.getAlarmTime()));
         }
 
         @Override

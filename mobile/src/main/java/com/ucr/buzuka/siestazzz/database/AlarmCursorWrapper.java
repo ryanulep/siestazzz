@@ -23,16 +23,15 @@ public class AlarmCursorWrapper extends CursorWrapper {
         String uuidString = getString(getColumnIndex(AlarmTable.Cols.UUID));
         String title = getString(getColumnIndex(AlarmTable.Cols.TITLE));
         long time = getLong(getColumnIndex(AlarmTable.Cols.TIME));
-        int active = getInt(getColumnIndex(AlarmTable.Cols.ACTIVE));
-        int smart = getInt(getColumnIndex(AlarmTable.Cols.SMART));
+        int isActive = getInt(getColumnIndex(AlarmTable.Cols.ACTIVE));
+        int isSmart = getInt(getColumnIndex(AlarmTable.Cols.SMART));
 
         Alarm alarm = new Alarm(UUID.fromString(uuidString));
-        alarm.setDate(new Date(time));
-        journalEntry.setWakeDateAndTime(new Date(wakeDateAndTime));
-        journalEntry.setMotionDataPath(motionDataPath);
-        journalEntry.setSoundDataPath(soundDataPath);
-        journalEntry.setSleepNotes(sleepNotes);
+        alarm.setAlarmTitle(title);
+        alarm.setAlarmTime(new Date(time));
+        alarm.setActive( isActive != 0);
+        alarm.setSmart( isSmart != 0);
 
-        return journalEntry;
+        return alarm;
     }
 }

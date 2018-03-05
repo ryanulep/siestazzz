@@ -31,7 +31,7 @@
                 android:textAlignment="center"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:title="@string/app_name"
+                app:alarmTitle="@string/app_name"
                 tools:textAlignment="center" />
 
             <ImageView

@@ -10,19 +10,27 @@ import java.util.UUID;
 public class Alarm {
 
     private UUID mId;
-    private String mTitle;
-    private Date mDate;
+    private String mAlarmTitle;
+    private Date mAlarmTime;
     private boolean mActive;
+    private boolean mSmart;
 
     public Alarm() {
-        mId = UUID.randomUUID();
-        mDate = new Date();
-        mTitle = "Default Alarm";
+        this(UUID.randomUUID());
     }
 
-    public Alarm(String title, Date date, boolean active) {
+    public Alarm(UUID uuid) {
+        mId = uuid;
+        mAlarmTime = new Date();
+        mAlarmTitle = "Alarm";
+        mActive = true;
+        mSmart = false;
+    }
+
+    public Alarm(String alarmTitle, Date alarmTime, boolean active) {
         mId = UUID.randomUUID();
-        mDate = date;
+        mAlarmTitle = alarmTitle;
+        mAlarmTime = alarmTime;
         mActive = active;
     }
 
@@ -30,20 +38,20 @@ public class Alarm {
         return mId;
     }
 
-    public String getTitle() {
-        return mTitle;
+    public String getAlarmTitle() {
+        return mAlarmTitle;
     }
 
-    public void setTitle(String title) {
-        mTitle = title;
+    public void setAlarmTitle(String alarmTitle) {
+        mAlarmTitle = alarmTitle;
     }
 
-    public Date getDate() {
-        return mDate;
+    public Date getAlarmTime() {
+        return mAlarmTime;
     }
 
-    public void setDate(Date date) {
-        mDate = date;
+    public void setAlarmTime(Date alarmTime) {
+        mAlarmTime = alarmTime;
     }
 
     public boolean isActive() {
@@ -52,5 +60,13 @@ public class Alarm {
 
     public void setActive(boolean active) {
         mActive = active;
+    }
+
+    public boolean isSmart() {
+        return mSmart;
+    }
+
+    public void setSmart(boolean smart) {
+        mSmart = smart;
     }
 }
