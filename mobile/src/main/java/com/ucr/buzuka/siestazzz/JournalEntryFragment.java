@@ -226,24 +226,3 @@ public class JournalEntryFragment extends Fragment {
         mSleepDurationField.setText(String.valueOf(mJournalEntry.getHoursSlept()));
     }
 }
-
-
-// TODO: Wire up the rest of the UI
-
-//        mTitleField = (EditText) view.findViewById(R.id.journal_entry_title);
-//        mTitleField.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//                // This space intentionally left blank.
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                mJournalEntry.setTitle(s.toString());
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                // This one too.
-//            }
-//        });
