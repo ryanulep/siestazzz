@@ -33,6 +33,15 @@
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 app:title="@string/app_name"
                 tools:textAlignment="center" />
+
+            <ImageView
+                android:layout_width="2dp"
+                android:layout_height="34dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="16dp"
+                android:layout_weight=".25"
+                app:srcCompat="@drawable/icon" />
+
         </LinearLayout>
 
         <android.support.design.widget.TabLayout

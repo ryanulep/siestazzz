@@ -44,7 +44,7 @@ public class SetAlarm extends AppCompatActivity {
                 // Toast to indicate that the alarm has been set by the user.
                 Toast.makeText(getApplicationContext(), "Alarm Set!", Toast.LENGTH_SHORT).show();
 
-                // TODO: Add comments explainging what code is doing here.
+                // TODO: Add comments explaining what code is doing here.
                 // TODO: Determine why we are not adding the set alarm to BellTower
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     hour = timerClock.getHour();

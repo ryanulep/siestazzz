@@ -30,8 +30,6 @@ public class AlarmDetailFragment extends Fragment {
     private Switch mIsAlarmActive;
     private Button mCloseButton;
 
-    // TODO: Add additional UI implementations
-
     public static AlarmDetailFragment newInstance(UUID alarmId) {
         Bundle args = new Bundle();
         args.putSerializable(ARG_ALARM_ID, alarmId);
@@ -55,7 +53,7 @@ public class AlarmDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_alarm_detail, container, false);
-        // TODO: Wire up the fragment to the UI
+
         mTitleField = (EditText) v.findViewById(R.id.alarm_title);
         mAlarmTime = (TextView) v.findViewById(R.id.alarm_time);
         mIsAlarmActive = (Switch) v.findViewById(R.id.alarm_active);
