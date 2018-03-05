@@ -20,12 +20,12 @@ import java.util.UUID;
 public class Journal {
     private static Journal sJournal;
 
-//    private List<JournalEntry> mJournalEntries;
     // Variables needed to add SQLiteOpenHelper to get rid of the grunt work of opening a SQLiteDatabase.
     private Context mContext;
     private SQLiteDatabase mDatabase;
 
     public static Journal get(Context context) {
+        // if an instance of Journal does not exist, create one.
         if (sJournal == null) {
             sJournal = new Journal(context);
         }
