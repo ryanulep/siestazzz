@@ -59,7 +59,7 @@ public class AlarmDetailFragment extends Fragment {
 
         mTitleField.setText(mAlarm.getAlarmTitle());
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMMM d \n h:mm a");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMMM d\nh:mm a");
 
         mAlarmTime.setText(mAlarm.getAlarmTitle());
         mAlarmTime.setText(dateFormat.format(mAlarm.getAlarmTime()));

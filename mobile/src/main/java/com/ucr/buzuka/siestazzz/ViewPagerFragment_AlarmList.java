@@ -96,7 +96,7 @@ public class ViewPagerFragment_AlarmList extends Fragment {
 
         // bind is used to attach personal information to each list_item_alarm.
         public void bind(Alarm alarm) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMMM d -- h:mm a");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMMM d\nh:mm a");
 
             mAlarm = alarm;
             mTitleTextView.setText(mAlarm.getAlarmTitle());
