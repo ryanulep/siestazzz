@@ -214,7 +214,6 @@ public class JournalEntryFragment extends Fragment {
             updateHoursSlept();
         }
 
-        // TODO COMPLETE BELOW
         if (requestCode == REQUEST_WAKE_TIME) {
             Date time = (Date) data.getSerializableExtra(TimePickerFragment.EXTRA_TIME);
             mJournalEntry.setWakeTime(time);
