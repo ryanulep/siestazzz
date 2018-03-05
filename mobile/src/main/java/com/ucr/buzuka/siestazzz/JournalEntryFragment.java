@@ -46,6 +46,7 @@ public class JournalEntryFragment extends Fragment {
     private Button mWakeDateButton;
     private Button mSleepTimeButton;
     private Button mWakeTimeButton;
+    private Button mCloseButton;
     private TextView mSleepDurationField;
     private EditText mSleepNotes;
 
@@ -103,7 +104,6 @@ public class JournalEntryFragment extends Fragment {
             }
         });
 
-
         mTitleField = (TextView) view.findViewById(R.id.journal_entry_date);
         mTitleField.setText(mJournalEntry.getWakeMonthAndDay());
 
@@ -159,6 +159,14 @@ public class JournalEntryFragment extends Fragment {
             }
         });
 
+        mCloseButton = (Button) view.findViewById(R.id.closebutton);
+        mCloseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
+
         return view;
     }
 
@@ -206,7 +214,7 @@ public class JournalEntryFragment extends Fragment {
             updateHoursSlept();
         }
 
-        //TODO COMPLETE BELOW
+        // TODO COMPLETE BELOW
         if (requestCode == REQUEST_WAKE_TIME) {
             Date time = (Date) data.getSerializableExtra(TimePickerFragment.EXTRA_TIME);
             mJournalEntry.setWakeTime(time);  // TODO Create Method.
@@ -226,24 +234,3 @@ public class JournalEntryFragment extends Fragment {
         mSleepDurationField.setText(String.valueOf(mJournalEntry.getHoursSlept()));
     }
 }
-
-
-// TODO: Wire up the rest of the UI
-
-//        mTitleField = (EditText) view.findViewById(R.id.journal_entry_title);
-//        mTitleField.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//                // This space intentionally left blank.
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                mJournalEntry.setTitle(s.toString());
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                // This one too.
-//            }
-//        });

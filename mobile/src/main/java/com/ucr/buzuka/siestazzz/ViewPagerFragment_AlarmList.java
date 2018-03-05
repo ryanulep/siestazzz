@@ -53,7 +53,6 @@ public class ViewPagerFragment_AlarmList extends Fragment {
         // Private variable used to bind to list_item_alarm
         private Alarm mAlarm;
 
-        // TODO: Personalize list_items_alarm
         private TextView mTitleTextView;
         private TextView mInfoTextView;
 
