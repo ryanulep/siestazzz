@@ -3,9 +3,11 @@ package com.ucr.buzuka.siestazzz;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
     private boolean permissionGranted;
+    public static final String GLOBAL_PREFS = "global_preferences";
 
 
     @Override
@@ -134,36 +137,69 @@ public class MainActivity extends AppCompatActivity {
 
     public void SmartAlarmClick(View view) {
         final Button btn = (Button) findViewById(R.id.smart_alarm_button);
+        //create a shared preference for the toggle
+        SharedPreferences.Editor editor = getSharedPreferences(GLOBAL_PREFS, MODE_PRIVATE).edit();
 
         if (btn.getBackground().getConstantState() == getResources().getDrawable(R.drawable.smartalarm_disabled).getConstantState()) {
             btn.setBackground(getDrawable(R.drawable.smartalarm_enabled));
+            //set toggle to true
+            editor.putBoolean(String.valueOf(SetAlarm.SMART_ALARM), true);
+            Log.i("MainActivity", "Smart alarm on!" );
         }
         else {
             btn.setBackground(getDrawable(R.drawable.smartalarm_disabled));
+            //set toggle to false
+            editor.putBoolean(String.valueOf(SetAlarm.SMART_ALARM), false);
+            Log.i("MainActivity", "Smart alarm off!" );
         }
+        //apply shared preference
+        editor.apply();
     }
 
     public void TrackMovementClicked(View view) {
         final Button btn = (Button) findViewById(R.id.track_movement_button);
+        //create a shared preference for the toggle
+        SharedPreferences.Editor editor = getSharedPreferences(GLOBAL_PREFS, MODE_PRIVATE).edit();
 
         if (btn.getBackground().getConstantState() == getResources().getDrawable(R.drawable.trackmovement_disabled).getConstantState()) {
             btn.setBackground(getDrawable(R.drawable.trackmovement_enabled));
+            //set toggle to true
+            editor.putString(SleepSessionActivity.SENSOR_ACCEL, "true");
+            Log.i("MainActivity", "Toggled sensor" );
+            Toast.makeText(this,"Accelerometer on!", Toast.LENGTH_SHORT).show();
         }
         else {
             btn.setBackground(getDrawable(R.drawable.trackmovement_disabled));
+            //set toggle to true
+            editor.putString(SleepSessionActivity.SENSOR_ACCEL, "false");
+            Log.i("MainActivity", "Un-toggled sensor" );
+            Toast.makeText(this,"Accelerometer off!", Toast.LENGTH_SHORT).show();
         }
+        //apply shared preference
+        editor.apply();
     }
 
     public void RecordSoundClicked(View view) {
         final Button btn = (Button) findViewById(R.id.record_sound_button);
+        //create a shared preference for the toggle
+        SharedPreferences.Editor editor = getSharedPreferences(GLOBAL_PREFS, MODE_PRIVATE).edit();
 
         if (btn.getBackground().getConstantState() == getResources().getDrawable(R.drawable.recordsound_disabled).getConstantState()) {
             btn.setBackground(getDrawable(R.drawable.recordsound_enabled));
+            //set toggle to true
+            editor.putString(SleepSessionActivity.SENSOR_AUDIO, "true");
+            Log.i("MainActivity", "Toggled audio" );
+            Toast.makeText(this,"Audio on!", Toast.LENGTH_SHORT).show();
         }
         else {
             btn.setBackground(getDrawable(R.drawable.recordsound_disabled));
-
+            //set toggle to true
+            editor.putString(SleepSessionActivity.SENSOR_AUDIO, "false");
+            Log.i("MainActivity", "Un-Toggled audio" );
+            Toast.makeText(this,"Audio off!", Toast.LENGTH_SHORT).show();
         }
+        //apply shared preference
+        editor.apply();
     }
 
     /**

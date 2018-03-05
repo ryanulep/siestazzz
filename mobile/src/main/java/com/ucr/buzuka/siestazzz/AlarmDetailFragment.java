@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -58,12 +57,12 @@ public class AlarmDetailFragment extends Fragment {
         mAlarmTime = (TextView) v.findViewById(R.id.alarm_time);
         mIsAlarmActive = (Switch) v.findViewById(R.id.alarm_active);
 
-        mTitleField.setText(mAlarm.getTitle());
+        mTitleField.setText(mAlarm.getAlarmTitle());
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMMM d \n h:mm a");
 
-        mAlarmTime.setText(mAlarm.getTitle());
-        mAlarmTime.setText(dateFormat.format(mAlarm.getDate()));
+        mAlarmTime.setText(mAlarm.getAlarmTitle());
+        mAlarmTime.setText(dateFormat.format(mAlarm.getAlarmTime()));
 
         mIsAlarmActive.setActivated(mAlarm.isActive());
 
@@ -75,7 +74,7 @@ public class AlarmDetailFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                mAlarm.setTitle(charSequence.toString());
+                mAlarm.setAlarmTitle(charSequence.toString());
             }
 
             @Override

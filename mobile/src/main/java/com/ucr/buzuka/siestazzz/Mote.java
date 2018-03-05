@@ -30,7 +30,7 @@ public class Mote extends BroadcastReceiver {
 //        } else {
 //            builder = new AlertDialog.Builder(this);
 //        }
-//        builder.setTitle("Alarm")
+//        builder.setAlarmTitle("Alarm")
 //
 //                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 //                    public void onClick(DialogInterface dialog, int which) {

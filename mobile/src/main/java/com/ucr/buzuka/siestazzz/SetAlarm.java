@@ -3,7 +3,9 @@ package com.ucr.buzuka.siestazzz;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -18,6 +20,8 @@ import java.util.Calendar;
 public class SetAlarm extends AppCompatActivity {
     private int hour;
     private int minute;
+    public static final String SMART_ALARM = "smart_alarm_toggle";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +30,17 @@ public class SetAlarm extends AppCompatActivity {
 
         Button cancelButton = (Button) findViewById(R.id.cancelButton);
         Button setButton = (Button) findViewById(R.id.setAlarm);
+
+        //get toggle preference
+        SharedPreferences prefs = getSharedPreferences(MainActivity.GLOBAL_PREFS, MODE_PRIVATE);
+        boolean isSmart = Boolean.parseBoolean(prefs.getString(SMART_ALARM, "false"));
+        Log.i("SetAlarm", String.valueOf(isSmart));
+
+        //just display smart alarm toggle onCreate
+        if (isSmart){
+            Toast.makeText(this,"Smart alarm toggled", Toast.LENGTH_SHORT).show();
+        }
+
 
        // final TextView alarmDisplay =  findViewById(R.id.textView_AlarmTime);
         final TimePicker timerClock = (TimePicker) findViewById(R.id.timePicker);
@@ -73,4 +88,5 @@ public class SetAlarm extends AppCompatActivity {
             }
         });
     }
+
 }
