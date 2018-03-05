@@ -197,17 +197,18 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
 
                 /*Write to file if speed is greater than threshold* */
                 int volume = mRecorder.getMaxAmplitude();
+
                 if (speed > SENSOR_THRESHOLD || volume > 2000) {
-                    if(!(speed > SENSOR_THRESHOLD)){
-                        speed=0;
+                    if (!(speed > SENSOR_THRESHOLD)) {
+                        speed = 0;
                     }
-                    if(!(volume>2000)){
-                        volume=0;
+                    if (!(volume > 2000)) {
+                        volume = 0;
                     }
                     Log.d("RECORD", String.valueOf(volume));
-                    SensorReadout sensorReadout = new SensorReadout(sessionID, curTime, speed * 100, volume );
+                    SensorReadout sensorReadout = new SensorReadout(sessionID, curTime, speed * 100, volume);
                     db.sensorReadoutDao().insertAll(sensorReadout);
-//                    sensorReadoutList.add(sensorReadout);
+                    //                    sensorReadoutList.add(sensorReadout);
                     Log.d(TAG, "Current read out " + sensorReadout);
 
                     if (speed != Float.POSITIVE_INFINITY) {
