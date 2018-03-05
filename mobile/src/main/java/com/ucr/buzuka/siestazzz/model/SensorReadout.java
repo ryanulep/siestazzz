@@ -29,18 +29,21 @@ public class SensorReadout implements Parcelable {
     private long current_Time;
     @ColumnInfo
     private float speed;
+    @ColumnInfo
+    private int volume;
     
 /** Constructors */
     public SensorReadout() {
     }
 
     @Ignore
-    public SensorReadout(String sessionID, long curTime, float speed) {
+    public SensorReadout(String sessionID, long curTime, float speed, int volume) {
         this.readOutID = UUID.randomUUID().toString();
 
         this.sessionID  = sessionID;
         this.current_Time = curTime;
         this.speed = speed;
+        this.volume=volume;
     }
     
 /** Setters and getters */
@@ -68,6 +71,10 @@ public class SensorReadout implements Parcelable {
         this.speed = speed;
     }
 
+    public int getVolume() { return volume; }
+
+    public void setVolume(int volume) { this.volume=volume; }
+
 
     /**
      * Convert all object in data container to a single string
@@ -79,6 +86,7 @@ public class SensorReadout implements Parcelable {
                 ", sessionID='" + sessionID + '\'' +
                 ", current_Time=" + current_Time +
                 ", speed=" + speed +
+                ", volume=" + volume +
                 '}';
     }
 
@@ -98,6 +106,7 @@ public class SensorReadout implements Parcelable {
         dest.writeString(this.sessionID);
         dest.writeLong(this.current_Time);
         dest.writeFloat(this.speed);
+        dest.writeInt(this.volume);
     }
 
     protected SensorReadout(Parcel in) {
@@ -105,6 +114,7 @@ public class SensorReadout implements Parcelable {
         this.sessionID = in.readString();
         this.current_Time = in.readLong();
         this.speed = in.readFloat();
+        this.volume = in.readInt();
     }
 
     public static final Creator<SensorReadout> CREATOR = new Creator<SensorReadout>() {

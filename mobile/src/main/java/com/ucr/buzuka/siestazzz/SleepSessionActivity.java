@@ -126,7 +126,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
 //        create a new session id
         sessionID = UUID.randomUUID().toString();
         //sensorReadoutList.add(sensorReadout);
-        SensorReadout sensorReadout = new SensorReadout(sessionID, System.currentTimeMillis(), 0);
+        SensorReadout sensorReadout = new SensorReadout(sessionID, System.currentTimeMillis(), 0, 0);
         Session         session     = new Session(sessionID);
 
 //        get an instance of database
@@ -177,12 +177,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         /*If sensor is accelerometer
         * and if storage limiter hits zero
         * */
-        if(sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            int volume = mRecorder.getMaxAmplitude();
-            if (volume > 2000) {
-                Log.d("RECORD", String.valueOf(volume));
-            }
-        }
+
         if(sensor.getType() == Sensor.TYPE_ACCELEROMETER){
             //get current accelerometer data
             float x = sensorEvent.values[0];
@@ -201,12 +196,19 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
                 speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime;
 
                 /*Write to file if speed is greater than threshold* */
-                if (speed > SENSOR_THRESHOLD) {
-
-                    SensorReadout sensorReadout = new SensorReadout(sessionID, curTime, speed * 100);
+                int volume = mRecorder.getMaxAmplitude();
+                if (speed > SENSOR_THRESHOLD || volume > 2000) {
+                    if(!(speed > SENSOR_THRESHOLD)){
+                        speed=0;
+                    }
+                    if(!(volume>2000)){
+                        volume=0;
+                    }
+                    Log.d("RECORD", String.valueOf(volume));
+                    SensorReadout sensorReadout = new SensorReadout(sessionID, curTime, speed * 100, volume );
                     db.sensorReadoutDao().insertAll(sensorReadout);
 //                    sensorReadoutList.add(sensorReadout);
-//                    Log.i(TAG, "Current read out " + sensorReadoutList);
+                    Log.d(TAG, "Current read out " + sensorReadout);
 
                     if (speed != Float.POSITIVE_INFINITY) {
                         MAX_SPEED = speed;
@@ -238,7 +240,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     public void GoHome(View view){
 
 //        log session end
-        SensorReadout sensorReadout = new SensorReadout(sessionID, System.currentTimeMillis(), 0);
+        SensorReadout sensorReadout = new SensorReadout(sessionID, System.currentTimeMillis(), 0,0);
         //sensorReadoutList.add(sensorReadout);
         db.sensorReadoutDao().insertAll(sensorReadout);
 
