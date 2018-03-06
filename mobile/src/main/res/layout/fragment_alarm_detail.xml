@@ -39,8 +39,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/alarm_title" />
 
-
-
     <Switch
         android:id="@+id/alarm_active"
         android:layout_width="wrap_content"
