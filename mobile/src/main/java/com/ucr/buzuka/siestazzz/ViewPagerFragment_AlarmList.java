@@ -1,5 +1,6 @@
 package com.ucr.buzuka.siestazzz;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -28,17 +29,18 @@ public class ViewPagerFragment_AlarmList extends Fragment {
     private AlarmAdapter mAdapter;
     private FloatingActionButton mAddAlarm;
 
-    @Nullable
+
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
-        View rootView=inflater.inflate(R.layout.fragment_alarms,container, false);
+        View view = inflater.inflate(R.layout.fragment_alarms,container, false);
 
-        mAlarmRecyclerView = (RecyclerView) rootView.findViewById(R.id.alarm_recycler_view);
+        mAlarmRecyclerView = (RecyclerView) view.findViewById(R.id.alarm_recycler_view);
         mAlarmRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mAlarmRecyclerView.setAdapter(mAdapter);
 
         updateUI();
 
-        mAddAlarm = (FloatingActionButton) rootView.findViewById(R.id.add_alarm_fab);
+        mAddAlarm = (FloatingActionButton) view.findViewById(R.id.add_alarm_fab);
         mAddAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,12 +51,24 @@ public class ViewPagerFragment_AlarmList extends Fragment {
             }
         });
 
-        return rootView; // inflate is a function that converts a layout to a view.
+        return view; // inflate is a function that converts a layout to a view.
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        updateUI();
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        updateUI();
+    }
+
+    @Override
+    public void onAttachFragment(Fragment childFragment) {
+        super.onAttachFragment(childFragment);
         updateUI();
     }
 
@@ -75,7 +89,7 @@ public class ViewPagerFragment_AlarmList extends Fragment {
     }
 
     // Implementing a ViewHolder and an Adapter
-    // The ViewHolder Part
+    // ViewHolder
     private class AlarmHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         // Private variable used to bind to list_item_alarm
@@ -87,11 +101,18 @@ public class ViewPagerFragment_AlarmList extends Fragment {
         // In AlarmHolder constructor inflate list_item_alarm. Immediately pass it into super(...)
         public AlarmHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_alarm, parent, false));
+
             //Set onCLickListener as the holder
             itemView.setOnClickListener(this);
 
             mTitleTextView = (TextView) itemView.findViewById(R.id.alarm_title);
             mInfoTextView = (TextView) itemView.findViewById(R.id.alarm_info);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Intent intent = AlarmPagerActivity.newIntent(getActivity(), mAlarm.getId());
+            startActivity(intent);
         }
 
         // bind is used to attach personal information to each list_item_alarm.
@@ -102,16 +123,11 @@ public class ViewPagerFragment_AlarmList extends Fragment {
             mTitleTextView.setText(mAlarm.getAlarmTitle());
             mInfoTextView.setText(dateFormat.format(mAlarm.getAlarmTime()));
         }
-
-        @Override
-        public void onClick(View view) {
-            Intent intent = AlarmPagerActivity.newIntent(getActivity(), mAlarm.getId());
-            startActivity(intent);
-        }
-    }
+    }  // End of AlarmHolder
 
     // The Adapter Part
     private class AlarmAdapter extends RecyclerView.Adapter<AlarmHolder> {
+
         private List<Alarm> mAlarms;
 
         public AlarmAdapter(List<Alarm> alarms) {

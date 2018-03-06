@@ -260,10 +260,11 @@ public class MainActivity extends AppCompatActivity {
         public SectionsPagerAdapter(FragmentManager fm) { super(fm); }
 
         @Override
-        public Fragment getItem(int position) { // The page that we want to display in a ViewPage
+        public Fragment getItem(int position) {
+            // The page that we want to display in a ViewPage
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            //return PlaceholderFragment.newInstance(position + 1);
+            // return PlaceholderFragment.newInstance(position + 1);
 
             switch (position) {
                 case 0:
