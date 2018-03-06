@@ -64,9 +64,8 @@ public class JournalEntry {
     public String getWakeHourAndMinute() {
 
         DateFormat df = new SimpleDateFormat("h:mm a");
-        String fWakeTime = df.format(mWakeDateAndTime);
 
-        return fWakeTime;
+        return df.format(mWakeDateAndTime);
     }
 
     public void setWakeTime(Date wakeTime) {
