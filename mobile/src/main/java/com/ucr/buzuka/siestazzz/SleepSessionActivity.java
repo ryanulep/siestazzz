@@ -1,10 +1,7 @@
 package com.ucr.buzuka.siestazzz;
 
-import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -12,13 +9,9 @@ import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ucr.buzuka.siestazzz.database.AppDatabase;
 import com.ucr.buzuka.siestazzz.model.Journal;
@@ -26,11 +19,9 @@ import com.ucr.buzuka.siestazzz.model.JournalEntry;
 import com.ucr.buzuka.siestazzz.model.SensorData;
 import com.ucr.buzuka.siestazzz.model.SensorReadout;
 import com.ucr.buzuka.siestazzz.model.Session;
-import com.ucr.buzuka.siestazzz.util.JSONHelper;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,11 +35,12 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     private static final int M_SENSOR_DELAY = 200;      //set the time interval to pull from sensor
     private static int STORAGE_LIMITER = 150;           //set the time interval to store
     private static final String TAG = "SleepSessionActivity";
-    //private Queue<Float> sensorLog;
+
     private ArrayList<SensorData> sensorDataList = new ArrayList<>();
-    //sensor manager and accelerometer
+
     private SensorManager sensorManager;
     private Sensor sensorAccelerometer;
+
     //local variable for sensor data
     private long lastUpdate = 0;
     private float last_x, last_y, last_z; //last position
@@ -58,14 +50,13 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     private long diffTime = 0;
     private float speed = 0;
     private String sessionID;
-//    private Context mContext; //global context field to threading
-//    private AppDatabase db;
+
     public static final String SENSOR_ACCEL = "accelerometer_toggle";
     public static final String SENSOR_AUDIO = "audio_toggle";
 
     private static final String LOG_TAG = "AudioRecordTest";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
-    private static String mFileName = null;
+    private static String mAudioFileName = null;
     private File myDir;
     private MediaRecorder mRecorder = null;
     private MediaPlayer mPlayer = null;
@@ -84,19 +75,19 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     }
 
     private void startRecording() {
-        mFileName = getExternalCacheDir().getAbsolutePath();
+        mAudioFileName = getExternalCacheDir().getAbsolutePath();
         long yourmilliseconds = System.currentTimeMillis();
         SimpleDateFormat sdf = new SimpleDateFormat("MMMddyyyHHmm");
         Date resultdate = new Date(yourmilliseconds);
-        mFileName +="/";
-        mFileName +=fDate;
-        mFileName +="/";
-        mFileName += "1.3gp";
-//        Log.d("AUDIO", mFileName);
+        mAudioFileName +="/";
+        mAudioFileName +=fDate;
+        mAudioFileName +="/";
+        mAudioFileName += "1.3gp";
+//        Log.d("AUDIO", mAudioFileName);
         mRecorder = new MediaRecorder();
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mRecorder.setOutputFile(mFileName);
+        mRecorder.setOutputFile(mAudioFileName);
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
         try {
@@ -293,14 +284,17 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         JournalEntry journalEntry = new JournalEntry();
         journalEntry.setSleepDateAndTime(mDate);
         journalEntry.setWakeDateAndTime(wakeTime);
+        // Add audio data
         if(toggle_audio){
-            journalEntry.setSoundDataPath(mFileName);
-            Log.d("AUDIO", "Path="+mFileName);
+            journalEntry.setSoundDataPath(mAudioFileName);
+            Log.d("AUDIO", "Path="+ mAudioFileName);
         }
 
         else{
             journalEntry.setSoundDataPath("NULL");
         }
+
+
         Journal.get(this).addJournalEntry(journalEntry);
 
 
