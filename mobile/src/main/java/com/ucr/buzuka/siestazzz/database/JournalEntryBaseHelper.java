@@ -41,6 +41,18 @@ public class JournalEntryBaseHelper extends SQLiteOpenHelper {
                 ")"
         );
 
+        // Brought over alarm table
+        // This is part of a very important two-step process. First, write the initial part of your SQL creation code.
+        db.execSQL("create table " + AlarmDbSchema.AlarmTable.NAME + "(" +
+                " _id integer primary key autoincrement, " +
+                AlarmDbSchema.AlarmTable.Cols.UUID + ", " +
+                AlarmDbSchema.AlarmTable.Cols.TITLE + ", " +
+                AlarmDbSchema.AlarmTable.Cols.TIME + ", " +
+                AlarmDbSchema.AlarmTable.Cols.ACTIVE + ", " +
+                AlarmDbSchema.AlarmTable.Cols.SMART +
+                ")"
+        );
+
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

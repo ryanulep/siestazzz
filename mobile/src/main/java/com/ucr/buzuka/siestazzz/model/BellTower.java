@@ -5,9 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.ucr.buzuka.siestazzz.database.AlarmBaseHelper;
 import com.ucr.buzuka.siestazzz.database.AlarmCursorWrapper;
 import com.ucr.buzuka.siestazzz.database.AlarmDbSchema;
+import com.ucr.buzuka.siestazzz.database.JournalEntryBaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +48,7 @@ public class BellTower {
          *  - If hits is not the first time, check the version umber in the database. If the version number in
          *    JournalEntryBaseHelper is higher call onUpgrade(SQLiteDatabase, int, int).
          */
-        mDatabase = new AlarmBaseHelper(mContext)
+        mDatabase = new JournalEntryBaseHelper(mContext)
                 .getWritableDatabase();
     }
 
