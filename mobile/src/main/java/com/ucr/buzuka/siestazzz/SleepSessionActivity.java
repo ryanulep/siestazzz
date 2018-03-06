@@ -45,7 +45,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     private static int STORAGE_LIMITER = 150;           //set the time interval to store
     private static final String TAG = "SleepSessionActivity";
     //private Queue<Float> sensorLog;
-    public  ArrayList<SensorData> sensorDataList = new ArrayList<>();
+    private ArrayList<SensorData> sensorDataList = new ArrayList<>();
     //sensor manager and accelerometer
     private SensorManager sensorManager;
     private Sensor sensorAccelerometer;
@@ -54,10 +54,10 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     private float last_x, last_y, last_z; //last position
     private float SENSOR_THRESHOLD = 0.05f;
     private float MAX_SPEED = Float.NEGATIVE_INFINITY;
-    long curTime = 0;
-    long diffTime = 0;
-    float speed = 0;
-    String sessionID;
+    private long curTime = 0;
+    private long diffTime = 0;
+    private float speed = 0;
+    private String sessionID;
 //    private Context mContext; //global context field to threading
 //    private AppDatabase db;
     public static final String SENSOR_ACCEL = "accelerometer_toggle";

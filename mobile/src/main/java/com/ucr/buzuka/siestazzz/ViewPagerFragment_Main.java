@@ -18,9 +18,8 @@ public class ViewPagerFragment_Main extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        return rootView;
+        return inflater.inflate(R.layout.fragment_main, container, false);
     }
 
 

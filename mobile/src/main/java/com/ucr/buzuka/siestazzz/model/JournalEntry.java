@@ -86,9 +86,8 @@ public class JournalEntry {
     public String getSleepHourAndMinute() {
 
         DateFormat df = new SimpleDateFormat("h:mm a");
-        String fSleepTime = df.format(mSleepDateAndTime);
 
-        return fSleepTime;
+        return df.format(mSleepDateAndTime);
     }
 
     public Date getWakeDateAndTime() {
