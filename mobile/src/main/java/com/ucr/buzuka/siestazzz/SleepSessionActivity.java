@@ -92,7 +92,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         mFileName +=fDate;
         mFileName +="/";
         mFileName += "1.3gp";
-        Log.d("AUDIO", mFileName);
+//        Log.d("AUDIO", mFileName);
         mRecorder = new MediaRecorder();
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
@@ -248,7 +248,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
                 if (!(volume > 2000)) {
                     volume = 0;
                 }
-                Log.d("RECORD", String.valueOf(volume));
+//                Log.d("RECORD", String.valueOf(volume));
                 // TODO HERE
 
                 SensorData sData = new SensorData(curTime, speed * 100, volume);
@@ -293,7 +293,14 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         JournalEntry journalEntry = new JournalEntry();
         journalEntry.setSleepDateAndTime(mDate);
         journalEntry.setWakeDateAndTime(wakeTime);
-        journalEntry.setSoundDataPath("TestPath");
+        if(toggle_audio){
+            journalEntry.setSoundDataPath(mFileName);
+            Log.d("AUDIO", "Path="+mFileName);
+        }
+
+        else{
+            journalEntry.setSoundDataPath("NULL");
+        }
         Journal.get(this).addJournalEntry(journalEntry);
 
 
