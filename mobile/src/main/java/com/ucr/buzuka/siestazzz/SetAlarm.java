@@ -21,6 +21,7 @@ public class SetAlarm extends AppCompatActivity {
     private int hour;
     private int minute;
     public static final String SMART_ALARM = "smart_alarm_toggle";
+    boolean repeating = false;
 
 
     @Override
@@ -53,20 +54,20 @@ public class SetAlarm extends AppCompatActivity {
         final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
 
+
         setButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Toast to indicate that the alarm has been set by the user.
                 Toast.makeText(getApplicationContext(), "Alarm Set!", Toast.LENGTH_SHORT).show();
-
                 // TODO: Add comments explaining what code is doing here.
-                // TODO: Determine why we are not adding the set alarm to BellTower
+
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     hour = timerClock.getHour();
                     minute = timerClock.getMinute();
                 }
 
-                cal.set(Calendar.MONTH,1);
+                cal.set(Calendar.MONTH,cal.get(Calendar.MONTH));
                 cal.set(Calendar.YEAR,2018);
                 cal.set(Calendar.DAY_OF_MONTH,cal.get(Calendar.DAY_OF_MONTH));
                 cal.set(Calendar.HOUR_OF_DAY,hour);
@@ -74,11 +75,17 @@ public class SetAlarm extends AppCompatActivity {
                 cal.set(Calendar.SECOND,0);
                 Log.w("myApp", "Alarm");
 
-                alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
-
+                if(repeating){
+                    // Reapeats Everyday
+                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),alarmManager.INTERVAL_DAY,pendingIntent);
+                }
+                else {
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
+                }
                 finish();
             }
         });
+
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override

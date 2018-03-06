@@ -36,7 +36,6 @@ public class Mote extends BroadcastReceiver {
         vibe.vibrate(10000);
 
         Log.v(TAG, "Initializing sounds...");
-
         final MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.sample);
         mediaPlayer.setLooping(true);
 
