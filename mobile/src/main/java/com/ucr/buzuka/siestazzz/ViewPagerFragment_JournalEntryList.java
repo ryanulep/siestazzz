@@ -49,7 +49,6 @@ public class ViewPagerFragment_JournalEntryList extends Fragment {
                 Journal.get(getActivity()).addJournalEntry(journalEntry);
                 Intent intent = JournalEntryPagerActivity.newIntent(getActivity(), journalEntry.getId());
                 startActivity(intent);
-                //updateUI();
             }
         });
 
@@ -78,7 +77,8 @@ public class ViewPagerFragment_JournalEntryList extends Fragment {
         }
     }
 
-    // View Holder
+    // Implementing a ViewHolder and an Adapter
+    // ViewHolder
     private class JournalEntryHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private JournalEntry mJournalEntry;
