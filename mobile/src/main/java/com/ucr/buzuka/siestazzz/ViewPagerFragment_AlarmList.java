@@ -65,6 +65,8 @@ public class ViewPagerFragment_AlarmList extends Fragment {
         updateUI();
     }
 
+
+
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
@@ -122,6 +124,9 @@ public class ViewPagerFragment_AlarmList extends Fragment {
                     Log.i("ViewPagerFragment_AlarmList", "mAlarm.setActive(isActive) — get switch value " + isActive);
                     Log.i("ViewPagerFragment_AlarmList", "mAlarm.getActive() — get mAlarm value " + mAlarm.isActive());
 //                    mIsAlarmActive.setChecked(isActive);
+
+                    // Bandage Fix.
+                    BellTower.get(getActivity()).updateAlarm(mAlarm);
                 }
             });
         }
