@@ -6,8 +6,18 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+
+import com.ucr.buzuka.siestazzz.model.Alarm;
+import com.ucr.buzuka.siestazzz.model.BellTower;
+
+import java.util.UUID;
 
 public class ListAlarmsActivity extends AppCompatActivity {
+
+    private Alarm mAlarm;
+    private Switch mIsAlarmActive;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

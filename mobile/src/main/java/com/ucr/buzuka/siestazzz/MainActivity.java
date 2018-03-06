@@ -23,6 +23,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.ucr.buzuka.siestazzz.model.Alarm;
+import com.ucr.buzuka.siestazzz.model.BellTower;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_PERMISSION_WRITE = 1;
@@ -76,8 +79,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void SetAlarm(View view) {
-        // Tell MainActivity to switch to ListAlarmsActivity
-        Intent intent = new Intent(this, SetAlarm.class);
+        Alarm alarm = new Alarm();
+        BellTower.get(this).addAlarm(alarm);
+        Intent intent = AlarmPagerActivity.newIntent(this, alarm.getId());
         startActivity(intent);
     }
 
