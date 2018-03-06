@@ -11,7 +11,7 @@ import android.support.annotation.NonNull;
 import java.util.UUID;
 
 /**
- * Created by jakex on 2/11/2018.
+ * Created by Rick Boshae on 3/5/2018.
  */
 
 /** new table for sensor readout */
