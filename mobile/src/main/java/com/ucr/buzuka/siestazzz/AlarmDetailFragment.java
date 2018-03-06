@@ -118,6 +118,18 @@ public class AlarmDetailFragment extends Fragment {
         return v;
     }
 
+    /**
+     * JournalEntry instances get modified in JournalEntryFragment and will need to be written out when
+     * JournalEntryFragment is done. Adding an override to JournalFragment.onPause() updates Journal's
+     * copy of the JournalEntry
+     */
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        BellTower.get(getActivity()).updateAlarm(mAlarm);
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
