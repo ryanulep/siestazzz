@@ -1,5 +1,7 @@
 package com.ucr.buzuka.siestazzz;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,15 +9,19 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.ucr.buzuka.siestazzz.model.Alarm;
 import com.ucr.buzuka.siestazzz.model.BellTower;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,17 +34,18 @@ public class ViewPagerFragment_AlarmList extends Fragment {
     private AlarmAdapter mAdapter;
     private FloatingActionButton mAddAlarm;
 
-    @Nullable
+
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
-        View rootView=inflater.inflate(R.layout.fragment_alarms,container, false);
+        View view = inflater.inflate(R.layout.fragment_alarms,container, false);
 
-        mAlarmRecyclerView = (RecyclerView) rootView.findViewById(R.id.alarm_recycler_view);
+        mAlarmRecyclerView = (RecyclerView) view.findViewById(R.id.alarm_recycler_view);
         mAlarmRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mAlarmRecyclerView.setAdapter(mAdapter);
 
         updateUI();
 
-        mAddAlarm = (FloatingActionButton) rootView.findViewById(R.id.add_alarm_fab);
+        mAddAlarm = (FloatingActionButton) view.findViewById(R.id.add_alarm_fab);
         mAddAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,12 +56,26 @@ public class ViewPagerFragment_AlarmList extends Fragment {
             }
         });
 
-        return rootView; // inflate is a function that converts a layout to a view.
+        return view; // inflate is a function that converts a layout to a view.
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        updateUI();
+    }
+
+
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        updateUI();
+    }
+
+    @Override
+    public void onAttachFragment(Fragment childFragment) {
+        super.onAttachFragment(childFragment);
         updateUI();
     }
 
@@ -75,7 +96,7 @@ public class ViewPagerFragment_AlarmList extends Fragment {
     }
 
     // Implementing a ViewHolder and an Adapter
-    // The ViewHolder Part
+    // ViewHolder
     private class AlarmHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         // Private variable used to bind to list_item_alarm
@@ -83,24 +104,31 @@ public class ViewPagerFragment_AlarmList extends Fragment {
 
         private TextView mTitleTextView;
         private TextView mInfoTextView;
+        private Switch mIsAlarmActive;
 
         // In AlarmHolder constructor inflate list_item_alarm. Immediately pass it into super(...)
         public AlarmHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_alarm, parent, false));
+
             //Set onCLickListener as the holder
             itemView.setOnClickListener(this);
 
             mTitleTextView = (TextView) itemView.findViewById(R.id.alarm_title);
             mInfoTextView = (TextView) itemView.findViewById(R.id.alarm_info);
-        }
+            mIsAlarmActive = (Switch) itemView.findViewById(R.id.activeSwitch);
 
-        // bind is used to attach personal information to each list_item_alarm.
-        public void bind(Alarm alarm) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMMM d -- h:mm a");
+            mIsAlarmActive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean isActive) {
+                    mAlarm.setActive(isActive);
+                    Log.i("ViewPagerFragment_AlarmList", "mAlarm.setActive(isActive) — get switch value " + isActive);
+                    Log.i("ViewPagerFragment_AlarmList", "mAlarm.getActive() — get mAlarm value " + mAlarm.isActive());
+//                    mIsAlarmActive.setChecked(isActive);
 
-            mAlarm = alarm;
-            mTitleTextView.setText(mAlarm.getAlarmTitle());
-            mInfoTextView.setText(dateFormat.format(mAlarm.getAlarmTime()));
+                    // Bandage Fix.
+                    BellTower.get(getActivity()).updateAlarm(mAlarm);
+                }
+            });
         }
 
         @Override
@@ -108,10 +136,21 @@ public class ViewPagerFragment_AlarmList extends Fragment {
             Intent intent = AlarmPagerActivity.newIntent(getActivity(), mAlarm.getId());
             startActivity(intent);
         }
-    }
+
+        // bind is used to attach personal information to each list_item_alarm.
+        public void bind(Alarm alarm) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMMM d\nh:mm a");
+
+            mAlarm = alarm;
+            mTitleTextView.setText(mAlarm.getAlarmTitle());
+            mInfoTextView.setText(dateFormat.format(mAlarm.getAlarmTime()));
+            mIsAlarmActive.setChecked(mAlarm.isActive());
+        }
+    }  // End of AlarmHolder
 
     // The Adapter Part
     private class AlarmAdapter extends RecyclerView.Adapter<AlarmHolder> {
+
         private List<Alarm> mAlarms;
 
         public AlarmAdapter(List<Alarm> alarms) {
@@ -141,4 +180,5 @@ public class ViewPagerFragment_AlarmList extends Fragment {
             mAlarms = alarms;
         }
     }
+
 }

@@ -2,6 +2,7 @@ package com.ucr.buzuka.siestazzz;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -49,6 +50,7 @@ public class JournalEntryFragment extends Fragment {
     private Button mCloseButton;
     private TextView mSleepDurationField;
     private EditText mSleepNotes;
+    private Button mSleepRecordingPlayBackButton;
 
     /**
      * Notes on public static JournalEntryFragment newInstance(UUID journalEntryId):
@@ -164,6 +166,25 @@ public class JournalEntryFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 getActivity().onBackPressed();
+            }
+        });
+
+        mSleepRecordingPlayBackButton = (Button) view.findViewById(R.id.sleep_session_play_button);
+        mSleepRecordingPlayBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // TODO: Flynn help me wire this up sir.
+                //set up MediaPlayer
+                MediaPlayer mp = new MediaPlayer();
+
+                try {
+                    mp.setDataSource(mJournalEntry.getSoundDataPath());
+                    mp.prepare();
+                    mp.start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
