@@ -21,7 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ucr.buzuka.siestazzz.database.AppDatabase;
+import com.ucr.buzuka.siestazzz.model.Journal;
 import com.ucr.buzuka.siestazzz.model.JournalEntry;
+import com.ucr.buzuka.siestazzz.model.SensorData;
 import com.ucr.buzuka.siestazzz.model.SensorReadout;
 import com.ucr.buzuka.siestazzz.model.Session;
 import com.ucr.buzuka.siestazzz.util.JSONHelper;
@@ -35,13 +37,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
+import static android.app.PendingIntent.getActivity;
+
 public class SleepSessionActivity extends AppCompatActivity implements SensorEventListener {
 
     private static final int M_SENSOR_DELAY = 200;      //set the time interval to pull from sensor
     private static int STORAGE_LIMITER = 150;           //set the time interval to store
     private static final String TAG = "SleepSessionActivity";
     //private Queue<Float> sensorLog;
-//    public  ArrayList<SensorReadout> sensorReadoutList = new ArrayList<>();
+    public  ArrayList<SensorData> sensorDataList = new ArrayList<>();
     //sensor manager and accelerometer
     private SensorManager sensorManager;
     private Sensor sensorAccelerometer;
@@ -54,8 +58,8 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     long diffTime = 0;
     float speed = 0;
     String sessionID;
-    private Context mContext; //global context field to threading
-    private AppDatabase db;
+//    private Context mContext; //global context field to threading
+//    private AppDatabase db;
     public static final String SENSOR_ACCEL = "accelerometer_toggle";
     public static final String SENSOR_AUDIO = "audio_toggle";
 
@@ -142,19 +146,21 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
 //        create a new session id
         sessionID = UUID.randomUUID().toString();
         //sensorReadoutList.add(sensorReadout);
+
+        // Logs a list of readouts
         SensorReadout sensorReadout = new SensorReadout(sessionID, System.currentTimeMillis(), 0, 0);
         Session         session     = new Session(sessionID, myDir.getPath());
         Log.d("DATABASE", "Session:" + session);
 //        get an instance of database
-        db = AppDatabase.getInstance(this);
+//        db = AppDatabase.getInstance(this);
 //        drop table
 //        db.sensorReadoutDao().clearTable();
 
 //        log session start
 //        insert start
-        db.sensorReadoutDao().insertAll(sensorReadout);
+//        db.sensorReadoutDao().insertAll(sensorReadout);
 //        new session
-        db.sessionDao().insertAll(session);
+//        db.sessionDao().insertAll(session);
         Log.d("RECORD", "OnCreate Completed");
     }
 
@@ -243,10 +249,15 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
                     volume = 0;
                 }
                 Log.d("RECORD", String.valueOf(volume));
-                SensorReadout sensorReadout = new SensorReadout(sessionID, curTime, speed * 100, volume);
-                db.sensorReadoutDao().insertAll(sensorReadout);
+                // TODO HERE
+
+                SensorData sData = new SensorData(curTime, speed * 100, volume);
+                sensorDataList.add(sData);
+
+//                SensorReadout sensorReadout = new SensorReadout(sessionID, curTime, speed * 100, volume); // insert to db
+//                db.sensorReadoutDao().insertAll(sensorReadout);
                 //                    sensorReadoutList.add(sensorReadout);
-                Log.d(TAG, "Current read out " + sensorReadout);
+//                Log.d(TAG, "Current read out " + sensorReadout);
 
                 if (speed != Float.POSITIVE_INFINITY) {
                     MAX_SPEED = speed;
@@ -264,19 +275,27 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
 
         if (toggle_accel) {
 //        log session end
-        SensorReadout sensorReadout = new SensorReadout(sessionID, System.currentTimeMillis(), 0,0);
+//        SensorReadout sensorReadout = new SensorReadout(sessionID, System.currentTimeMillis(), 0,0);
         //sensorReadoutList.add(sensorReadout);
-        db.sensorReadoutDao().insertAll(sensorReadout);
+//        db.sensorReadoutDao().insertAll(sensorReadout);
 
-            // export to json file
-            boolean result = JSONHelper.exportToJSON(this, db.sensorReadoutDao().findById(sessionID));
-
-            if (result) {
-                Toast.makeText(this, "Data exported", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Export failed", Toast.LENGTH_SHORT).show();
-            }
+            // export to json file TODO: REvive this.
+//            boolean result = JSONHelper.exportToJSON(this, db.sensorReadoutDao().findById(sessionID));
+//
+//            if (result) {
+//                Toast.makeText(this, "Data exported", Toast.LENGTH_SHORT).show();
+//            } else {
+//                Toast.makeText(this, "Export failed", Toast.LENGTH_SHORT).show();
+//            }
         }
+        Date wakeTime = new Date();
+
+        JournalEntry journalEntry = new JournalEntry();
+        journalEntry.setSleepDateAndTime(mDate);
+        journalEntry.setWakeDateAndTime(wakeTime);
+        journalEntry.setSoundDataPath("TestPath");
+        Journal.get(this).addJournalEntry(journalEntry);
+
 
         finish(); //may needed for closing activity
 //        //intent to go back to MainActivity

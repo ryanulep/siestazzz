@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -23,6 +24,12 @@ public class JournalEntry {
     private String mMotionDataPath;
     private String mSoundDataPath;
     private String mSleepNotes;
+
+    private List<SensorData> mSensorDataList;
+
+
+
+
 
     public JournalEntry() {
 
@@ -212,5 +219,13 @@ public class JournalEntry {
 
     public void setSleepNotes(String sleepNotes) {
         mSleepNotes = sleepNotes;
+    }
+
+    public List<SensorData> getSensorDataList() {
+        return mSensorDataList;
+    }
+
+    public void setSensorDataList(List<SensorData> sensorDataList) {
+        mSensorDataList = sensorDataList;
     }
 }
