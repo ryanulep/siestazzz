@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,9 @@ import java.util.UUID;
 
 public class AlarmDetailFragment extends Fragment {
     private static final String ARG_ALARM_ID = "alarm_id"; // Goes with bundle args for memory
+    private static final String DIALOG_TIME = "DialogTime";
+
+    private static final int REQUEST_ALARM_TIME = 5;
 
     private Alarm mAlarm;
     private EditText mTitleField;
@@ -29,6 +33,18 @@ public class AlarmDetailFragment extends Fragment {
     private Switch mIsAlarmActive;
     private Button mCloseButton;
 
+    /**
+     * Notes on public static AlarmFragment newInstance(UUID alarmId):
+     * =========================================================================================================
+     * To attach the arguments bundle to a fragment, you call Fragment.setArguments(Bundle). Attaching
+     * arguments to a fragment must be done after the fragment is created but before it is added to an activity.
+     * <p>
+     * To hit this window. It is a common Android programming convection to add a static method named
+     * newInstance() to the Fragment class. This method creates the fragment instance and bundles up and
+     * sets it s arguments.
+     */
+
+    // Attaching arguments to a fragment
     public static AlarmDetailFragment newInstance(UUID alarmId) {
         Bundle args = new Bundle();
         args.putSerializable(ARG_ALARM_ID, alarmId);
@@ -85,6 +101,7 @@ public class AlarmDetailFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isActive) {
                 mAlarm.setActive(isActive);
+                Log.i("AlarmDetailFragment", "mAlarm.setActive(isActive) — get switch value" + isActive);
             }
         });
 
