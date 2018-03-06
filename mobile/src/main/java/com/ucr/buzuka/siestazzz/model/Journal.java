@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.ucr.buzuka.siestazzz.database.JournalEntryBaseHelper;
+import com.ucr.buzuka.siestazzz.database.UnifiedBaseHelper;
 import com.ucr.buzuka.siestazzz.database.JournalEntryCursorWrapper;
 import com.ucr.buzuka.siestazzz.database.JournalEntryDbSchema;
 
@@ -37,14 +37,14 @@ public class Journal {
         mContext = context.getApplicationContext();
 
         /**
-         * When getWritableDatabase() is called JournalEntryBaseHelper will do the following:
+         * When getWritableDatabase() is called UnifiedBaseHelper will do the following:
          *  - Open /data/data/<path>/databases/journalEntryBase.db
          *  - If this is the first time the database has been created, call onCreate(SQLiteDatabase), then save out the
          *    latest version number
          *  - If hits is not the first time, check the version umber in the database. If the version number in
-         *    JournalEntryBaseHelper is higher call onUpgrade(SQLiteDatabase, int, int).
+         *    UnifiedBaseHelper is higher call onUpgrade(SQLiteDatabase, int, int).
          */
-        mDatabase = new JournalEntryBaseHelper(mContext)
+        mDatabase = new UnifiedBaseHelper(mContext)
                 .getWritableDatabase();
     }
 
