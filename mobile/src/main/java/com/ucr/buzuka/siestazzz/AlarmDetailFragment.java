@@ -1,5 +1,7 @@
 package com.ucr.buzuka.siestazzz;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,6 +21,7 @@ import com.ucr.buzuka.siestazzz.model.Alarm;
 import com.ucr.buzuka.siestazzz.model.BellTower;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 
 public class AlarmDetailFragment extends Fragment {
@@ -101,7 +104,7 @@ public class AlarmDetailFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isActive) {
                 mAlarm.setActive(isActive);
-                Log.i("AlarmDetailFragment", "mAlarm.setActive(isActive) — get switch value" + isActive);
+                Log.i("AlarmDetailFragment", "mAlarm.setActive(isActive) — get switch value " + isActive);
             }
         });
 
@@ -113,5 +116,21 @@ public class AlarmDetailFragment extends Fragment {
         });
 
         return v;
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+
+        if (requestCode == REQUEST_ALARM_TIME) {
+            Date time = (Date) data.getSerializableExtra(TimePickerFragment.EXTRA_TIME);
+            mAlarm.setAlarmTime(time);
+
+            // TODO: Update alarm time view.
+        }
+
     }
 }

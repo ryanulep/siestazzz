@@ -1,5 +1,6 @@
 package com.ucr.buzuka.siestazzz;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,7 @@ import com.ucr.buzuka.siestazzz.model.Alarm;
 import com.ucr.buzuka.siestazzz.model.BellTower;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -111,6 +114,16 @@ public class ViewPagerFragment_AlarmList extends Fragment {
             mTitleTextView = (TextView) itemView.findViewById(R.id.alarm_title);
             mInfoTextView = (TextView) itemView.findViewById(R.id.alarm_info);
             mIsAlarmActive = (Switch) itemView.findViewById(R.id.activeSwitch);
+
+            mIsAlarmActive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean isActive) {
+                    mAlarm.setActive(isActive);
+                    Log.i("ViewPagerFragment_AlarmList", "mAlarm.setActive(isActive) — get switch value " + isActive);
+                    Log.i("ViewPagerFragment_AlarmList", "mAlarm.getActive() — get mAlarm value " + mAlarm.isActive());
+//                    mIsAlarmActive.setChecked(isActive);
+                }
+            });
         }
 
         @Override
@@ -127,14 +140,6 @@ public class ViewPagerFragment_AlarmList extends Fragment {
             mTitleTextView.setText(mAlarm.getAlarmTitle());
             mInfoTextView.setText(dateFormat.format(mAlarm.getAlarmTime()));
             mIsAlarmActive.setChecked(mAlarm.isActive());
-
-            mIsAlarmActive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean isActive) {
-                    mAlarm.setActive(isActive);
-                    mIsAlarmActive.setChecked(isActive);
-                }
-            });
         }
     }  // End of AlarmHolder
 
@@ -170,4 +175,5 @@ public class ViewPagerFragment_AlarmList extends Fragment {
             mAlarms = alarms;
         }
     }
+
 }
