@@ -1,5 +1,6 @@
 package com.ucr.buzuka.siestazzz;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -28,14 +29,14 @@ public class ViewPagerFragment_AlarmList extends Fragment {
     private AlarmAdapter mAdapter;
     private FloatingActionButton mAddAlarm;
 
-    @Nullable
+
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_alarms,container, false);
 
         mAlarmRecyclerView = (RecyclerView) view.findViewById(R.id.alarm_recycler_view);
         mAlarmRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mAlarmRecyclerView.setAdapter(mAdapter);
 
         updateUI();
 
@@ -56,6 +57,18 @@ public class ViewPagerFragment_AlarmList extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        updateUI();
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        updateUI();
+    }
+
+    @Override
+    public void onAttachFragment(Fragment childFragment) {
+        super.onAttachFragment(childFragment);
         updateUI();
     }
 
