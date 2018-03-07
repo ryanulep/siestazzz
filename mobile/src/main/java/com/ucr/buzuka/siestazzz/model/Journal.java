@@ -113,12 +113,6 @@ public class Journal {
         String uuidString = journalEntry.getId().toString();
         ContentValues values = getContentValues(journalEntry);
 
-        // The delete(...) method starts off similar to insert(...) - you pass a table name you want to
-        // update and the ContentValues you want to assign to each row you update. The last part is
-        // different because now you have to specify which rows get updated. You do that by building
-        // a where clause (third argument) and the nspecify values for the arguments in the where clause
-        // (the final String[] array). Note: " = ?" prevents a SQL injection attack.
-
         // TODO: Delete associated sound and data files.
         mDatabase.delete(JournalEntryDbSchema.JournalEntryTable.NAME,
                 JournalEntryDbSchema.JournalEntryTable.Cols.UUID + " LIKE ?",

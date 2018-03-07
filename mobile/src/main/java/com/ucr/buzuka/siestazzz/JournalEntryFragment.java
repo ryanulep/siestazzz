@@ -60,7 +60,7 @@ public class JournalEntryFragment extends Fragment {
     private EditText mSleepNotes;
     private Button mSleepRecordingPlayBackButton;
     private Button mDeleteThisJournalEntry;
-    private boolean markedForDeletion; // Used to delete journalEntry OnPause
+    private boolean markedForDeletion = false; // Used to delete journalEntry OnPause
 
     /**
      * Notes on public static JournalEntryFragment newInstance(UUID journalEntryId):
@@ -235,13 +235,6 @@ public class JournalEntryFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
-//        if(markedForDeletion){
-//            Journal.get(getActivity()).deleteJournalEntry(mJournalEntry);
-////            getActivity().recreate();
-//            Intent intent = new Intent(getActivity(), ViewPagerFragment_Main.class);
-//            startActivity(intent);
-//        }
         Log.d(TAG, "onDestroy");
     }
 
