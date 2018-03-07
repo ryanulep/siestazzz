@@ -35,6 +35,7 @@ public class AlarmDetailFragment extends Fragment {
     private TextView mAlarmTime;
     private Switch mIsAlarmActive;
     private Button mCloseButton;
+    private Button mSetAlarmButton;
 
     /**
      * Notes on public static AlarmFragment newInstance(UUID alarmId):
@@ -76,6 +77,15 @@ public class AlarmDetailFragment extends Fragment {
         mAlarmTime = (TextView) v.findViewById(R.id.alarm_time);
         mIsAlarmActive = (Switch) v.findViewById(R.id.alarm_active);
         mCloseButton = (Button) v.findViewById(R.id.closebutton);
+
+        mSetAlarmButton = (Button) v.findViewById(R.id.set_alarm_button);
+
+        mSetAlarmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAlarm.setAlarmTime(getContext(), mAlarm.getAlarmTime());
+            }
+        });
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMMM d\nh:mm a");
 
@@ -139,7 +149,7 @@ public class AlarmDetailFragment extends Fragment {
 
         if (requestCode == REQUEST_ALARM_TIME) {
             Date time = (Date) data.getSerializableExtra(TimePickerFragment.EXTRA_TIME);
-            mAlarm.setAlarmTime(time);
+            //mAlarm.setAlarmTime(time);
 
             // TODO: Update alarm time view.
         }
