@@ -106,6 +106,19 @@ public class Journal {
                 new String[] { uuidString });
     }
 
+    public void deleteJournalEntry(JournalEntry journalEntry) {
+        String uuidString = journalEntry.getId().toString();
+        ContentValues values = getContentValues(journalEntry);
+
+        // The update(...) method starts off similar to insert(...) - you pass a table name you want to
+        // update and the ContentValues you want to assign to each row you update. The last part is
+        // different because now you have to specify which rows get updated. You do that by building
+        // a where clause (third argument) and the nspecify values for the arguments in the where clause
+        // (the final String[] array). Note: " = ?" prevents a SQL injection attack.
+        mDatabase.delete(JournalEntryDbSchema.JournalEntryTable.NAME, JournalEntryDbSchema.JournalEntryTable.Cols.UUID,
+                new String[] { uuidString });
+    }
+
     /**
      * Reading in data from SQLite is done using the query(...) method.
      */

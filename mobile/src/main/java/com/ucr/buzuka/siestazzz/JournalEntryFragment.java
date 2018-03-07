@@ -92,6 +92,7 @@ public class JournalEntryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_journal_entry, container, false);
         GraphView graph = (GraphView) view.findViewById(R.id.graph);
+        // TODO: FIX Crashing if series and series2 is null.
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(DataExtract.prepareVolumeData(mJournalEntry.getSoundDataPath()));
         graph.addSeries(series);
         LineGraphSeries<DataPoint> series2 = new LineGraphSeries<>(DataExtract.prepareSpeedData(mJournalEntry.getSoundDataPath()));
