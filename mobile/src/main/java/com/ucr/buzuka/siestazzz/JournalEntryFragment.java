@@ -179,7 +179,8 @@ public class JournalEntryFragment extends Fragment {
                 MediaPlayer mp = new MediaPlayer();
 
                 try {
-                    mp.setDataSource(mJournalEntry.getSoundDataPath());
+                    String path=mJournalEntry.getSoundDataPath()+"/recording.3gp";
+                    mp.setDataSource(path);
                     mp.prepare();
                     mp.start();
                 } catch (Exception e) {
