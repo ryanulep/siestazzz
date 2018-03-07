@@ -35,7 +35,7 @@ import java.util.UUID;
 
 public class SleepSessionActivity extends AppCompatActivity implements SensorEventListener {
 
-    private static final int M_SENSOR_DELAY = 200;      //set the time interval to pull from sensor
+    private static final int M_SENSOR_DELAY = 500;      //set the time interval to pull from sensor
     private static int STORAGE_LIMITER = 150;           //set the time interval to store
     private static final String TAG = "SleepSessionActivity";
     //private Queue<Float> sensorLog;
@@ -46,7 +46,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     //local variable for sensor data
     private long lastUpdate = 0;
     private float last_x, last_y, last_z; //last position
-    private float SENSOR_THRESHOLD = 0.05f;
+    private float SENSOR_THRESHOLD = 0.02f;
     private float MAX_SPEED = Float.NEGATIVE_INFINITY;
     long curTime = 0;
     long diffTime = 0;
@@ -289,20 +289,23 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
                 STORAGE_LIMITER--;
             }
         }
-        if (speed > SENSOR_THRESHOLD || volume > 2000) {
-            if (speed > SENSOR_THRESHOLD) {
-                speedValues+=Float.toString(speed);
-                speedValues+=" ";
-                speedTimes+=curTime;
-                speedTimes+=" ";
-                Log.d("CONVERT", "Speed:"+speed);
+//        if (speed > SENSOR_THRESHOLD || volume > 2000) {
+            if (!(speed > SENSOR_THRESHOLD)) {
+                speed=0;
             }
-            if (volume > 2000) {
-                volumeValues+=Float.toString(volume);
-                volumeValues+=" ";
-                volumeTimes+=curTime;
-                volumeTimes+=" ";
+            if (volume > 5000) {
+                volume=0;
             }
+        speedValues+=Float.toString(speed);
+        speedValues+=" ";
+        speedTimes+=curTime;
+        speedTimes+=" ";
+
+        volumeValues+=Float.toString(volume);
+        volumeValues+=" ";
+        volumeTimes+=curTime;
+        volumeTimes+=" ";
+        Log.d("CONVERT", "Speed:"+speed);
 //                Log.d("RECORD", String.valueOf(volume));
             // TODO HERE
 
@@ -317,7 +320,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
             if (speed != Float.POSITIVE_INFINITY) {
                 MAX_SPEED = speed;
             }
-        }
+//        }
     }
 
     @Override
