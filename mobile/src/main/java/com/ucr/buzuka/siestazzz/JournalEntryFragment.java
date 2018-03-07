@@ -2,6 +2,7 @@ package com.ucr.buzuka.siestazzz;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,8 +21,12 @@ import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 import com.ucr.buzuka.siestazzz.model.Journal;
 import com.ucr.buzuka.siestazzz.model.JournalEntry;
+import com.ucr.buzuka.siestazzz.util.DataExtract;
 
 import java.util.Date;
 import java.util.UUID;
@@ -86,7 +91,12 @@ public class JournalEntryFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_journal_entry, container, false);
-
+        GraphView graph = (GraphView) view.findViewById(R.id.graph);
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(DataExtract.prepareVolumeData(mJournalEntry.getSoundDataPath()));
+        graph.addSeries(series);
+        LineGraphSeries<DataPoint> series2 = new LineGraphSeries<>(DataExtract.prepareSpeedData(mJournalEntry.getSoundDataPath()));
+        series2.setColor(Color.GREEN);
+        graph.addSeries(series2);
         mSleepNotes = (EditText) view.findViewById(R.id.journal_entry_notes);
         mSleepNotes.setText(mJournalEntry.getSleepNotes());
         mSleepNotes.addTextChangedListener(new TextWatcher() {
@@ -179,7 +189,8 @@ public class JournalEntryFragment extends Fragment {
                 MediaPlayer mp = new MediaPlayer();
 
                 try {
-                    mp.setDataSource(mJournalEntry.getSoundDataPath());
+                    String path=mJournalEntry.getSoundDataPath()+"/recording.3gp";
+                    mp.setDataSource(path);
                     mp.prepare();
                     mp.start();
                 } catch (Exception e) {
