@@ -38,6 +38,9 @@ public class AlarmService extends IntentService {
     public static void setAlarmService(Context context, boolean mActive, Date date, boolean mSmart, String mAlarmTitle, UUID mId){
         Log.w("myApp", "In setAlarmService function");
         Intent i = AlarmService.newIntent(context);
+
+
+        // TODO Give unique ID at place of 0
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, PendingIntent.FLAG_UPDATE_CURRENT|  Intent.FILL_IN_DATA);
         AlarmManager alarmManager =(AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
@@ -46,7 +49,7 @@ public class AlarmService extends IntentService {
 
         if(mActive){
             alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
-            Log.w("myApp", "AlarmManager Set");
+            Log.w("myApp", "AlarmManager Se t" + cal);
 
         }
         else{

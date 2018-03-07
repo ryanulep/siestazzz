@@ -61,13 +61,17 @@ public class Alarm {
 
     public void setAlarmTime(Context context,Date alarmTime) {
         Log.w("myApp", "SetAlarmTime");
-        mAlarmTime = alarmTime;
+        Calendar newDate = Calendar.getInstance();
+        newDate.setTime(alarmTime);
 
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(alarmTime);
+        Calendar mTempAlarmTime = Calendar.getInstance();
+
+        mTempAlarmTime.setTime(mAlarmTime);             // Set to current SleepTimeAndDate
+        mTempAlarmTime.set(Calendar.HOUR_OF_DAY, newDate.get(Calendar.HOUR_OF_DAY));
+        mTempAlarmTime.set(Calendar.MINUTE, newDate.get(Calendar.MINUTE));
 
 
-
+        mAlarmTime = mTempAlarmTime.getTime();
         AlarmService.setAlarmService(context, mActive, mAlarmTime, mSmart, mAlarmTitle, mId);
     }
 
