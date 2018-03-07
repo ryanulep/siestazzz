@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,8 @@ import java.util.UUID;
 
 public class JournalEntryFragment extends Fragment {
 
+    private static final String TAG = "JournalEntryFragment";
+
     private static final String ARG_JOURNAL_ENTRY_ID = "journal_entry_id"; // Used to attach the arguments bundle to a fragment.
     private static final String DIALOG_DATE = "DialogDate";
     private static final String DIALOG_TIME = "DialogTime";
@@ -56,6 +59,8 @@ public class JournalEntryFragment extends Fragment {
     private TextView mSleepDurationField;
     private EditText mSleepNotes;
     private Button mSleepRecordingPlayBackButton;
+    private Button mDeleteThisJournalEntry;
+    private boolean markedForDeletion = false; // Used to delete journalEntry OnPause
 
     /**
      * Notes on public static JournalEntryFragment newInstance(UUID journalEntryId):
@@ -92,6 +97,7 @@ public class JournalEntryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_journal_entry, container, false);
         GraphView graph = (GraphView) view.findViewById(R.id.graph);
+        // TODO: FIX Crashing if series and series2 is null.
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(DataExtract.prepareVolumeData(mJournalEntry.getSoundDataPath()));
         graph.addSeries(series);
         LineGraphSeries<DataPoint> series2 = new LineGraphSeries<>(DataExtract.prepareSpeedData(mJournalEntry.getSoundDataPath()));
@@ -179,12 +185,21 @@ public class JournalEntryFragment extends Fragment {
             }
         });
 
+        mDeleteThisJournalEntry = (Button) view.findViewById(R.id.joural_entry_delete_button);
+        mDeleteThisJournalEntry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                markedForDeletion = true;
+                Journal.get(getActivity()).deleteJournalEntry(mJournalEntry);
+                getActivity().finish();
+            }
+        });
+
         mSleepRecordingPlayBackButton = (Button) view.findViewById(R.id.sleep_session_play_button);
         mSleepRecordingPlayBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                // TODO: Flynn help me wire this up sir.
                 //set up MediaPlayer
                 MediaPlayer mp = new MediaPlayer();
 
@@ -211,7 +226,21 @@ public class JournalEntryFragment extends Fragment {
     public void onPause() {
         super.onPause();
 
-        Journal.get(getActivity()).updateJournalEntry(mJournalEntry);
+        if(!markedForDeletion){
+            Journal.get(getActivity()).updateJournalEntry(mJournalEntry);
+        }
+        Log.d(TAG, "onPause");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 
     @Override
