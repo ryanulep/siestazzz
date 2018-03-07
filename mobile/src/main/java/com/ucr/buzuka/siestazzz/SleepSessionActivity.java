@@ -35,8 +35,8 @@ import java.util.UUID;
 
 public class SleepSessionActivity extends AppCompatActivity implements SensorEventListener {
 
-    private static final int M_SENSOR_DELAY = 500;      //set the time interval to pull from sensor
-    private static int STORAGE_LIMITER = 150;           //set the time interval to store
+    private static final int M_SENSOR_DELAY = 0;      //set the time interval to pull from sensor
+    private static int STORAGE_LIMITER = 0;           //set the time interval to store
     private static final String TAG = "SleepSessionActivity";
     //private Queue<Float> sensorLog;
     public  ArrayList<SensorData> sensorDataList = new ArrayList<>();
