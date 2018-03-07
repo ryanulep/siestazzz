@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.ucr.buzuka.siestazzz.database.UnifiedBaseHelper;
 import com.ucr.buzuka.siestazzz.database.JournalEntryCursorWrapper;
@@ -18,6 +19,8 @@ import java.util.UUID;
  */
 
 public class Journal {
+
+    static final String TAG = "Journal";
     private static Journal sJournal;
 
     // Variables needed to add SQLiteOpenHelper to get rid of the grunt work of opening a SQLiteDatabase.
@@ -110,13 +113,17 @@ public class Journal {
         String uuidString = journalEntry.getId().toString();
         ContentValues values = getContentValues(journalEntry);
 
-        // The update(...) method starts off similar to insert(...) - you pass a table name you want to
+        // The delete(...) method starts off similar to insert(...) - you pass a table name you want to
         // update and the ContentValues you want to assign to each row you update. The last part is
         // different because now you have to specify which rows get updated. You do that by building
         // a where clause (third argument) and the nspecify values for the arguments in the where clause
         // (the final String[] array). Note: " = ?" prevents a SQL injection attack.
-        mDatabase.delete(JournalEntryDbSchema.JournalEntryTable.NAME, JournalEntryDbSchema.JournalEntryTable.Cols.UUID,
+
+        // TODO: Delete associated sound and data files.
+        mDatabase.delete(JournalEntryDbSchema.JournalEntryTable.NAME,
+                JournalEntryDbSchema.JournalEntryTable.Cols.UUID + " LIKE ?",
                 new String[] { uuidString });
+        Log.d(TAG, "deleteJournalEntry: deleted");
     }
 
     /**
