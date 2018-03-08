@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -36,6 +35,8 @@ public class AlarmDetailFragment extends Fragment {
     private TextView mAlarmTime;
     private Switch mIsAlarmActive;
     private Button mCloseButton;
+    private Button mDeleteAlarmButton;
+    private boolean markedForDeletion = false;
     private Button mSetAlarmButton;
 
     /**
@@ -130,6 +131,16 @@ public class AlarmDetailFragment extends Fragment {
             }
         });
 
+        mDeleteAlarmButton = v.findViewById(R.id.alarm_delete_button);
+        mDeleteAlarmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                markedForDeletion = true;
+                BellTower.get(getActivity()).deleteAlarm(mAlarm);
+                getActivity().finish();
+            }
+        });
+
         return v;
     }
 
@@ -141,8 +152,10 @@ public class AlarmDetailFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        if(!markedForDeletion){
+            BellTower.get(getActivity()).updateAlarm(mAlarm);
+        }
 
-        BellTower.get(getActivity()).updateAlarm(mAlarm);
     }
 
 

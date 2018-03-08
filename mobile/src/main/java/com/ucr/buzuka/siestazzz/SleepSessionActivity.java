@@ -1,10 +1,8 @@
 package com.ucr.buzuka.siestazzz;
 
-import android.Manifest;
+
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -12,37 +10,33 @@ import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import com.jjoe64.graphview.series.DataPoint;
 import com.ucr.buzuka.siestazzz.database.AppDatabase;
 import com.ucr.buzuka.siestazzz.model.Journal;
 import com.ucr.buzuka.siestazzz.model.JournalEntry;
 import com.ucr.buzuka.siestazzz.model.SensorData;
 import com.ucr.buzuka.siestazzz.model.SensorReadout;
 import com.ucr.buzuka.siestazzz.model.Session;
+import com.ucr.buzuka.siestazzz.util.DataExtract;
 import com.ucr.buzuka.siestazzz.util.JSONHelper;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
-import static android.app.PendingIntent.getActivity;
 
 public class SleepSessionActivity extends AppCompatActivity implements SensorEventListener {
 
-    private static final int M_SENSOR_DELAY = 200;      //set the time interval to pull from sensor
-    private static int STORAGE_LIMITER = 150;           //set the time interval to store
+    private static final int M_SENSOR_DELAY = 0;      //set the time interval to pull from sensor
+    private static int STORAGE_LIMITER = 0;           //set the time interval to store
     private static final String TAG = "SleepSessionActivity";
     //private Queue<Float> sensorLog;
     public  ArrayList<SensorData> sensorDataList = new ArrayList<>();
@@ -52,7 +46,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     //local variable for sensor data
     private long lastUpdate = 0;
     private float last_x, last_y, last_z; //last position
-    private float SENSOR_THRESHOLD = 0.05f;
+    private float SENSOR_THRESHOLD = 0.02f;
     private float MAX_SPEED = Float.NEGATIVE_INFINITY;
     long curTime = 0;
     long diffTime = 0;
@@ -75,7 +69,11 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
 
     private static boolean toggle_accel;
     private static boolean toggle_audio;
-
+    private String volumeValues="";
+    private String volumeTimes="";
+    private String speedValues="";
+    private String speedTimes="";
+    private String journalPath="";
 
     private void stopRecording() {
         mRecorder.stop();
@@ -90,8 +88,9 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         Date resultdate = new Date(yourmilliseconds);
         mFileName +="/";
         mFileName +=fDate;
+        journalPath=mFileName;
         mFileName +="/";
-        mFileName += "1.3gp";
+        mFileName += "recording.3gp";
 //        Log.d("AUDIO", mFileName);
         mRecorder = new MediaRecorder();
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -191,12 +190,61 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         super.onStop();
         if (toggle_audio) {
             stopRecording();
-            Log.d("RECORD", "onStop() called");
+
+            try{
+                String pathTemp=getExternalCacheDir().getAbsolutePath()+"/"+fDate+"/volumeValues.txt";
+                File vVals = new File(pathTemp);
+                vVals.createNewFile();
+                FileWriter vWrite=new FileWriter(vVals);
+                vWrite.write(volumeValues);
+                vWrite.flush();
+                vWrite.close();
+                pathTemp=getExternalCacheDir().getAbsolutePath()+"/"+fDate+"/volumeTimes.txt";
+                vVals = new File(pathTemp);
+                vVals.createNewFile();
+                vWrite=new FileWriter(vVals);
+                vWrite.write(volumeTimes);
+                vWrite.flush();
+                vWrite.close();
+//                DataPoint[] test=DataExtract.prepareVolumeData(journalPath);
+//                if(test!=null){
+//                    for(int i=0; i<test.length;i++){
+//                        Log.d("CONVERT", "DataPoint:"+test[i]);
+//                    }
+//                }
+            }
+            catch (IOException e){
+                Log.d("RECORD", "OOPS");
+            }
         }
         if (toggle_accel) {
             sensorManager.unregisterListener(this);
+            try{
+                String pathTemp=getExternalCacheDir().getAbsolutePath()+"/"+fDate+"/speedValues.txt";
+                File sVals = new File(pathTemp);
+                sVals.createNewFile();
+                FileWriter sWrite=new FileWriter(sVals);
+                sWrite.write(speedValues);
+                sWrite.flush();
+                sWrite.close();
+                pathTemp=getExternalCacheDir().getAbsolutePath()+"/"+fDate+"/speedTimes.txt";
+                sVals = new File(pathTemp);
+                sVals.createNewFile();
+                sWrite=new FileWriter(sVals);
+                sWrite.write(speedTimes);
+                sWrite.flush();
+                sWrite.close();
+//                DataPoint[] test=DataExtract.prepareSpeedData(journalPath);
+//                if(test!=null){
+//                    for(int i=0; i<test.length;i++){
+//                        Log.d("CONVERT", "DataPoint:"+test[i]);
+//                    }
+//                }
+            }
+            catch (IOException e){
+                Log.d("RECORD", "OOPS");
+            }
         }
-
         // TODO Create JournalEntryObject
         JournalEntry journalEntry = new JournalEntry();
     }
@@ -241,28 +289,38 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
                 STORAGE_LIMITER--;
             }
         }
-            if (speed > SENSOR_THRESHOLD || volume > 2000) {
-                if (!(speed > SENSOR_THRESHOLD)) {
-                    speed = 0;
-                }
-                if (!(volume > 2000)) {
-                    volume = 0;
-                }
-//                Log.d("RECORD", String.valueOf(volume));
-                // TODO HERE
+//        if (speed > SENSOR_THRESHOLD || volume > 2000) {
+            if (!(speed > SENSOR_THRESHOLD)) {
+                speed=0;
+            }
+            if (volume > 5000) {
+                volume=0;
+            }
+        speedValues+=Float.toString(speed);
+        speedValues+=" ";
+        speedTimes+=curTime;
+        speedTimes+=" ";
 
-                SensorData sData = new SensorData(curTime, speed * 100, volume);
-                sensorDataList.add(sData);
+        volumeValues+=Float.toString(volume);
+        volumeValues+=" ";
+        volumeTimes+=curTime;
+        volumeTimes+=" ";
+        Log.d("CONVERT", "Speed:"+speed);
+//                Log.d("RECORD", String.valueOf(volume));
+            // TODO HERE
+
+//            SensorData sData = new SensorData(curTime, speed * 100, volume);
+//            sensorDataList.add(sData);
 
 //                SensorReadout sensorReadout = new SensorReadout(sessionID, curTime, speed * 100, volume); // insert to db
 //                db.sensorReadoutDao().insertAll(sensorReadout);
-                //                    sensorReadoutList.add(sensorReadout);
+            //                    sensorReadoutList.add(sensorReadout);
 //                Log.d(TAG, "Current read out " + sensorReadout);
 
-                if (speed != Float.POSITIVE_INFINITY) {
-                    MAX_SPEED = speed;
-                }
+            if (speed != Float.POSITIVE_INFINITY) {
+                MAX_SPEED = speed;
             }
+//        }
     }
 
     @Override
@@ -294,12 +352,12 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         journalEntry.setSleepDateAndTime(mDate);
         journalEntry.setWakeDateAndTime(wakeTime);
         if(toggle_audio){
-            journalEntry.setSoundDataPath(mFileName);
-            Log.d("AUDIO", "Path="+mFileName);
+            journalEntry.setSoundDataPath(journalPath);
+            Log.d("AUDIO", "Path="+journalPath);
         }
 
         else{
-            journalEntry.setSoundDataPath("NULL");
+            journalEntry.setSoundDataPath(null);
         }
         Journal.get(this).addJournalEntry(journalEntry);
 

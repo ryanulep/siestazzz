@@ -2,6 +2,7 @@ package com.ucr.buzuka.siestazzz;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,18 +11,20 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 import com.ucr.buzuka.siestazzz.model.Journal;
 import com.ucr.buzuka.siestazzz.model.JournalEntry;
+import com.ucr.buzuka.siestazzz.util.DataExtract;
 
 import java.util.Date;
 import java.util.UUID;
@@ -31,6 +34,8 @@ import java.util.UUID;
  */
 
 public class JournalEntryFragment extends Fragment {
+
+    private static final String TAG = "JournalEntryFragment";
 
     private static final String ARG_JOURNAL_ENTRY_ID = "journal_entry_id"; // Used to attach the arguments bundle to a fragment.
     private static final String DIALOG_DATE = "DialogDate";
@@ -51,6 +56,8 @@ public class JournalEntryFragment extends Fragment {
     private TextView mSleepDurationField;
     private EditText mSleepNotes;
     private Button mSleepRecordingPlayBackButton;
+    private Button mDeleteThisJournalEntry;
+    private boolean markedForDeletion = false; // Used to delete journalEntry OnPause
 
     /**
      * Notes on public static JournalEntryFragment newInstance(UUID journalEntryId):
@@ -86,7 +93,26 @@ public class JournalEntryFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_journal_entry, container, false);
+        GraphView graph = (GraphView) view.findViewById(R.id.graph);
+        // DONE: FIX Crashing if series and series2 is null.
+        if(mJournalEntry.getSoundDataPath()!=null){
+            LineGraphSeries<DataPoint> series;
+            LineGraphSeries<DataPoint> series2;
+            DataPoint[] sound=DataExtract.prepareVolumeData(mJournalEntry.getSoundDataPath());
+            if(sound!=null)
+            {
+                Log.d("CONVERT", "Sound!=null"+sound);
+                series= new LineGraphSeries<>(sound);
+                graph.addSeries(series);
+            }
 
+            DataPoint[] motion=DataExtract.prepareSpeedData(mJournalEntry.getSoundDataPath());
+            if(motion!=null) {
+                series2 = new LineGraphSeries<>(motion);
+                series2.setColor(Color.GREEN);
+                graph.addSeries(series2);
+            }
+        }
         mSleepNotes = (EditText) view.findViewById(R.id.journal_entry_notes);
         mSleepNotes.setText(mJournalEntry.getSleepNotes());
         mSleepNotes.addTextChangedListener(new TextWatcher() {
@@ -169,17 +195,27 @@ public class JournalEntryFragment extends Fragment {
             }
         });
 
+        mDeleteThisJournalEntry = (Button) view.findViewById(R.id.journal_entry_delete_button);
+        mDeleteThisJournalEntry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                markedForDeletion = true;
+                Journal.get(getActivity()).deleteJournalEntry(mJournalEntry);
+                getActivity().finish();
+            }
+        });
+
         mSleepRecordingPlayBackButton = (Button) view.findViewById(R.id.sleep_session_play_button);
         mSleepRecordingPlayBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                // TODO: Flynn help me wire this up sir.
                 //set up MediaPlayer
                 MediaPlayer mp = new MediaPlayer();
 
                 try {
-                    mp.setDataSource(mJournalEntry.getSoundDataPath());
+                    String path=mJournalEntry.getSoundDataPath()+"/recording.3gp";
+                    mp.setDataSource(path);
                     mp.prepare();
                     mp.start();
                 } catch (Exception e) {
@@ -200,7 +236,21 @@ public class JournalEntryFragment extends Fragment {
     public void onPause() {
         super.onPause();
 
-        Journal.get(getActivity()).updateJournalEntry(mJournalEntry);
+        if(!markedForDeletion){
+            Journal.get(getActivity()).updateJournalEntry(mJournalEntry);
+        }
+        Log.d(TAG, "onPause");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 
     @Override
