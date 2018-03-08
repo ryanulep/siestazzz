@@ -49,7 +49,7 @@ public class AlarmService extends IntentService {
 
         if(mActive){
             alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
-            Log.w("myApp", "AlarmManager Se t" + cal);
+            Log.w("myApp", "AlarmManager Set " + cal);
 
         }
         else{
