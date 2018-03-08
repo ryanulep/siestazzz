@@ -3,58 +3,65 @@
     package="com.ucr.buzuka.siestazzz">
 
     <!-- needed for writing permission -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"
-        android:label="@string/app_name"
         android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".MainActivity" android:screenOrientation="portrait">
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".SetAlarm"
+        <activity
+            android:name=".SetAlarm"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
-
-        <activity android:name=".SleepSessionActivity"
+        <activity
+            android:name=".SleepSessionActivity"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
 
-        <receiver android:name=".Mote" />
+        <receiver android:name=".Mote">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </receiver>
 
         <activity
             android:name=".ListAlarmsActivity"
-            android:theme="@style/AppTheme"
-            android:screenOrientation="portrait" />
-
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".JournalEntryPagerActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".AlarmPagerActivity"
             android:screenOrientation="portrait" />
 
+        <service android:name=".AlarmService" />
+
+        <activity android:name=".Snooze2Activity"></activity>
     </application>
 
 </manifest>

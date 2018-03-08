@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -37,6 +38,7 @@ public class AlarmDetailFragment extends Fragment {
     private Button mCloseButton;
     private Button mDeleteAlarmButton;
     private boolean markedForDeletion = false;
+    private Button mSetAlarmButton;
 
     /**
      * Notes on public static AlarmFragment newInstance(UUID alarmId):
@@ -78,6 +80,19 @@ public class AlarmDetailFragment extends Fragment {
         mAlarmTime = (TextView) v.findViewById(R.id.alarm_time);
         mIsAlarmActive = (Switch) v.findViewById(R.id.alarm_active);
         mCloseButton = (Button) v.findViewById(R.id.closebutton);
+
+        mSetAlarmButton = (Button) v.findViewById(R.id.set_alarm_button);
+
+        mSetAlarmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = getFragmentManager();
+                TimePickerFragment dialog = TimePickerFragment.newInstance(mAlarm.getAlarmTime());
+                dialog.setTargetFragment(AlarmDetailFragment.this, REQUEST_ALARM_TIME);
+                dialog.show(manager, DIALOG_TIME);
+
+            }
+        });
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMMM d\nh:mm a");
 
@@ -153,8 +168,8 @@ public class AlarmDetailFragment extends Fragment {
 
         if (requestCode == REQUEST_ALARM_TIME) {
             Date time = (Date) data.getSerializableExtra(TimePickerFragment.EXTRA_TIME);
-            mAlarm.setAlarmTime(time);
-
+            //mAlarm.setAlarmTime(time);
+            mAlarm.setAlarmTime(getContext(), time);
             // TODO: Update alarm time view.
         }
 

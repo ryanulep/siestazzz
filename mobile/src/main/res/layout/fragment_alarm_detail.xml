@@ -7,6 +7,19 @@
     android:background="@drawable/mainbackground"
     tools:context="com.ucr.buzuka.siestazzz.AlarmDetailFragment">
 
+    <Button
+        android:id="@+id/set_alarm_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="162dp"
+        android:layout_marginStart="161dp"
+        android:layout_marginTop="44dp"
+        android:text="Set Alarm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/closebutton" />
+
     <EditText
         android:id="@+id/alarm_title"
         android:layout_height="wrap_content"
@@ -58,9 +71,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="162dp"
         android:layout_marginStart="161dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="52dp"
         android:background="@drawable/closebutton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/alarm_active" />
 
@@ -70,7 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Delete Alarm"
+        android:background="@drawable/deletebutton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </android.support.constraint.ConstraintLayout>
