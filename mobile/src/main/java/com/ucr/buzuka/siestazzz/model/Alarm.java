@@ -72,6 +72,7 @@ public class Alarm {
 
 
         mAlarmTime = mTempAlarmTime.getTime();
+
         AlarmService.setAlarmService(context, mActive, mAlarmTime, mSmart, mAlarmTitle, mId);
         AlarmService.setNotificationService(context, mAlarmTime);
     }
