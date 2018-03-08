@@ -12,14 +12,11 @@ import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
@@ -198,7 +195,7 @@ public class JournalEntryFragment extends Fragment {
             }
         });
 
-        mDeleteThisJournalEntry = (Button) view.findViewById(R.id.joural_entry_delete_button);
+        mDeleteThisJournalEntry = (Button) view.findViewById(R.id.journal_entry_delete_button);
         mDeleteThisJournalEntry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
