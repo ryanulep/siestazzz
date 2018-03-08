@@ -2,7 +2,11 @@ package com.ucr.buzuka.siestazzz.model;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
+import com.ucr.buzuka.siestazzz.AlarmService;
+
+import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
@@ -28,6 +32,10 @@ public class Alarm {
         mAlarmTitle = "Alarm";
         mActive = true;
         mSmart = false;
+
+
+
+
     }
 
     public UUID getId() {
@@ -48,6 +56,23 @@ public class Alarm {
 
     public void setAlarmTime(Date alarmTime) {
         mAlarmTime = alarmTime;
+//        AlarmService.setAlarmService(context, mActive, mAlarmTime, mSmart, mAlarmTitle, mId);
+    }
+
+    public void setAlarmTime(Context context,Date alarmTime) {
+        Log.w("myApp", "SetAlarmTime");
+        Calendar newDate = Calendar.getInstance();
+        newDate.setTime(alarmTime);
+
+        Calendar mTempAlarmTime = Calendar.getInstance();
+
+        mTempAlarmTime.setTime(mAlarmTime);             // Set to current SleepTimeAndDate
+        mTempAlarmTime.set(Calendar.HOUR_OF_DAY, newDate.get(Calendar.HOUR_OF_DAY));
+        mTempAlarmTime.set(Calendar.MINUTE, newDate.get(Calendar.MINUTE));
+
+
+        mAlarmTime = mTempAlarmTime.getTime();
+        AlarmService.setAlarmService(context, mActive, mAlarmTime, mSmart, mAlarmTitle, mId);
     }
 
     public boolean isActive() {
