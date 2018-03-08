@@ -20,7 +20,7 @@ import java.util.Calendar;
 public class SetAlarm extends AppCompatActivity {
     private int hour;
     private int minute;
-    public static final String SMART_ALARM = "smart_alarm_toggle";
+
 
 
     @Override
@@ -32,14 +32,9 @@ public class SetAlarm extends AppCompatActivity {
         Button setButton = (Button) findViewById(R.id.setAlarm);
 
         //get toggle preference
-        SharedPreferences prefs = getSharedPreferences(MainActivity.GLOBAL_PREFS, MODE_PRIVATE);
-        boolean isSmart = Boolean.parseBoolean(prefs.getString(SMART_ALARM, "false"));
-        Log.i("SetAlarm", String.valueOf(isSmart));
 
-        //just display smart alarm toggle onCreate
-        if (isSmart){
-            Toast.makeText(this,"Smart alarm toggled", Toast.LENGTH_SHORT).show();
-        }
+
+
 
 
        // final TextView alarmDisplay =  findViewById(R.id.textView_AlarmTime);

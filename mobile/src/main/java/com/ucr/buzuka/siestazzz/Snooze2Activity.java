@@ -1,5 +1,6 @@
 package com.ucr.buzuka.siestazzz;
 
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Vibrator;
@@ -14,12 +15,22 @@ public class Snooze2Activity extends AppCompatActivity {
     private static final String TAG =  "SnoozeActivity";
     float vol = (float) 0.025;
     boolean smartAlarm = true;
+    boolean isActive = true;
     int maxVolume = 100;
+    public static final String SMART_ALARM = "smart_alarm_toggle";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snooze2);
+
+        Log.w(TAG, "Before pref " +smartAlarm);
+        SharedPreferences prefs = getSharedPreferences(MainActivity.GLOBAL_PREFS, MODE_PRIVATE);
+        smartAlarm = Boolean.parseBoolean(prefs.getString(SMART_ALARM, ""));
+        Log.w(TAG, "After pref " + smartAlarm);
+
+
 
         final Vibrator vibe = (Vibrator) this.getSystemService(this.VIBRATOR_SERVICE);
         vibe.vibrate(10000);
@@ -32,8 +43,8 @@ public class Snooze2Activity extends AppCompatActivity {
         Log.w(TAG, "Playing sound...");
 
         if(smartAlarm) {
-            mediaPlayer.start();
             mediaPlayer.setVolume(vol, vol);
+            mediaPlayer.start();
             Handler handler1 = new Handler();
             for (int a = 1; a < 99; a++) {
                 handler1.postDelayed(new Runnable() {

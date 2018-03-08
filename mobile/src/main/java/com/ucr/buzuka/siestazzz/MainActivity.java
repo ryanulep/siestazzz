@@ -165,13 +165,13 @@ public class MainActivity extends AppCompatActivity {
         if (btn.getBackground().getConstantState() == getResources().getDrawable(R.drawable.smartalarm_disabled).getConstantState()) {
             btn.setBackground(getDrawable(R.drawable.smartalarm_enabled));
             //set toggle to true
-            editor.putBoolean(String.valueOf(SetAlarm.SMART_ALARM), true);
+            editor.putString(String.valueOf(Snooze2Activity.SMART_ALARM), "true");
             Log.i("MainActivity", "Smart alarm on!" );
         }
         else {
             btn.setBackground(getDrawable(R.drawable.smartalarm_disabled));
             //set toggle to false
-            editor.putBoolean(String.valueOf(SetAlarm.SMART_ALARM), false);
+            editor.putString(String.valueOf(Snooze2Activity.SMART_ALARM), "false");
             Log.i("MainActivity", "Smart alarm off!" );
         }
         //apply shared preference
