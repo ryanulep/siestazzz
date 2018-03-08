@@ -17,7 +17,7 @@ public class Snooze2Activity extends AppCompatActivity {
     boolean smartAlarm = true;
     boolean isActive = true;
     int maxVolume = 100;
-    String smartString = "Smart Alarm";
+    public static final String SMART_ALARM = "smart_alarm_toggle";
 
 
     @Override
@@ -25,10 +25,10 @@ public class Snooze2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snooze2);
 
-        SharedPreferences p = getSharedPreferences(MainActivity.GLOBAL_PREFS, MODE_PRIVATE);
-        smartAlarm = p.getBoolean(String.valueOf(smartString), false);
-        Log.w(TAG, "Smart Alarm =" + smartAlarm);
-
+        Log.w(TAG, "Before pref " +smartAlarm);
+        SharedPreferences prefs = getSharedPreferences(MainActivity.GLOBAL_PREFS, MODE_PRIVATE);
+        smartAlarm = Boolean.parseBoolean(prefs.getString(SMART_ALARM, ""));
+        Log.w(TAG, "After pref " + smartAlarm);
 
 
 
