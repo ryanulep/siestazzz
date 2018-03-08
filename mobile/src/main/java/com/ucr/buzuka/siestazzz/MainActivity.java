@@ -2,18 +2,25 @@ package com.ucr.buzuka.siestazzz;
 
 
 import android.Manifest;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +32,8 @@ import android.widget.Toast;
 
 import com.ucr.buzuka.siestazzz.model.Alarm;
 import com.ucr.buzuka.siestazzz.model.BellTower;
+
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,6 +55,10 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private boolean permissionGranted;
     public static final String GLOBAL_PREFS = "global_preferences";
+
+    //notification channel id
+    private String CHANNEL_ID = UUID.randomUUID().toString();
+    private int notificationId = 123;
 
 
     @Override
@@ -70,6 +83,9 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+
+
+
     }  // End of OnCreate
 
     public void GoToSleep(View view) {
@@ -97,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
         return (Environment.MEDIA_MOUNTED.equals(state) ||
                 Environment.MEDIA_MOUNTED_READ_ONLY.equals(state));
     }
+
 
     // Initiate request for permissions.
     private boolean checkPermissions() {
@@ -204,6 +221,48 @@ public class MainActivity extends AppCompatActivity {
         }
         //apply shared preference
         editor.apply();
+    }
+
+
+    public void sendNotification(View view){
+
+        //hard coding titles and content for now
+        String notificationTitle = "Time to sleep";
+        String notification = "You should start sleeping";
+        NotificationManager notificationManager;
+
+        //for android o and up, require to register notification channel
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system
+            notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+            notificationManager.createNotificationChannel(channel);
+        }else{
+            // just register notification manager
+           notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+        }
+
+
+        //create an intent to got that activity when notification displayed
+        Intent intent = new Intent(this, SleepSessionActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        //create notification object,
+        //pass in view, title for the notification, and the content to notify
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID )
+                .setSmallIcon(R.drawable.icon)
+                .setContentTitle(notificationTitle)
+                .setContentText(notification)
+                .setContentIntent(pendingIntent)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        notificationManager.notify(notificationId, mBuilder.build());
+
     }
 
     /**

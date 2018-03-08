@@ -24,6 +24,7 @@ import java.util.UUID;
  */
 
 public class BellTower {
+    private static final String TAG = "BellTower";
     private static BellTower sBellTower; // the s prefix on sBelltower is a naming convention indicating that sAlarmKeeper is static.
 
     // Variables needed to add SQLiteOpenHelper to get rid of the grunt work of opening a SQLiteDatabase.
@@ -110,6 +111,15 @@ public class BellTower {
         mDatabase.update(AlarmDbSchema.AlarmTable.NAME, values,
                 AlarmDbSchema.AlarmTable.Cols.UUID + " = ?",
                 new String[] { uuidString });
+    }
+
+    public void deleteAlarm(Alarm alarm) {
+        String uuidString = alarm.getId().toString();
+
+        mDatabase.delete(AlarmDbSchema.AlarmTable.NAME,
+                AlarmDbSchema.AlarmTable.Cols.UUID + " LIKE ?",
+                new String[] { uuidString });
+        Log.d(TAG, "deleteAlarm: deleted");
     }
 
     /**

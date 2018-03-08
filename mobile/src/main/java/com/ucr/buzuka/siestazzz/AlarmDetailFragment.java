@@ -35,6 +35,8 @@ public class AlarmDetailFragment extends Fragment {
     private TextView mAlarmTime;
     private Switch mIsAlarmActive;
     private Button mCloseButton;
+    private Button mDeleteAlarmButton;
+    private boolean markedForDeletion = false;
 
     /**
      * Notes on public static AlarmFragment newInstance(UUID alarmId):
@@ -115,6 +117,16 @@ public class AlarmDetailFragment extends Fragment {
             }
         });
 
+        mDeleteAlarmButton = v.findViewById(R.id.alarm_delete_button);
+        mDeleteAlarmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                markedForDeletion = true;
+                BellTower.get(getActivity()).deleteAlarm(mAlarm);
+                getActivity().finish();
+            }
+        });
+
         return v;
     }
 
@@ -126,8 +138,10 @@ public class AlarmDetailFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        if(!markedForDeletion){
+            BellTower.get(getActivity()).updateAlarm(mAlarm);
+        }
 
-        BellTower.get(getActivity()).updateAlarm(mAlarm);
     }
 
 
