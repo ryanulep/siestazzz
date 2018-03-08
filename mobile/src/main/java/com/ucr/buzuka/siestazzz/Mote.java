@@ -23,46 +23,16 @@ import android.widget.Toast;
 
 
 public class Mote extends BroadcastReceiver {
-    NotificationCompat.Builder notification;
-    private static final String TAG =  "Mote.java";
-    float vol = (float) 0.025;
-    boolean smartAlarm = true;
-    int maxVolume = 100;
 
     public void onReceive(Context context, Intent intent) {
         // TODO Auto-generated method stub
-        Toast.makeText(context, "Alarm worked.", Toast.LENGTH_LONG).show();
-        Vibrator vibe = (Vibrator)context.getSystemService(context.VIBRATOR_SERVICE);
-        vibe.vibrate(10000);
+        Intent intent_snooze = new Intent(context, Snooze2Activity.class);
+//        intent_snooze.setClassName("com.ucr.buzuka.siestazzz", "com.ucr.buzuka.siestazzz.SnoozeActivity");
+        intent_snooze.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        Log.w(TAG, "Initializing sounds...");
+        context.startActivity(intent_snooze);
 
-        final MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.sample);
-        mediaPlayer.setLooping(true);
 
-        Log.w(TAG, "Playing sound...");
-
-        if(smartAlarm) {
-            mediaPlayer.start();
-            mediaPlayer.setVolume(vol, vol);
-            Handler handler1 = new Handler();
-            for (int a = 1; a < 99; a++) {
-                handler1.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        vol += 1;
-                        Log.w(TAG, "Increasing vol");
-                        float log1 = (float) (Math.log(maxVolume - vol) / Math.log(maxVolume));
-                        mediaPlayer.setVolume(1 - log1, 1 - log1);
-                    }
-                }, 1000 * a);
-            }
-
-        }
-        else{
-            mediaPlayer.setVolume(1, 1);
-            mediaPlayer.start();
-        }
     }
 }
 
