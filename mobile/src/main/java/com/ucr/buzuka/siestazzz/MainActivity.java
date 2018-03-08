@@ -222,47 +222,6 @@ public class MainActivity extends AppCompatActivity {
         }
         //apply shared preference
         editor.apply();
-    }
-
-
-    public void sendNotification(View view){
-
-        //hard coding titles and content for now
-        String notificationTitle = "Time to sleep";
-        String notification = "You should start sleeping";
-        NotificationManager notificationManager;
-
-        //for android o and up, require to register notification channel
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString(R.string.channel_name);
-            String description = getString(R.string.channel_description);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(description);
-            // Register the channel with the system
-            notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-            notificationManager.createNotificationChannel(channel);
-        }else{
-            // just register notification manager
-           notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-        }
-
-
-        //create an intent to got that activity when notification displayed
-        Intent intent = new Intent(this, SleepSessionActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-
-        //create notification object,
-        //pass in view, title for the notification, and the content to notify
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID )
-                .setSmallIcon(R.drawable.icon)
-                .setContentTitle(notificationTitle)
-                .setContentText(notification)
-                .setContentIntent(pendingIntent)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-        notificationManager.notify(notificationId, mBuilder.build());
 
     }
 
