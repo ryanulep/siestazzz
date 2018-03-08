@@ -48,6 +48,12 @@
             </intent-filter>
         </receiver>
 
+        <receiver
+            android:name=".MoteNotify"
+            android:enabled="true"
+            android:exported="false" >
+        </receiver>
+
         <activity
             android:name=".ListAlarmsActivity"
             android:screenOrientation="portrait"

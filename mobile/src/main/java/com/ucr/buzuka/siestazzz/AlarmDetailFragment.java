@@ -1,6 +1,7 @@
 package com.ucr.buzuka.siestazzz;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,8 +23,11 @@ import com.ucr.buzuka.siestazzz.model.Alarm;
 import com.ucr.buzuka.siestazzz.model.BellTower;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
+
+import static com.ucr.buzuka.siestazzz.NotificationService.setNotifyService;
 
 public class AlarmDetailFragment extends Fragment {
     private static final String ARG_ALARM_ID = "alarm_id"; // Goes with bundle args for memory
@@ -170,6 +174,11 @@ public class AlarmDetailFragment extends Fragment {
             Date time = (Date) data.getSerializableExtra(TimePickerFragment.EXTRA_TIME);
             //mAlarm.setAlarmTime(time);
             mAlarm.setAlarmTime(getContext(), time);
+            Calendar notifytime = Calendar.getInstance();
+            notifytime.setTime(time);
+            notifytime.add(Calendar.HOUR_OF_DAY, -8);
+            // TODO: replace time with notifytime
+            NotificationService.setNotifyService(getContext(), time);
             // TODO: Update alarm time view.
         }
 
