@@ -206,7 +206,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
                 vWrite.write(volumeTimes);
                 vWrite.flush();
                 vWrite.close();
-                DataPoint[] test=DataExtract.prepareVolumeData(journalPath);
+//                DataPoint[] test=DataExtract.prepareVolumeData(journalPath);
 //                if(test!=null){
 //                    for(int i=0; i<test.length;i++){
 //                        Log.d("CONVERT", "DataPoint:"+test[i]);
@@ -234,12 +234,12 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
                 sWrite.write(speedTimes);
                 sWrite.flush();
                 sWrite.close();
-                DataPoint[] test=DataExtract.prepareSpeedData(journalPath);
-                if(test!=null){
-                    for(int i=0; i<test.length;i++){
-                        Log.d("CONVERT", "DataPoint:"+test[i]);
-                    }
-                }
+//                DataPoint[] test=DataExtract.prepareSpeedData(journalPath);
+//                if(test!=null){
+//                    for(int i=0; i<test.length;i++){
+//                        Log.d("CONVERT", "DataPoint:"+test[i]);
+//                    }
+//                }
             }
             catch (IOException e){
                 Log.d("RECORD", "OOPS");
@@ -357,7 +357,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
         }
 
         else{
-            journalEntry.setSoundDataPath("NULL");
+            journalEntry.setSoundDataPath(null);
         }
         Journal.get(this).addJournalEntry(journalEntry);
 

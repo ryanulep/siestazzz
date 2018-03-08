@@ -98,12 +98,23 @@ public class JournalEntryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_journal_entry, container, false);
         GraphView graph = (GraphView) view.findViewById(R.id.graph);
         // DONE: FIX Crashing if series and series2 is null.
-        if(!(mJournalEntry.getSoundDataPath().equals("NULL"))){
-            LineGraphSeries<DataPoint> series = new LineGraphSeries<>(DataExtract.prepareVolumeData(mJournalEntry.getSoundDataPath()));
-            graph.addSeries(series);
-            LineGraphSeries<DataPoint> series2 = new LineGraphSeries<>(DataExtract.prepareSpeedData(mJournalEntry.getSoundDataPath()));
-            series2.setColor(Color.GREEN);
-            graph.addSeries(series2);
+        if(mJournalEntry.getSoundDataPath()!=null){
+            LineGraphSeries<DataPoint> series;
+            LineGraphSeries<DataPoint> series2;
+            DataPoint[] sound=DataExtract.prepareVolumeData(mJournalEntry.getSoundDataPath());
+            if(sound!=null)
+            {
+                Log.d("CONVERT", "Sound!=null"+sound);
+                series= new LineGraphSeries<>(sound);
+                graph.addSeries(series);
+            }
+
+            DataPoint[] motion=DataExtract.prepareSpeedData(mJournalEntry.getSoundDataPath());
+            if(motion!=null) {
+                series2 = new LineGraphSeries<>(motion);
+                series2.setColor(Color.GREEN);
+                graph.addSeries(series2);
+            }
         }
         mSleepNotes = (EditText) view.findViewById(R.id.journal_entry_notes);
         mSleepNotes.setText(mJournalEntry.getSleepNotes());
