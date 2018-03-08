@@ -35,12 +35,12 @@ public class Mote extends BroadcastReceiver {
         Vibrator vibe = (Vibrator)context.getSystemService(context.VIBRATOR_SERVICE);
         vibe.vibrate(10000);
 
-        Log.v(TAG, "Initializing sounds...");
+        Log.w(TAG, "Initializing sounds...");
 
         final MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.sample);
         mediaPlayer.setLooping(true);
 
-        Log.v(TAG, "Playing sound...");
+        Log.w(TAG, "Playing sound...");
 
         if(smartAlarm) {
             mediaPlayer.start();
@@ -51,12 +51,13 @@ public class Mote extends BroadcastReceiver {
                     @Override
                     public void run() {
                         vol += 1;
-                        Log.v(TAG, "Increasing vol");
+                        Log.w(TAG, "Increasing vol");
                         float log1 = (float) (Math.log(maxVolume - vol) / Math.log(maxVolume));
                         mediaPlayer.setVolume(1 - log1, 1 - log1);
                     }
                 }, 1000 * a);
             }
+
         }
         else{
             mediaPlayer.setVolume(1, 1);
