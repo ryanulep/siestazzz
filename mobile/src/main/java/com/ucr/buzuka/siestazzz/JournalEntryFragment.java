@@ -104,6 +104,8 @@ public class JournalEntryFragment extends Fragment {
                 Log.d("CONVERT", "Sound!=null"+sound);
                 series= new LineGraphSeries<>(sound);
                 graph.addSeries(series);
+                graph.getViewport().setMaxX(series.getHighestValueX());
+                graph.getViewport().setMinX(0);
             }
 
             DataPoint[] motion=DataExtract.prepareSpeedData(mJournalEntry.getSoundDataPath());
@@ -111,6 +113,8 @@ public class JournalEntryFragment extends Fragment {
                 series2 = new LineGraphSeries<>(motion);
                 series2.setColor(Color.GREEN);
                 graph.addSeries(series2);
+                graph.getViewport().setMaxX(series2.getHighestValueX());
+                graph.getViewport().setMinX(0);
             }
         }
         mSleepNotes = (EditText) view.findViewById(R.id.journal_entry_notes);

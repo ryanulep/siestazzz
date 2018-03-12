@@ -26,6 +26,12 @@ public class AlarmService extends IntentService {
         return new Intent(context, Mote.class);
     }
 
+    public static  Intent newIntentNotify(Context context){
+        Log.i(TAG, "newIntentNotify: return new Intent(context, MoteNotify.class) ");
+        return new Intent(context, MoteNotify.class);
+
+    }
+
     public AlarmService(){
         super(TAG);
     }
