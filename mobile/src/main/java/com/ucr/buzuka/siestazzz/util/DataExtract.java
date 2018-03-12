@@ -44,11 +44,12 @@ public class DataExtract {
             values=valueRaw.split(" ");
             times=timeRaw.split(" ");
             DataPoint[] result=new DataPoint[values.length];
+            double start=Double.parseDouble(times[0]);
             for(int i=0; i<values.length;i++){
 //                Log.d("CONVERT", "Value of times is:"+times[i]);
-                double x=Double.parseDouble(times[i]);
+                double x=Double.parseDouble(times[i])-start;
                 double y=Double.parseDouble(values[i]);
-                DataPoint temp=new DataPoint(x,y);
+                DataPoint temp=new DataPoint(x/1000,y);
                 result[i]=temp;
             }
             return result;
@@ -83,12 +84,14 @@ public class DataExtract {
         if(valueRaw!=null){
             values=valueRaw.split(" ");
             times=timeRaw.split(" ");
+            double start=Double.parseDouble(times[0]);
             DataPoint[] result=new DataPoint[values.length];
             for(int i=0; i<values.length;i++){
 //                Log.d("CONVERT", "Value of times is:"+times[i]);
-                double x=Double.parseDouble(times[i]);
+
+                double x=Double.parseDouble(times[i])-start;
                 double y=Double.parseDouble(values[i]);
-                DataPoint temp=new DataPoint(x,y*10000);
+                DataPoint temp=new DataPoint(x/1000,y*10000);
                 result[i]=temp;
             }
             Log.d("CONVERT", "Speed Success");
