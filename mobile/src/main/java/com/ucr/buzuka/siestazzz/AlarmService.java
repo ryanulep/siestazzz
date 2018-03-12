@@ -52,11 +52,24 @@ public class AlarmService extends IntentService {
 
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
+        cal.set(Calendar.SECOND,0);
+
+
+
+
+        Log.w("myApp", "Current Time " + Calendar.getInstance().getTime());
+        Log.w("myApp", "Set time is " + cal.getTime());
 
         if(mActive){
+            if(cal.before(Calendar.getInstance())){
+                cal.add(Calendar.DATE, 1);  // add 1 day
+                alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
+                Log.w("myApp", "Inrement 1 day " + cal.getTime());
+            }
+            else{
             alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
             Log.w("myApp", "AlarmManager Set " + cal);
-
+            }
         }
         else{
             alarmManager.cancel(pi);

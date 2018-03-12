@@ -42,10 +42,13 @@ public class Snooze2Activity extends AppCompatActivity {
 
         Log.w(TAG, "Playing sound...");
 
+        final Handler handler1 = new Handler();
+
         if(smartAlarm) {
+            vol = (float) 0.025;
             mediaPlayer.setVolume(vol, vol);
             mediaPlayer.start();
-            Handler handler1 = new Handler();
+
             for (int a = 1; a < 99; a++) {
                 handler1.postDelayed(new Runnable() {
                     @Override
@@ -70,6 +73,7 @@ public class Snooze2Activity extends AppCompatActivity {
             public void onClick(View v) {
                 mediaPlayer.stop();
                 vibe.cancel();
+
                 finish();
             }
         });
