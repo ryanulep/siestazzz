@@ -15,10 +15,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-/**
- * Created by Rick Boshae on 2/25/2018.
- */
-
 public class DatePickerFragment extends DialogFragment {
 
   public static final String EXTRA_DATE = "com.buzuka.android.siestazzz.date";

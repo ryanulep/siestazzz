@@ -14,10 +14,6 @@ import com.ucr.buzuka.siestazzz.model.BellTower;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Created by Ryan on 2/21/18.
- */
-
 public class AlarmPagerActivity extends AppCompatActivity {
 
   private static final String EXTRA_ALARM_ID = "com.buzuka.android.siestazzz.alarm_id";

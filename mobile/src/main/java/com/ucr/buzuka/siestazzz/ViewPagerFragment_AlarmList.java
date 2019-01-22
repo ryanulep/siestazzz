@@ -10,8 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Switch;
 import android.widget.TextView;
 import com.ucr.buzuka.siestazzz.model.Alarm;
@@ -38,7 +40,7 @@ public class ViewPagerFragment_AlarmList extends Fragment {
     updateUI();
 
     mAddAlarm = (FloatingActionButton) view.findViewById(R.id.add_alarm_fab);
-    mAddAlarm.setOnClickListener(new View.OnClickListener() {
+    mAddAlarm.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
         Alarm alarm = new Alarm();
@@ -56,7 +58,6 @@ public class ViewPagerFragment_AlarmList extends Fragment {
     super.onResume();
     updateUI();
   }
-
 
   @Override
   public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
@@ -88,7 +89,7 @@ public class ViewPagerFragment_AlarmList extends Fragment {
 
   // Implementing a ViewHolder and an Adapter
   // ViewHolder
-  private class AlarmHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+  private class AlarmHolder extends RecyclerView.ViewHolder implements OnClickListener {
 
     // Private variable used to bind to list_item_alarm
     private Alarm mAlarm;
@@ -108,7 +109,7 @@ public class ViewPagerFragment_AlarmList extends Fragment {
       mInfoTextView = (TextView) itemView.findViewById(R.id.alarm_info);
       mIsAlarmActive = (Switch) itemView.findViewById(R.id.activeSwitch);
 
-      mIsAlarmActive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+      mIsAlarmActive.setOnCheckedChangeListener(new OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton compoundButton, boolean isActive) {
           mAlarm.setActive(isActive);

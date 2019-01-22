@@ -157,6 +157,4 @@ public class BellTower {
 
     return values;
   }
-
-
 }

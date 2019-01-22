@@ -12,10 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-/**
- * Created by jakex on 2/11/2018.
- */
-
 public class JSONHelper {
 
   //private static final String FILE_NAME = "readout.json";
@@ -24,8 +20,7 @@ public class JSONHelper {
   public static boolean exportToJSON(Context context, List<SensorReadout> sensorReadoutList) {
     DataItems readoutData = new DataItems();
     readoutData.setSensorReadouts(sensorReadoutList);
-    Gson gson = new Gson();
-    String jsonString = gson.toJson(readoutData);
+    String jsonString = new Gson().toJson(readoutData);
     Log.i(TAG, "exportToJSON: " + jsonString);
     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
         .format(Calendar.getInstance().getTime());
@@ -66,7 +61,6 @@ public class JSONHelper {
   }
 
   static class DataItems {
-
     List<SensorReadout> sensorReadouts;
 
     public List<SensorReadout> getSensorReadouts() {

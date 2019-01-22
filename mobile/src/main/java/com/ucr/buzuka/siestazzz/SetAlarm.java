@@ -1,5 +1,7 @@
 package com.ucr.buzuka.siestazzz;
 
+import static android.widget.Toast.makeText;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -8,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -17,7 +20,6 @@ public class SetAlarm extends AppCompatActivity {
 
   private int hour;
   private int minute;
-
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +43,11 @@ public class SetAlarm extends AppCompatActivity {
 
     final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-    setButton.setOnClickListener(new View.OnClickListener() {
+    setButton.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
         // Toast to indicate that the alarm has been set by the user.
-        Toast.makeText(getApplicationContext(), "Alarm Set!", Toast.LENGTH_SHORT).show();
+        makeText(getApplicationContext(), "Alarm Set!", Toast.LENGTH_SHORT).show();
 
         // TODO: Add comments explaining what code is doing here.
         // TODO: Determine why we are not adding the set alarm to BellTower
@@ -68,10 +70,9 @@ public class SetAlarm extends AppCompatActivity {
       }
     });
 
-    cancelButton.setOnClickListener(new View.OnClickListener() {
+    cancelButton.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View view) {
-        //alarmManager.cancel(pendingIntent);
         finish();
       }
     });

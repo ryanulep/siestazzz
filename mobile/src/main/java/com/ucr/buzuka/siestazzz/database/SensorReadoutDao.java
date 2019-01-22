@@ -7,9 +7,8 @@ import com.ucr.buzuka.siestazzz.model.SensorReadout;
 import java.util.List;
 
 /**
- * Created by jakex on 2/25/2018. Room entity insertion and querying
+ * Room entity insertion and querying
  */
-
 @Dao
 public interface SensorReadoutDao {
 

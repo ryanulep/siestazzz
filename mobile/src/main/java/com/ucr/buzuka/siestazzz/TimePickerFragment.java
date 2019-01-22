@@ -1,5 +1,7 @@
 package com.ucr.buzuka.siestazzz;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -38,6 +40,7 @@ public class TimePickerFragment extends DialogFragment {
   @NonNull
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
+    checkNotNull(getArguments());
     Date time = (Date) getArguments().getSerializable(ARG_TIME);
 
     Calendar calendar = Calendar.getInstance();
@@ -66,11 +69,6 @@ public class TimePickerFragment extends DialogFragment {
             time.set(Calendar.HOUR_OF_DAY, hour);
             //time.set(Calendar.HOUR, hour);
             time.set(Calendar.MINUTE, minute);
-//                        if (hour > 12) {
-//                            time.set(Calendar.AM_PM, Calendar.PM);
-//                        } else {
-//                            time.set(Calendar.AM_PM, Calendar.AM);
-//                        }
             Date retTime = time.getTime();
 
             sendResult(Activity.RESULT_OK, retTime);

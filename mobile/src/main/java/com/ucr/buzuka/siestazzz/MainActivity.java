@@ -1,6 +1,8 @@
 package com.ucr.buzuka.siestazzz;
 
 
+import static android.widget.Toast.makeText;
+
 import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,11 +11,15 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.design.widget.TabLayout.TabLayoutOnPageChangeListener;
+import android.support.design.widget.TabLayout.ViewPagerOnTabSelectedListener;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -30,10 +36,9 @@ public class MainActivity extends AppCompatActivity {
   private static final int REQUEST_PERMISSION_WRITE = 1;
   //private static final String FILE_NAME = "readout.txt";
   /**
-   * The {@link android.support.v4.view.PagerAdapter} that will provide fragments for each of the
-   * sections. We use a {@link FragmentPagerAdapter} derivative, which will keep every loaded
-   * fragment in memory. If this becomes too memory intensive, it may be best to switch to a {@link
-   * android.support.v4.app.FragmentStatePagerAdapter}.
+   * The {@link PagerAdapter} that will provide fragments for each of the sections. We use a {@link
+   * FragmentPagerAdapter} derivative, which will keep every loaded fragment in memory. If this
+   * becomes too memory intensive, it may be best to switch to a {@link FragmentStatePagerAdapter}.
    */
   private SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -69,13 +74,13 @@ public class MainActivity extends AppCompatActivity {
 
     TabLayout tabLayout = findViewById(R.id.tabs);
 
-    mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-    tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+    mViewPager.addOnPageChangeListener(new TabLayoutOnPageChangeListener(tabLayout));
+    tabLayout.addOnTabSelectedListener(new ViewPagerOnTabSelectedListener(mViewPager));
   }  // End of OnCreate
 
   public void GoToSleep(View view) {
     Intent intent = new Intent(this, SleepSessionActivity.class);
-    Toast.makeText(getApplicationContext(), "Start Sleep!", Toast.LENGTH_SHORT).show();
+    makeText(getApplicationContext(), "Start Sleep!", Toast.LENGTH_SHORT).show();
     startActivity(intent);
   }
 
@@ -104,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
   private boolean checkPermissions() {
 
     if (!isExternalStorageReadable() || !isExternalStorageWritable()) {
-      Toast.makeText(this, "This app only works on devices with usable external storage",
+      makeText(this, "This app only works on devices with usable external storage",
           Toast.LENGTH_SHORT).show();
       return false;
     }
@@ -134,10 +139,10 @@ public class MainActivity extends AppCompatActivity {
         if (grantResults.length > 0
             && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
           permissionGranted = true;
-          Toast.makeText(this, "External storage permission granted",
+          makeText(this, "External storage permission granted",
               Toast.LENGTH_SHORT).show();
         } else {
-          Toast.makeText(this, "You must grant permission!", Toast.LENGTH_SHORT).show();
+          makeText(this, "You must grant permission!", Toast.LENGTH_SHORT).show();
         }
         break;
     }
@@ -175,13 +180,13 @@ public class MainActivity extends AppCompatActivity {
       //set toggle to true
       editor.putString(SleepSessionActivity.SENSOR_ACCEL, "true");
       Log.i("MainActivity", "Toggled sensor");
-      Toast.makeText(this, "Accelerometer on!", Toast.LENGTH_SHORT).show();
+      makeText(this, "Accelerometer on!", Toast.LENGTH_SHORT).show();
     } else {
       btn.setBackground(getDrawable(R.drawable.trackmovement_disabled));
       //set toggle to true
       editor.putString(SleepSessionActivity.SENSOR_ACCEL, "false");
       Log.i("MainActivity", "Un-toggled sensor");
-      Toast.makeText(this, "Accelerometer off!", Toast.LENGTH_SHORT).show();
+      makeText(this, "Accelerometer off!", Toast.LENGTH_SHORT).show();
     }
     //apply shared preference
     editor.apply();
@@ -198,13 +203,13 @@ public class MainActivity extends AppCompatActivity {
       //set toggle to true
       editor.putString(SleepSessionActivity.SENSOR_AUDIO, "true");
       Log.i("MainActivity", "Toggled audio");
-      Toast.makeText(this, "Audio on!", Toast.LENGTH_SHORT).show();
+      makeText(this, "Audio on!", Toast.LENGTH_SHORT).show();
     } else {
       btn.setBackground(getDrawable(R.drawable.recordsound_disabled));
       //set toggle to true
       editor.putString(SleepSessionActivity.SENSOR_AUDIO, "false");
       Log.i("MainActivity", "Un-Toggled audio");
-      Toast.makeText(this, "Audio off!", Toast.LENGTH_SHORT).show();
+      makeText(this, "Audio off!", Toast.LENGTH_SHORT).show();
     }
     //apply shared preference
     editor.apply();
@@ -222,40 +227,6 @@ public class MainActivity extends AppCompatActivity {
 
     public PlaceholderFragment() {
     }
-
-//        /**
-//         * Returns a new instance of this fragment for the given section
-//         * number.
-//         *
-//         * Not currently  being used however I think this would be a good
-//         * use for passing data between sections.
-//         */
-//        public static PlaceholderFragment newInstance(int sectionNumber) {
-//            PlaceholderFragment fragment = new PlaceholderFragment();
-//            Bundle args = new Bundle();                       // Unclear what Bundle is doing
-//            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-//            fragment.setArguments(args);
-//            return fragment;
-//        }
-
-//        @Override
-//        public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle
-// savedInstanceState) {
-//            final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-//            // Some fuzzy stuff here. Refer to template but in essence i want to add interface
-// here.
-//
-//            Button sleep_button = (Button) rootView.findViewById(R.id.sleepButton);
-//
-//            sleep_button.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    // getContext() is used to replace 'MainActivity.this'
-//                    Toast.makeText(getContext(), "Button Clicked",Toast.LENGTH_LONG).show();
-//                }
-//            });
-//        return rootView;
-//        }
   }
 
   /**
@@ -270,10 +241,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public Fragment getItem(int position) {
-      // The page that we want to display in a ViewPage
-      // getItem is called to instantiate the fragment for the given page.
-      // Return a PlaceholderFragment (defined as a static inner class below).
-      // return PlaceholderFragment.newInstance(position + 1);
+      /* The page that we want to display in a ViewPage
+       getItem is called to instantiate the fragment for the given page.
+       Return a PlaceholderFragment (defined as a static inner class below).
+       return PlaceholderFragment.newInstance(position + 1); */
 
       switch (position) {
         case 0:
@@ -282,10 +253,6 @@ public class MainActivity extends AppCompatActivity {
           return new ViewPagerFragment_JournalEntryList();
         case 2:
           return new ViewPagerFragment_AlarmList();
-
-        //Later Case 3 may be added to display app info.
-//                case 3:
-//                    return new InfoViewPagerFragment();
         default:
           return new ViewPagerFragment_Main();
       }

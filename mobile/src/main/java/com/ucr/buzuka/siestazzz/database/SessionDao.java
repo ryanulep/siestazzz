@@ -7,7 +7,7 @@ import com.ucr.buzuka.siestazzz.model.Session;
 import java.util.List;
 
 /**
- * Created by jakex on 2/26/2018. Session table for storing each session
+ * Session table for storing each session
  */
 @Dao
 public interface SessionDao {

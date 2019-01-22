@@ -41,41 +41,37 @@ public class Snooze2Activity extends AppCompatActivity {
 
     Log.w(TAG, "Playing sound...");
 
-        final Handler handler1 = new Handler();
+    final Handler handler1 = new Handler();
 
-        if(smartAlarm) {
-            vol = (float) 0.025;
-            mediaPlayer.setVolume(vol, vol);
-            mediaPlayer.start();
+    if (smartAlarm) {
+      vol = (float) 0.025;
+      mediaPlayer.setVolume(vol, vol);
+      mediaPlayer.start();
 
-            for (int a = 1; a < 99; a++) {
-                handler1.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        vol += 1;
-                        Log.w(TAG, "Increasing vol");
-                        float log1 = (float) (Math.log(maxVolume - vol) / Math.log(maxVolume));
-                        mediaPlayer.setVolume(1 - log1, 1 - log1);
-                    }
-                }, 1000 * a);
-            }
-
-        }
-        else{
-            mediaPlayer.setVolume(1, 1);
-            mediaPlayer.start();
-        }
-
-        mDismissAlarm = findViewById(R.id.snooze2_dismiss);
-        mDismissAlarm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mediaPlayer.stop();
-                vibe.cancel();
-
-                finish();
-            }
-        });
-
+      for (int a = 1; a < 99; a++) {
+        handler1.postDelayed(new Runnable() {
+          @Override
+          public void run() {
+            vol += 1;
+            Log.w(TAG, "Increasing vol");
+            float log1 = (float) (Math.log(maxVolume - vol) / Math.log(maxVolume));
+            mediaPlayer.setVolume(1 - log1, 1 - log1);
+          }
+        }, 1000 * a);
+      }
+    } else {
+      mediaPlayer.setVolume(1, 1);
+      mediaPlayer.start();
     }
+
+    mDismissAlarm = findViewById(R.id.snooze2_dismiss);
+    mDismissAlarm.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        mediaPlayer.stop();
+        vibe.cancel();
+        finish();
+      }
+    });
+  }
 }

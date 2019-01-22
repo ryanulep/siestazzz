@@ -1,5 +1,7 @@
 package com.ucr.buzuka.siestazzz;
 
+import static java.lang.Math.abs;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
@@ -83,6 +85,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     journalPath = mFileName;
     mFileName += "/";
     mFileName += "recording.3gp";
+
     mRecorder = new MediaRecorder();
     mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
     mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
@@ -104,7 +107,6 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_sleep_session);
 
-    //get toggle preference
     SharedPreferences prefs = getSharedPreferences(MainActivity.GLOBAL_PREFS, MODE_PRIVATE);
     toggle_accel = Boolean.parseBoolean(prefs.getString(String.valueOf(SENSOR_ACCEL), ""));
     toggle_audio = Boolean.parseBoolean(prefs.getString(String.valueOf(SENSOR_AUDIO), ""));
@@ -238,7 +240,7 @@ public class SleepSessionActivity extends AppCompatActivity implements SensorEve
           STORAGE_LIMITER = 150;
           diffTime = (curTime - lastUpdate) / 100;
           lastUpdate = curTime;
-          speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime;
+          speed = abs(x + y + z - last_x - last_y - last_z) / diffTime;
         }
         last_x = x;
         last_y = y;

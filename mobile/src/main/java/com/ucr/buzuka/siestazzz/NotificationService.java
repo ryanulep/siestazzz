@@ -9,10 +9,6 @@ import android.util.Log;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * Created by Rick Boshae and Xiao Zhou on 3/7/18.
- */
-
 public class NotificationService extends IntentService {
 
   private static final String TAG = "NotificationService";

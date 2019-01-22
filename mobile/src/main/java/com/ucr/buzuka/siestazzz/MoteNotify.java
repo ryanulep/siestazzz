@@ -1,6 +1,7 @@
 package com.ucr.buzuka.siestazzz;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
+import static android.widget.Toast.makeText;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -14,19 +15,14 @@ import android.util.Log;
 import android.widget.Toast;
 import java.util.UUID;
 
-/**
- * Created by jakex on 3/7/2018.
- */
-
 public class MoteNotify extends BroadcastReceiver {
 
-  //notification channel id
   private String CHANNEL_ID = UUID.randomUUID().toString();
   private int notificationId = 123;
 
   @Override
   public void onReceive(Context context, Intent intent) {
-    Toast.makeText(context, "NOTIFICATION ON", Toast.LENGTH_SHORT).show();
+    makeText(context, "NOTIFICATION ON", Toast.LENGTH_SHORT).show();
     Log.i("MOTEN", "onReceive: notify received");
     //hard coding titles and content for now
     String notificationTitle = "Time to sleep";

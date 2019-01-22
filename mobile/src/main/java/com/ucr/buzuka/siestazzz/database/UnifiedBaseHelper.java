@@ -6,10 +6,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.ucr.buzuka.siestazzz.database.JournalEntryDbSchema.JournalEntryTable;
 
 /**
- * Created by Rick Boshae on 3/3/2018.
- */
-
-/**
  * UnifiedBaseHelper handles four core steps. - Check to see whether the database exists - If the
  * database does not exist, create it and create the a table and initial data it needs. - If it
  * does, open it up and see what version of UnifiedDbSchema has. - If it is an old version, upgrade

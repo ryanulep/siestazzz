@@ -10,10 +10,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
-/**
- * Created by Ammar on 3/6/18.
- */
-
 public class AlarmService extends IntentService {
 
   private static final String TAG = "AlarmService";
@@ -46,31 +42,25 @@ public class AlarmService extends IntentService {
         .getBroadcast(context, 0, i, PendingIntent.FLAG_UPDATE_CURRENT | Intent.FILL_IN_DATA);
     AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        cal.set(Calendar.SECOND,0);
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(date);
+    cal.set(Calendar.SECOND, 0);
 
+    Log.w("myApp", "Current Time " + Calendar.getInstance().getTime());
+    Log.w("myApp", "Set time is " + cal.getTime());
 
-
-
-        Log.w("myApp", "Current Time " + Calendar.getInstance().getTime());
-        Log.w("myApp", "Set time is " + cal.getTime());
-
-        if(mActive){
-            if(cal.before(Calendar.getInstance())){
-                cal.add(Calendar.DATE, 1);  // add 1 day
-                alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
-                Log.w("myApp", "Inrement 1 day " + cal.getTime());
-            }
-            else{
-            alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
-            Log.w("myApp", "AlarmManager Set " + cal);
-            }
-        }
-        else{
-            alarmManager.cancel(pi);
-            pi.cancel();
-        }
+    if (mActive) {
+      if (cal.before(Calendar.getInstance())) {
+        cal.add(Calendar.DATE, 1);  // add 1 day
+        alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
+        Log.w("myApp", "Inrement 1 day " + cal.getTime());
+      } else {
+        alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
+        Log.w("myApp", "AlarmManager Set " + cal);
+      }
+    } else {
+      alarmManager.cancel(pi);
+      pi.cancel();
     }
-
+  }
 }
