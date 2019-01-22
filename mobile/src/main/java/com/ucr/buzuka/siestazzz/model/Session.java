@@ -10,41 +10,44 @@ import android.support.annotation.NonNull;
  */
 @Entity
 public class Session {
-    @PrimaryKey
-    @NonNull
-    private String sessionID;
 
-    private String path;
+  @PrimaryKey
+  @NonNull
+  private String sessionID;
 
-    public Session() {
-    }
+  private String path;
 
-    @Ignore
-    public Session(String sessionID, String path){
-        this.sessionID = sessionID;
-        this.path = path;
-    }
+  public Session() {
+  }
 
-    public String getSessionID() {
-        return sessionID;
-    }
+  @Ignore
+  public Session(String sessionID, String path) {
+    this.sessionID = sessionID;
+    this.path = path;
+  }
 
-    public void setSessionID(String sessionID) {
-        this.sessionID = sessionID;
-    }
+  @NonNull
+  public String getSessionID() {
+    return sessionID;
+  }
 
-    public String getPath(){
-        return path;
-    }
+  public void setSessionID(String sessionID) {
+    this.sessionID = sessionID;
+  }
 
-    public void setPath(String path){
-        this.path=path;
-    }
-    @Override
-    public String toString() {
-        return "Session{" +
-                "sessionID='" + sessionID + '\'' +
-                "path=" + path +
-                '}';
-    }
+  public String getPath() {
+    return path;
+  }
+
+  public void setPath(String path) {
+    this.path = path;
+  }
+
+  @Override
+  public String toString() {
+    return "Session{" +
+        "sessionID='" + sessionID + '\'' +
+        "path=" + path +
+        '}';
+  }
 }

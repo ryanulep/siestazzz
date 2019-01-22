@@ -1,42 +1,45 @@
 package com.ucr.buzuka.siestazzz.database;
 
 import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
-import android.arch.persistence.room.Update;
-
 import com.ucr.buzuka.siestazzz.model.SensorReadout;
-
 import java.util.List;
 
 /**
- * Created by jakex on 2/25/2018.
- * Room entity insertion and querying
+ * Created by jakex on 2/25/2018. Room entity insertion and querying
  */
 
 @Dao
 public interface SensorReadoutDao {
-    @Insert
-    void insertAll(List<SensorReadout> items);
 
-    @Insert
-    void insertAll(SensorReadout... items);
+  @Insert
+  void insertAll(List<SensorReadout> items);
 
-    /** get count  */
-    @Query("SELECT COUNT(*) from sensorreadout")
-    int countItems();
+  @Insert
+  void insertAll(SensorReadout... items);
 
-    /** get all item  */
-    @Query("SELECT * FROM sensorreadout ORDER BY sessionID")
-    List<SensorReadout> getAll();
+  /**
+   * get count
+   */
+  @Query("SELECT COUNT(*) from sensorreadout")
+  int countItems();
 
-    /** get one specific session */
-    @Query("SELECT * FROM sensorreadout WHERE sessionID = :sessionID")
-    List<SensorReadout> findById(String sessionID);
+  /**
+   * get all item
+   */
+  @Query("SELECT * FROM sensorreadout ORDER BY sessionID")
+  List<SensorReadout> getAll();
 
-    /** clear table */
-    @Query("DELETE FROM sensorreadout")
-    void clearTable();
+  /**
+   * get one specific session
+   */
+  @Query("SELECT * FROM sensorreadout WHERE sessionID = :sessionID")
+  List<SensorReadout> findById(String sessionID);
 
+  /**
+   * clear table
+   */
+  @Query("DELETE FROM sensorreadout")
+  void clearTable();
 }
