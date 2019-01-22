@@ -46,16 +46,31 @@ public class AlarmService extends IntentService {
         .getBroadcast(context, 0, i, PendingIntent.FLAG_UPDATE_CURRENT | Intent.FILL_IN_DATA);
     AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
-    Calendar cal = Calendar.getInstance();
-    cal.setTime(date);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.SECOND,0);
 
-    if (mActive) {
-      alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
-      Log.w("myApp", "AlarmManager Set " + cal);
-    } else {
-      alarmManager.cancel(pi);
-      pi.cancel();
+
+
+
+        Log.w("myApp", "Current Time " + Calendar.getInstance().getTime());
+        Log.w("myApp", "Set time is " + cal.getTime());
+
+        if(mActive){
+            if(cal.before(Calendar.getInstance())){
+                cal.add(Calendar.DATE, 1);  // add 1 day
+                alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
+                Log.w("myApp", "Inrement 1 day " + cal.getTime());
+            }
+            else{
+            alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
+            Log.w("myApp", "AlarmManager Set " + cal);
+            }
+        }
+        else{
+            alarmManager.cancel(pi);
+            pi.cancel();
+        }
     }
-  }
 
 }

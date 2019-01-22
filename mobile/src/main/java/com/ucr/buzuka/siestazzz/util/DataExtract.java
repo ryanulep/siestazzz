@@ -31,31 +31,32 @@ public class DataExtract {
     String[] values = new String[0];
     String[] times = new String[0];
 
-    if (valueRaw != "") {
-      Log.d("CONVERT", "timeRaw=" + timeRaw);
-      values = valueRaw.split(" ");
-      times = timeRaw.split(" ");
-      DataPoint[] result = new DataPoint[values.length];
-      for (int i = 0; i < values.length; i++) {
+        if(valueRaw!=""){
+            Log.d("CONVERT", "timeRaw="+timeRaw);
+            values=valueRaw.split(" ");
+            times=timeRaw.split(" ");
+            DataPoint[] result=new DataPoint[values.length];
+            double start=Double.parseDouble(times[0]);
+            for(int i=0; i<values.length;i++){
 //                Log.d("CONVERT", "Value of times is:"+times[i]);
-        double x = Double.parseDouble(times[i]);
-        double y = Double.parseDouble(values[i]);
-        DataPoint temp = new DataPoint(x, y);
-        result[i] = temp;
-      }
-      return result;
-    } else {
-      return null;
+                double x=Double.parseDouble(times[i])-start;
+                double y=Double.parseDouble(values[i]);
+                DataPoint temp=new DataPoint(x/1000,y);
+                result[i]=temp;
+            }
+            return result;
+        }
+        else{
+            return null;
+        }
     }
-  }
-
-  public static DataPoint[] prepareSpeedData(String path) {
-    String valuePath = path + "/speedValues.txt";
-    File valueFile = new File(valuePath);
-    String timePath = path + "/speedTimes.txt";
-    File timeFile = new File(timePath);
-    String valueRaw = "";
-    String timeRaw = "";
+    public static DataPoint[] prepareSpeedData(String path){
+        String valuePath=path+"/speedValues.txt";
+        File valueFile=new File(valuePath);
+        String timePath=path+"/speedTimes.txt";
+        File timeFile=new File(timePath);
+        String valueRaw="";
+        String timeRaw="";
 
     try {
       FileReader fr = new FileReader(valueFile);
@@ -71,23 +72,27 @@ public class DataExtract {
     String[] values = new String[0];
     String[] times = new String[0];
 
-    if (valueRaw != null) {
-      values = valueRaw.split(" ");
-      times = timeRaw.split(" ");
-      DataPoint[] result = new DataPoint[values.length];
-      for (int i = 0; i < values.length; i++) {
+        if(valueRaw!=null){
+            values=valueRaw.split(" ");
+            times=timeRaw.split(" ");
+            double start=Double.parseDouble(times[0]);
+            DataPoint[] result=new DataPoint[values.length];
+            for(int i=0; i<values.length;i++){
 //                Log.d("CONVERT", "Value of times is:"+times[i]);
-        double x = Double.parseDouble(times[i]);
-        double y = Double.parseDouble(values[i]);
-        DataPoint temp = new DataPoint(x, y * 10000);
-        result[i] = temp;
-      }
-      Log.d("CONVERT", "Speed Success");
-      return result;
-    } else {
-      Log.d("CONVERT", "Speed Failure");
-      return null;
+
+                double x=Double.parseDouble(times[i])-start;
+                double y=Double.parseDouble(values[i]);
+                DataPoint temp=new DataPoint(x/1000,y*10000);
+                result[i]=temp;
+            }
+            Log.d("CONVERT", "Speed Success");
+            return result;
+        }
+        else{
+            Log.d("CONVERT", "Speed Failure");
+            return null;
+
+        }
     }
-  }
 
 }
